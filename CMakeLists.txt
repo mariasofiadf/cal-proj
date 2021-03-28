@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(CAL-TP_classes)
+project(cal-proj)
 
 # Build the Google tests
 set(GOOGLETEST_PATH lib/googletest-master)
