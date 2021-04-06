@@ -20,7 +20,7 @@ file(GLOB MAIN CONFIGURE_DEPENDS
 
 add_executable(test
         test.cpp
-        ${TEST} src/Printer.h)
+        ${TEST} test/DijkstraTest.cpp src/TestAux.cpp)
 
 add_executable(main
         main.cpp
