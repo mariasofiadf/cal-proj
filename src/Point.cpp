@@ -25,3 +25,11 @@ const string &Point::getName() const {
 }
 
 PointPark::PointPark(double x, double y, const string &name, double price) : Point(x, y, name), price(price) {}
+
+PointTask::PointTask(double x, double y, const string &name) : Point(x, y, name) {}
+
+PointGas::PointGas(double x, double y, const string &name) : PointTask(x, y, name) {}
+
+PointCoffe::PointCoffe(double x, double y, const string &name) : PointTask(x, y, name) {}
+
+StorePoint::StorePoint(double x, double y, const string &name) : PointTask(x, y, name) {}

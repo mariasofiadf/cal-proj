@@ -40,18 +40,22 @@ public:
 
 class PointTask : public Point{
 public:
+    PointTask(double x, double y, const string &name);
 };
 
-class GasPoint : public PointTask{
+class PointGas : public PointTask{
 public:
+    PointGas(double x, double y, const string &name);
 };
 
-class CoffePoint : public PointTask{
+class PointCoffe : public PointTask{
 public:
+    PointCoffe(double x, double y, const string &name);
 };
 
 class StorePoint : public PointTask{
 public:
+    StorePoint(double x, double y, const string &name);
 };
 
 
