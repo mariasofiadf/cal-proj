@@ -7,13 +7,17 @@
 #include <random>
 #include <time.h>
 #include <chrono>
-#include "Graph.h"
+#include "../src/Graph.h"
 
 /**
  * Auxiliary functions to tests...
  *
  */
 Graph<int> CreateTestGraph();
+
+Graph<int> CreateTestGraphBidirectional();
+
+Graph<int> CreateMap1();
 
 template <typename T1, typename T2>
 std::basic_ostream<char>& operator<<(std::basic_ostream<char> & strm, const std::pair<T1, T2>& kvPair)

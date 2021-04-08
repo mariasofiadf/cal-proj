@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
 #include <random>
-#include "Graph.h"
+#include "../src/Graph.h"
 #include "TestAux.h"
 
 /**
@@ -31,6 +31,28 @@ Graph<int> CreateTestGraph() {
     return myGraph;
 }
 
+Graph<int> CreateTestGraphBidirectional() {
+    Graph<int> myGraph;
+
+    for(int i = 1; i <= 7; i++)
+        myGraph.addVertex(i);
+
+    myGraph.addBidirectionalEdge(1, 2, 2);
+    myGraph.addBidirectionalEdge(1, 4, 7);
+    myGraph.addBidirectionalEdge(2, 4, 3);
+    myGraph.addBidirectionalEdge(2, 5, 5);
+    myGraph.addBidirectionalEdge(3, 1, 2);
+    myGraph.addBidirectionalEdge(3, 6, 5);
+    myGraph.addBidirectionalEdge(4, 3, 1);
+    myGraph.addBidirectionalEdge(4, 5, 1);
+    myGraph.addBidirectionalEdge(4, 6, 6);
+    myGraph.addBidirectionalEdge(4, 7, 4);
+    myGraph.addBidirectionalEdge(5, 7, 2);
+    myGraph.addBidirectionalEdge(6, 4, 3);
+    myGraph.addBidirectionalEdge(7, 6, 4);
+
+    return myGraph;
+}
 
 void generateRandomGridGraph(int n, Graph<std::pair<int,int>> & g) {
     std::random_device rd;
@@ -47,4 +69,23 @@ void generateRandomGridGraph(int n, Graph<std::pair<int,int>> & g) {
                 for (int dj = -1; dj <= 1; dj++)
                     if ((di != 0) != (dj != 0) && i+di >= 0 && i+di < n && j+dj >= 0 && j+dj < n)
                         g.addEdge(std::make_pair(i,j), std::make_pair(i+di,j+dj), dis(gen));
+}
+
+Graph<int> CreateMap1() {
+    Graph<int> myGraph;
+
+    for(int i = 1; i <= 7; i++)
+        myGraph.addVertex(i);
+
+    myGraph.addBidirectionalEdge(1, 2, 1);
+    myGraph.addBidirectionalEdge(1, 3, 5);
+    myGraph.addBidirectionalEdge(2, 4, 2);
+    myGraph.addBidirectionalEdge(3, 4, 1);
+    myGraph.addBidirectionalEdge(3, 6, 1);
+    myGraph.addBidirectionalEdge(4, 5, 1);
+    myGraph.addBidirectionalEdge(4, 6, 5);
+    myGraph.addBidirectionalEdge(5, 7, 3);
+    myGraph.addBidirectionalEdge(6, 7, 1);
+
+    return myGraph;
 }

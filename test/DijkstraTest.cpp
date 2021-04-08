@@ -3,7 +3,7 @@
 //
 
 #include "../src/Graph.h"
-#include "../src/TestAux.h"
+#include "TestAux.h"
 
 
 
@@ -11,7 +11,7 @@
 #include <gtest/gtest.h>
 #include "string"
 
-TEST(TP6_Ex2, test_dijkstra) {
+TEST(Dijkstra, test_dijkstra) {
 Graph<int> myGraph = CreateTestGraph();
 
 myGraph.dijkstraShortestPath(3);
@@ -27,4 +27,18 @@ checkSinglePath(myGraph.getPath(5, 6), "5 7 6 ");
 
 myGraph.dijkstraShortestPath(7);
 checkSinglePath(myGraph.getPath(7, 1), "7 6 4 3 1 ");
+}
+
+TEST(Dijkstra, test_dijkstra_map1) {
+    Graph<int> myGraph = CreateMap1();
+
+    myGraph.dijkstraShortestPath(1);
+    checkAllPaths(myGraph, "1<-|2<-1|3<-4|4<-2|5<-4|6<-3|7<-6|");
+    checkSinglePath(myGraph.getPath(1, 7), "1 2 4 3 6 7 ");
+
+
+    myGraph.dijkstraShortestPath(7);
+    checkAllPaths(myGraph, "1<-2|2<-4|3<-6|4<-3|5<-7|6<-7|7<-|");
+
+
 }
