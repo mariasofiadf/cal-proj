@@ -4,24 +4,24 @@
 
 #include <gtest/gtest.h>
 #include "TestAux.h"
+#include "../src/Graph.h"
 
+TEST(Map, test_dijkstra_super_simple) {
+    Graph myGraph;
 
-TEST(Map, test_dijkstra) {
-    Graph myGraph = CreateTestGraph();
+    Point P1(0,0, "P1");
+    Point P2(0,0, "P2");
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addBidirectionalEdge(P1, P2, 1);
 
-    /*
-    myGraph.dijkstraShortestPath(3);
-    checkAllPaths(myGraph, "1<-3|2<-1|3<-|4<-2|5<-4|6<-3|7<-5|");
+    myGraph.dijkstraShortestPath(P1);
 
+    checkAllPaths(myGraph, "P1<-|P2<-P1|");
+    checkSinglePath(myGraph.getPath(P1, P2), "P1 P2 ");
 
-    myGraph.dijkstraShortestPath(1);
-    checkAllPaths(myGraph, "1<-|2<-1|3<-4|4<-2|5<-4|6<-4|7<-5|");
-    checkSinglePath(myGraph.getPath(1, 7), "1 2 4 5 7 ");
+    myGraph.dijkstraShortestPath(P2);
 
-    myGraph.dijkstraShortestPath(5);
-    checkSinglePath(myGraph.getPath(5, 6), "5 7 6 ");
-
-    myGraph.dijkstraShortestPath(7);
-    checkSinglePath(myGraph.getPath(7, 1), "7 6 4 3 1 ");
-     */
+    checkAllPaths(myGraph, "P1<-P2|P2<-|");
+    checkSinglePath(myGraph.getPath(P2, P1), "P2 P1 ");
 }

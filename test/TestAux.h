@@ -7,6 +7,7 @@
 #include <random>
 #include <time.h>
 #include <chrono>
+#include "../src/Graph.h"
 
 /**
  * Auxiliary functions to tests...

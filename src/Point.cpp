@@ -16,7 +16,7 @@ bool Point::operator==(const Point &rhs) const {
 }
 
 ostream &operator<<(ostream &os, const Point &point) {
-    os << "name: " << point.name;
+    os << point.name;
     return os;
 }
 
