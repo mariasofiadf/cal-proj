@@ -11,142 +11,138 @@
 #include <unordered_set>
 #include "MutablePriorityQueue.h"
 
-template <class T> class Edge;
-template <class T> class Graph;
-template <class T> class Vertex;
+#include "Point.h"
+
+class Edge;
+class Graph;
+class Vertex;
 
 #define INF std::numeric_limits<double>::max()
 
 /************************* Vertex  **************************/
 
-template <class T>
 class Vertex {
-	T info;                 // contents
-	std::vector<Edge<T> *> adj;  // outgoing edges
+	Point info;                 // contents
+	std::vector<Edge *> adj;  // outgoing edges
 
 	bool visited;
 	double dist = 0;
-	Vertex<T> *path = nullptr;
+	Vertex *path = nullptr;
 	int queueIndex = 0; 		// required by MutablePriorityQueue
     bool marked; // required by modifiedDijkstra
-	Edge<T> * addEdge(Vertex<T> *dest, double w);
+	Edge * addEdge(Vertex *dest, double w);
 public:
-	Vertex(T in);
-	bool operator<(Vertex<T> & vertex) const; // // required by MutablePriorityQueue
-	T getInfo() const;
+	Vertex(Point in);
+	bool operator<(Vertex & vertex) const; // // required by MutablePriorityQueue
+	Point getPoint() const;
 	double getDist() const;
-	Vertex *getPath() const;
-	friend class Graph<T>;
-	friend class MutablePriorityQueue<Vertex<T>>;
+
+    const Point &getInfo() const;
+
+    Vertex *getPath() const;
+	friend class Graph;
+	friend class MutablePriorityQueue<Vertex>;
 };
 
+class Edge {
+    Vertex *orig; 		    // Fp07
+    Vertex * dest;           // destination vertex
+    double weight;              // edge weight
+    bool selected = false;      // Fp07
+    Edge *reverse = nullptr; // Fp07
+public:
+    Edge(Vertex *o, Vertex *d, double w);
+    friend class Graph;
+    friend class Vertex;
 
-template <class T>
-Vertex<T>::Vertex(T in): info(in) {}
+    double getWeight() const;
+    Vertex *getOrig() const;
+    Vertex *getDest() const;
+};
+
+Vertex::Vertex(Point in): info(in) {}
 
 /*
  * Auxiliary function to add an outgoing edge to a vertex (this),
  * with a given destination vertex (d) and edge weight (w).
  */
-template <class T>
-Edge<T> *Vertex<T>::addEdge(Vertex<T> *d, double w) {
-	Edge<T> *e = new Edge<T>(this, d, w);
+
+Edge *Vertex::addEdge(Vertex *d, double w) {
+	Edge *e = new Edge(this, d, w);
 	adj.push_back(e);
 	return e;
 }
 
-template <class T>
-bool Vertex<T>::operator<(Vertex<T> & vertex) const {
+bool Vertex::operator<(Vertex & vertex) const {
 	return this->dist < vertex.dist;
 }
 
-template <class T>
-T Vertex<T>::getInfo() const {
+Point Vertex::getPoint() const {
 	return this->info;
 }
 
-template <class T>
-double Vertex<T>::getDist() const {
+double Vertex::getDist() const {
 	return this->dist;
 }
 
-template <class T>
-Vertex<T> *Vertex<T>::getPath() const {
+Vertex *Vertex::getPath() const {
 	return this->path;
 }
 
 /********************** Edge  ****************************/
 
-template <class T>
-class Edge {
-	Vertex<T> *orig; 		    // Fp07
-	Vertex<T> * dest;           // destination vertex
-	double weight;              // edge weight
-	bool selected = false;      // Fp07
-	Edge<T> *reverse = nullptr; // Fp07
-public:
-	Edge(Vertex<T> *o, Vertex<T> *d, double w);
-	friend class Graph<T>;
-	friend class Vertex<T>;
 
-	double getWeight() const;
-	Vertex<T> *getOrig() const;
-	Vertex<T> *getDest() const;
-};
 
-template <class T>
-Edge<T>::Edge(Vertex<T> *o, Vertex<T> *d, double w): orig(o), dest(d), weight(w) {}
 
-template <class T>
-double Edge<T>::getWeight() const {
+Edge::Edge(Vertex *o, Vertex *d, double w): orig(o), dest(d), weight(w) {}
+
+double Edge::getWeight() const {
 	return weight;
 }
 
-template <class T>
-Vertex<T> *Edge<T>::getOrig() const {
+Vertex *Edge::getOrig() const {
 	return orig;
 }
 
-template <class T>
-Vertex<T> *Edge<T>::getDest() const {
+Vertex *Edge::getDest() const {
 	return dest;
 }
 
 /*************************** Graph  **************************/
 
-template <class T>
 class Graph {
-    std::vector<Vertex<T> *> vertexSet;    // vertex set
+    std::vector<Vertex *> vertexSet;    // vertex set
 
 public:
     ~Graph();
-	Vertex<T> *findVertex(const T &in) const;
-	bool addVertex(const T &in);
-	bool addEdge(const T &sourc, const T &dest, double w);
-	bool addBidirectionalEdge(const T &sourc, const T &dest, double w);
-    std::vector<Vertex<T> *> getVertexSet() const;
+	Vertex *findVertex(const Point &in) const;
+	bool addVertex(const Point &in);
+	bool addEdge(const Point &sourc, const Point &dest, double w);
+	bool addBidirectionalEdge(const Point &sourc, const Point &dest, double w);
+    std::vector<Vertex *> getVertexSet() const;
 
 	// Fp07 - minimum spanning tree
-    Vertex<T> * initSingleSource(const T &origin);
-    bool relax(Vertex<T> *v, Vertex<T> *w, double weight);
-    void dijkstraShortestPath(const T &origin);
-    std::vector<T> getPath(const T &origin, const T &dest) const;
+    Vertex * initSingleSource(const Point &origin);
+    bool relax(Vertex *v, Vertex *w, double weight);
+    void dijkstraShortestPath(const Point &origin);
+    std::vector<Point> getPath(const Point &origin, const Point &dest) const;
     //Functions for ModifiedDiskstra's
-    void markPossibleParks(const T &source);
+    void markPossibleParks(const Point &source);
 };
 
+const Point &Vertex::getInfo() const {
+    return info;
+}
 
 
-template <class T>
-std::vector<Vertex<T> *> Graph<T>::getVertexSet() const {
+std::vector<Vertex *> Graph::getVertexSet() const {
 	return vertexSet;
 }
 
 /*
  * Auxiliary function to find a vertex with a given content.
  */
-template <class T>
-Vertex<T> * Graph<T>::findVertex(const T &in) const {
+Vertex * Graph::findVertex(const Point &in) const {
 	for (auto v : vertexSet)
 		if (v->info == in)
 			return v;
@@ -157,11 +153,10 @@ Vertex<T> * Graph<T>::findVertex(const T &in) const {
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
-template <class T>
-bool Graph<T>::addVertex(const T &in) {
+bool Graph::addVertex(const Point &in) {
 	if (findVertex(in) != nullptr)
 		return false;
-	vertexSet.push_back(new Vertex<T>(in));
+	vertexSet.push_back(new Vertex(in));
 	return true;
 }
 
@@ -170,8 +165,8 @@ bool Graph<T>::addVertex(const T &in) {
  * destination vertices and the edge weight (w).
  * Returns true if successful, and false if the source or destination vertex does not exist.
  */
-template <class T>
-bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
+
+bool Graph::addEdge(const Point &sourc, const Point &dest, double w) {
 	auto v1 = findVertex(sourc);
 	auto v2 = findVertex(dest);
 	if (v1 == nullptr || v2 == nullptr)
@@ -180,8 +175,7 @@ bool Graph<T>::addEdge(const T &sourc, const T &dest, double w) {
 	return true;
 }
 
-template <class T>
-bool Graph<T>::addBidirectionalEdge(const T &sourc, const T &dest, double w) {
+bool Graph::addBidirectionalEdge(const Point &sourc, const Point &dest, double w) {
 	//TODO
     auto v1 = findVertex(sourc);
     auto v2 = findVertex(dest);
@@ -194,14 +188,11 @@ bool Graph<T>::addBidirectionalEdge(const T &sourc, const T &dest, double w) {
     return true;
 }
 
-template <class T>
-Graph<T>::~Graph() {
+Graph::~Graph() {
 
 }
 
-
-template<class T>
-Vertex<T> * Graph<T>::initSingleSource(const T &origin) {
+Vertex * Graph::initSingleSource(const Point &origin) {
     for(auto v : vertexSet) {
         v->dist = INF;
         v->path = NULL;
@@ -211,8 +202,8 @@ Vertex<T> * Graph<T>::initSingleSource(const T &origin) {
     return s;
 }
 
-template<class T>
-bool Graph<T>::relax(Vertex<T> *v, Vertex<T> *w, double weight) {
+
+bool Graph::relax(Vertex *v, Vertex *w, double weight) {
     if (v->dist + weight < w->dist) {
         w->dist = v->dist + weight;
         w->path = v;
@@ -222,10 +213,9 @@ bool Graph<T>::relax(Vertex<T> *v, Vertex<T> *w, double weight) {
         return false;
 }
 
-template<class T>
-void Graph<T>::dijkstraShortestPath(const T &origin) {
+void Graph::dijkstraShortestPath(const Point &origin) {
     auto s = initSingleSource(origin);
-    MutablePriorityQueue<Vertex<T>> q;
+    MutablePriorityQueue<Vertex> q;
     q.insert(s);
     while( ! q.empty() ) {
         auto v = q.extractMin();
@@ -247,9 +237,8 @@ void Graph<T>::dijkstraShortestPath(const T &origin) {
 #include <iostream>
 
 
-template<class T>
-std::vector<T> Graph<T>::getPath(const T &origin, const T &dest) const{
-    std::vector<T> res;
+std::vector<Point> Graph::getPath(const Point &origin, const Point &dest) const{
+    std::vector<Point> res;
     for (auto v = findVertex(dest); v != NULL; v = v-> path) {
         res.push_back(v->info);
         if (v->info == origin)
@@ -258,16 +247,15 @@ std::vector<T> Graph<T>::getPath(const T &origin, const T &dest) const{
     reverse(res.begin(), res.end());
     return res;
 }
-
-template<class T>
-void Graph<T>::markPossibleParks(const T &source) {
+/*
+void Graph::markPossibleParks(const T &source) {
     double maxDist = 1000;
-    typename std::vector<Vertex<T> *>::iterator it;
+    typename std::vector<Vertex *>::iterator it;
     for(it = vertexSet.begin(); it != vertexSet.end(); it++)
     {
         if(source)
     }
 }
-
+*/
 
 #endif /* GRAPH_H_ */

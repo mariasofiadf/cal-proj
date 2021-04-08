@@ -13,26 +13,13 @@
  * Auxiliary functions to tests...
  *
  */
-Graph<int> CreateTestGraph();
-
-Graph<int> CreateTestGraphBidirectional();
-
-Graph<int> CreateMap1();
-
-template <typename T1, typename T2>
-std::basic_ostream<char>& operator<<(std::basic_ostream<char> & strm, const std::pair<T1, T2>& kvPair)
-{
-    strm << "(" << kvPair.first << ", " << kvPair.second << ")";
-    return strm;
-}
+Graph CreateTestGraph();
 
 
-void generateRandomGridGraph(int n, Graph<std::pair<int,int>> & g);
 
-template <class T>
-void checkAllPaths(Graph<T> &g, std::string expected) {
+void checkAllPaths(Graph &g, std::string expected) {
     std::stringstream ss;
-    std::vector<Vertex<T>* > vs = g.getVertexSet();
+    std::vector<Vertex* > vs = g.getVertexSet();
     for(unsigned int i = 0; i < vs.size(); i++) {
         ss << vs[i]->getInfo() << "<-";
         if ( vs[i]->getPath() != NULL )
@@ -42,8 +29,7 @@ void checkAllPaths(Graph<T> &g, std::string expected) {
     EXPECT_EQ(expected, ss.str());
 }
 
-template <class T>
-void checkSinglePath(std::vector<T> path, std::string expected) {
+void checkSinglePath(std::vector<Point> path, std::string expected) {
     std::stringstream ss;
     for(unsigned int i = 0; i < path.size(); i++)
         ss << path[i] << " ";

@@ -15,6 +15,10 @@ public:
     double distance(Position &position);
     double getX() const;
     double getY() const;
+
+    bool operator==(const Position &rhs) const;
+
+    bool operator!=(const Position &rhs) const;
 };
 
 

@@ -5,28 +5,34 @@
 #ifndef POINT_H
 #define POINT_H
 
+#include <ostream>
 #include "Position.h"
 #include "string"
 
 using namespace std;
 
 class Point {
-protected: Position position = Position(0, 0);
+protected:
+    string name;
+    Position position = Position(0, 0);
 public:
-    Point(double x, double y);
+    Point(double x, double y, string name);
+
+    bool operator==(const Point &rhs) const;
+
+    friend ostream &operator<<(ostream &os, const Point &point);
 
 };
 
 
 class PointPark : public Point{
-    static int numParks;
 private:
+    static int numParks;
     double price;
 public:
     PointPark(double x, double y, double price);
 };
 
-int PointPark::numParks = 0;
 
 class PointTask : public Point{
     string name;

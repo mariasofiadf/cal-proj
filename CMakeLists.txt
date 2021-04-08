@@ -20,10 +20,10 @@ file(GLOB MAIN CONFIGURE_DEPENDS
 
 add_executable(test
         test.cpp
-        ${TEST} test/DijkstraTest.cpp test/TestAux.cpp test/PositionTest.cpp src/Position.cpp src/Point.cpp)
+        ${TEST} test/PositionTest.cpp test/PointTest.cpp src/Point.cpp src/Position.cpp test/MapTest.cpp)
 
 add_executable(main
         main.cpp
-        ${MAIN} src/Position.cpp src/Position.h src/Point.cpp src/Point.h)
+        ${MAIN} src/Position.cpp src/Position.h src/Point.cpp src/Point.h src/Graph.h)
 
 target_link_libraries(test gtest_main gmock_main)
