@@ -28,7 +28,7 @@ class Vertex {
 	double dist = 0;
 	Vertex<T> *path = nullptr;
 	int queueIndex = 0; 		// required by MutablePriorityQueue
-
+    bool marked; // required by modifiedDijkstra
 	Edge<T> * addEdge(Vertex<T> *dest, double w);
 public:
 	Vertex(T in);
@@ -131,7 +131,8 @@ public:
     bool relax(Vertex<T> *v, Vertex<T> *w, double weight);
     void dijkstraShortestPath(const T &origin);
     std::vector<T> getPath(const T &origin, const T &dest) const;
-
+    //Functions for ModifiedDiskstra's
+    void markPossibleParks(const T &source);
 };
 
 
@@ -258,7 +259,15 @@ std::vector<T> Graph<T>::getPath(const T &origin, const T &dest) const{
     return res;
 }
 
-
+template<class T>
+void Graph<T>::markPossibleParks(const T &source) {
+    double maxDist = 1000;
+    typename std::vector<Vertex<T> *>::iterator it;
+    for(it = vertexSet.begin(); it != vertexSet.end(); it++)
+    {
+        if(source)
+    }
+}
 
 
 #endif /* GRAPH_H_ */

@@ -11,7 +11,7 @@
 #include <gtest/gtest.h>
 #include "string"
 
-TEST(Dijkstra, test_dijkstra) {
+TEST(Base_Dijkstra, test_dijkstra) {
 Graph<int> myGraph = CreateTestGraph();
 
 myGraph.dijkstraShortestPath(3);
@@ -29,7 +29,7 @@ myGraph.dijkstraShortestPath(7);
 checkSinglePath(myGraph.getPath(7, 1), "7 6 4 3 1 ");
 }
 
-TEST(Dijkstra, test_dijkstra_map1) {
+TEST(Modified_Dijkstra, test_dijkstra_map1) {
     Graph<int> myGraph = CreateMap1();
 
     myGraph.dijkstraShortestPath(1);

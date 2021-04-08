@@ -71,8 +71,11 @@ void generateRandomGridGraph(int n, Graph<std::pair<int,int>> & g) {
                         g.addEdge(std::make_pair(i,j), std::make_pair(i+di,j+dj), dis(gen));
 }
 
+#include "../src/Point.h"
+
 Graph<int> CreateMap1() {
-    Graph<int> myGraph;
+    Graph<Point> myGraph;
+    Point S(0,1);
 
     for(int i = 1; i <= 7; i++)
         myGraph.addVertex(i);
