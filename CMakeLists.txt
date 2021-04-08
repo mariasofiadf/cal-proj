@@ -6,9 +6,9 @@ set(GOOGLETEST_PATH lib/googletest-master)
 add_subdirectory(${GOOGLETEST_PATH})
 
 # Add the source files of each TP class
-file(GLOB TEST CONFIGURE_DEPENDS
-        "test/*.cpp"
-        )
+#file(GLOB TEST CONFIGURE_DEPENDS
+#        "test/*.cpp"
+#        )
 
 file(GLOB MAIN CONFIGURE_DEPENDS
         "main.cpp"
@@ -20,7 +20,7 @@ file(GLOB MAIN CONFIGURE_DEPENDS
 
 add_executable(test
         test.cpp
-        ${TEST} test/PositionTest.cpp test/PointTest.cpp src/Point.cpp src/Position.cpp test/MapTest.cpp)
+        ${TEST} test/PositionTest.cpp test/PointTest.cpp src/Point.cpp src/Position.cpp src/Graph.h)
 
 add_executable(main
         main.cpp

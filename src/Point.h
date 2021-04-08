@@ -8,6 +8,8 @@
 #include <ostream>
 #include "Position.h"
 #include "string"
+#include<string.h>
+#include <iostream>
 
 using namespace std;
 
@@ -17,6 +19,8 @@ protected:
     Position position = Position(0, 0);
 public:
     Point(double x, double y, string name);
+
+    const string &getName() const;
 
     bool operator==(const Point &rhs) const;
 
@@ -30,29 +34,24 @@ private:
     static int numParks;
     double price;
 public:
-    PointPark(double x, double y, double price);
+    PointPark(double x, double y, const string &name, double price);
 };
 
 
 class PointTask : public Point{
-    string name;
 public:
-    PointTask(double x, double y, const string &name);
 };
 
 class GasPoint : public PointTask{
 public:
-    GasPoint(double x, double y, const string &name);
 };
 
 class CoffePoint : public PointTask{
 public:
-    CoffePoint(double x, double y, const string &name);
 };
 
 class StorePoint : public PointTask{
 public:
-    StorePoint(double x, double y, const string &name);
 };
 
 

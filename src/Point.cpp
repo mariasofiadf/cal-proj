@@ -4,8 +4,10 @@
 
 #include "Point.h"
 
+
 Point::Point(double x, double y, string name) {
     Position position(x,y);
+    this->name = name;
     this->position = position;
 }
 
@@ -18,12 +20,8 @@ ostream &operator<<(ostream &os, const Point &point) {
     return os;
 }
 
-PointPark::PointPark(double x, double y, double price) : Point(x, y, std::string()), price(price) {}
+const string &Point::getName() const {
+    return name;
+}
 
-PointTask::PointTask(double x, double y, const string &name) : Point(x, y, std::string()), name(name) {}
-
-GasPoint::GasPoint(double x, double y, const string &name) : PointTask(x, y, name) {}
-
-CoffePoint::CoffePoint(double x, double y, const string &name) : PointTask(x, y, name) {}
-
-StorePoint::StorePoint(double x, double y, const string &name) : PointTask(x, y, name) {}
+PointPark::PointPark(double x, double y, const string &name, double price) : Point(x, y, name), price(price) {}
