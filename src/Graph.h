@@ -29,10 +29,6 @@ class Vertex {
 	Vertex<T> *path = nullptr;
 	int queueIndex = 0; 		// required by MutablePriorityQueue
 
-	// Fp07 - minimum spanning tree (Kruskal)
-	int id;
-	int rank;
-
 	Edge<T> * addEdge(Vertex<T> *dest, double w);
 public:
 	Vertex(T in);
@@ -122,20 +118,12 @@ template <class T>
 class Graph {
     std::vector<Vertex<T> *> vertexSet;    // vertex set
 
-	// Fp07 (Kruskal's algorithm)
-	void makeSet(Vertex<T> * x);
-	Vertex<T> * findSet(Vertex<T> * x);
-	void linkSets(Vertex<T> * x, Vertex<T> * y);
-	void dfsKruskalPath(Vertex<T> *v);
-
-
 public:
     ~Graph();
 	Vertex<T> *findVertex(const T &in) const;
 	bool addVertex(const T &in);
 	bool addEdge(const T &sourc, const T &dest, double w);
 	bool addBidirectionalEdge(const T &sourc, const T &dest, double w);
-	int getNumVertex() const;
     std::vector<Vertex<T> *> getVertexSet() const;
 
 	// Fp07 - minimum spanning tree
@@ -143,18 +131,10 @@ public:
     bool relax(Vertex<T> *v, Vertex<T> *w, double weight);
     void dijkstraShortestPath(const T &origin);
     std::vector<T> getPath(const T &origin, const T &dest) const;
-    unsigned int calculatePrim();
-    unsigned int calculateKruskal();
-    bool allVertexVisited();
-    bool bothVertexVisited(Edge<T>* edge);
 
 };
 
 
-template <class T>
-int Graph<T>::getNumVertex() const {
-	return vertexSet.size();
-}
 
 template <class T>
 std::vector<Vertex<T> *> Graph<T>::getVertexSet() const {
@@ -266,49 +246,6 @@ void Graph<T>::dijkstraShortestPath(const T &origin) {
 #include <iostream>
 
 
-
-template <class T>
-bool Graph<T>::allVertexVisited(){
-    for(auto i : vertexSet)
-    {
-        if (!i->visited)
-            return false;
-    }
-    return true;
-}
-
-
-template <class T>
-bool Graph<T>::bothVertexVisited(Edge<T>* edge){
-    return edge->getDest()->visited && edge->getOrig()->visited;
-}
-
-
-template <class T>
-unsigned int Graph<T>::calculatePrim() {
-    //TODO
-    for (auto vertex : vertexSet) {
-        vertex->visited = false;
-    }
-
-    Edge<T> *minEdge = new Edge<T>(NULL, NULL, 99999);
-    while (!allVertexVisited()) {
-        for (auto vertex : vertexSet) {
-            for (auto edge : vertex->adj) {
-                if (edge->weight < minEdge->weight && !bothVertexVisited(edge))
-                {
-                    minEdge = edge;
-                    edge->getOrig()->visited = true;
-                    edge->getDest()->visited = true;
-                }
-            }
-        }
-        minEdge->getOrig()->path = minEdge->getDest();
-        minEdge->getDest()->path = minEdge->getOrig();
-    }
-	return 0;
-}
-
 template<class T>
 std::vector<T> Graph<T>::getPath(const T &origin, const T &dest) const{
     std::vector<T> res;
@@ -321,53 +258,7 @@ std::vector<T> Graph<T>::getPath(const T &origin, const T &dest) const{
     return res;
 }
 
-/**
- * Disjoint sets operations (page 571, Introduction to Algorithms) for Kruskal's algorithm.
- */
 
-template <class T>
-void Graph<T>::makeSet(Vertex<T> * x) {
-	x->path = x;
-	x->rank = 0;
-}
 
-template <class T>
-void Graph<T>::linkSets(Vertex<T> * x, Vertex<T> * y) {
-	if (x->rank > y->rank)
-		y->path = x;
-	else {
-		x->path = y;
-		if (x->rank == y->rank)
-			y->rank++;
-	}
-}
-
-template <class T>
-Vertex<T> * Graph<T>::findSet(Vertex<T> * x) {
-	if (x != x->path)
-		x->path = findSet(x->path);
-	return x->path;
-}
-
-/**
- * Implementation of Kruskal's algorithm to find a minimum
- * spanning tree of an undirected connected graph (edges added with addBidirectionalEdge).
- * It is used a disjoint-set data structure to achieve a running time O(|E| log |V|).
- * The solution is defined by the "path" field of each vertex, which will point
- * to the parent vertex in the tree (nullptr in the root).
- */
-template <class T>
-unsigned int Graph<T>::calculateKruskal() {
-    //TODO
-	return 0;
-}
-
-/**
- * Auxiliary function to set the "path" field to make a spanning tree.
- */
-template <class T>
-void Graph<T>::dfsKruskalPath(Vertex<T> *v) {
-    //TODO
-}
 
 #endif /* GRAPH_H_ */
