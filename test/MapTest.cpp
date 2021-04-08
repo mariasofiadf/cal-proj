@@ -60,4 +60,9 @@ myGraph.dijkstraShortestPath(P1);
 checkAllPaths(myGraph, "P1<-|P2<-P1|P3<-P4|P4<-P2|P5<-P4|P6<-P3|P7<-P6|");
 checkSinglePath(myGraph.getPath(P1, P7), "P1 P2 P4 P3 P6 P7 ");
 
+
+myGraph.dijkstraShortestPath(P4);
+checkAllPaths(myGraph, "P1<-P2|P2<-P4|P3<-P4|P4<-|P5<-P4|P6<-P3|P7<-P6|");
+checkSinglePath(myGraph.getPath(P4, P1), "P4 P2 P1 ");
+
 }
