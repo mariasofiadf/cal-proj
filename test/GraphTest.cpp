@@ -6,7 +6,7 @@
 #include "TestAux.h"
 #include "../src/Graph.h"
 
-TEST(Map, test_dijkstra_super_simple) {
+TEST(Graph, dijkstraShortestPath_2PointsOnly) {
     Graph myGraph;
 
     Point P1(0,0, "P1");
@@ -26,7 +26,7 @@ TEST(Map, test_dijkstra_super_simple) {
     checkSinglePath(myGraph.getPath(P2, P1), "P2 P1 ");
 }
 
-TEST(Map, test_dijkstra_simple) {
+TEST(Graph, dijkstraShortestPath_Simple) {
 Graph myGraph;
 
 Point P1(0,1, "P1");
@@ -65,7 +65,7 @@ checkSinglePath(myGraph.getPath(P4, P1), "P4 P2 P1 ");
 
 }
 
-TEST(Map, test_map_different_points) {
+TEST(Graph, dijkstraShortestPath_DifferentPointTypes) {
 Graph myGraph;
 
 Point P1(0,1, "P1");
@@ -102,4 +102,44 @@ myGraph.dijkstraShortestPath(C4);
 checkAllPaths(myGraph, "P1<-PK2|PK2<-C4|P3<-C4|C4<-|PK5<-C4|PK6<-P3|P7<-PK6|");
 checkSinglePath(myGraph.getPath(C4, P1), "C4 PK2 P1 ");
 
+}
+
+TEST(Graph, markPossibleParks) {
+    Graph myGraph;
+
+    Point P1(0,50, "P1");
+    PointPark PK2(2,3, "PK2", 3.0);
+    PointGas G3(2,0, "G3");
+    PointCoffe C4(3,2, "C4");
+    PointPark PK5(4,3, "PK5", 2.0);
+    PointPark PK6(4,0, "PK6", 2.6);
+    Point P7(5,1, "P7");
+
+    myGraph.addVertex(P1);
+    myGraph.addVertex(PK2);
+    myGraph.addVertex(G3);
+    myGraph.addVertex(C4);
+    myGraph.addVertex(PK5);
+    myGraph.addVertex(PK6);
+    myGraph.addVertex(P7);
+
+    myGraph.markPossibleParks(P1);
+
+    Vertex* V = myGraph.findVertex(P1);
+    EXPECT_EQ(V->isMarked(), false);
+
+    V = myGraph.findVertex(G3);
+    EXPECT_EQ(V->isMarked(), false);
+
+    V = myGraph.findVertex(C4);
+    EXPECT_EQ(V->isMarked(), false);
+
+    V = myGraph.findVertex(PK5);
+    EXPECT_EQ(V->isMarked(), true);
+
+    V = myGraph.findVertex(PK6);
+    EXPECT_EQ(V->isMarked(), true);
+
+    V = myGraph.findVertex(P7);
+    EXPECT_EQ(V->isMarked(), false);
 }

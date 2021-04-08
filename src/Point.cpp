@@ -24,12 +24,34 @@ const string &Point::getName() const {
     return name;
 }
 
-PointPark::PointPark(double x, double y, const string &name, double price) : Point(x, y, name), price(price) {}
+Position &Point::getPosition(){
+    return position;
+}
 
-PointTask::PointTask(double x, double y, const string &name) : Point(x, y, name) {}
+enum pointType Point::getPointType() const {
+    return pointType;
+}
 
-PointGas::PointGas(double x, double y, const string &name) : PointTask(x, y, name) {}
 
-PointCoffe::PointCoffe(double x, double y, const string &name) : PointTask(x, y, name) {}
+PointPark::PointPark(double x, double y, const string &name, double price) : Point(x, y, name), price(price) {
+    this->pointType = PARK;
+}
 
-StorePoint::StorePoint(double x, double y, const string &name) : PointTask(x, y, name) {}
+
+PointTask::PointTask(double x, double y, const string &name) : Point(x, y, name) {
+
+}
+
+PointGas::PointGas(double x, double y, const string &name) : PointTask(x, y, name) {
+    this->pointType = GAS;
+}
+
+
+PointCoffe::PointCoffe(double x, double y, const string &name) : PointTask(x, y, name) {
+    this->pointType = COFFE;
+}
+
+
+PointStore::PointStore(double x, double y, const string &name) : PointTask(x, y, name) {
+    this->pointType = STORE;
+}

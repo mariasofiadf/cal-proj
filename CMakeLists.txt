@@ -20,7 +20,7 @@ file(GLOB MAIN CONFIGURE_DEPENDS
 
 add_executable(test
         test.cpp
-        ${TEST} test/PositionTest.cpp test/PointTest.cpp test/MapTest.cpp src/Point.cpp src/Position.cpp src/Graph.h)
+        ${TEST} test/PositionTest.cpp test/PointTest.cpp test/GraphTest.cpp src/Point.cpp src/Position.cpp src/Graph.h )
 
 add_executable(main
         main.cpp

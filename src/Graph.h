@@ -19,6 +19,11 @@ class Vertex;
 
 #define INF std::numeric_limits<double>::max()
 
+template<typename Base, typename T>
+inline bool instanceof(const T*) {
+    return is_base_of<Base, T>::value;
+}
+
 /************************* Vertex  **************************/
 
 class Vertex {
@@ -36,11 +41,12 @@ public:
 	bool operator<(Vertex & vertex) const; // // required by MutablePriorityQueue
 	Point getPoint() const;
 	double getDist() const;
-
     const Point &getInfo() const;
-
     Vertex *getPath() const;
-	friend class Graph;
+
+    bool isMarked() const;
+
+    friend class Graph;
 	friend class MutablePriorityQueue<Vertex>;
 };
 
@@ -127,11 +133,15 @@ public:
     void dijkstraShortestPath(const Point &origin);
     std::vector<Point> getPath(const Point &origin, const Point &dest) const;
     //Functions for ModifiedDiskstra's
-    void markPossibleParks(const Point &source);
+    void markPossibleParks(Point &source);
 };
 
 const Point &Vertex::getInfo() const {
     return info;
+}
+
+bool Vertex::isMarked() const {
+    return marked;
 }
 
 
@@ -247,15 +257,25 @@ std::vector<Point> Graph::getPath(const Point &origin, const Point &dest) const{
     reverse(res.begin(), res.end());
     return res;
 }
-/*
-void Graph::markPossibleParks(const T &source) {
+
+void Graph::markPossibleParks(Point &source) {
+
     double maxDist = 1000;
     typename std::vector<Vertex *>::iterator it;
+
+    for(it = vertexSet.begin(); it != vertexSet.end(); it++)
+        (*it)->marked = false;
+
     for(it = vertexSet.begin(); it != vertexSet.end(); it++)
     {
-        if(source)
+        bool validDist = source.getPosition().distance((*it)->getPoint().getPosition()) < maxDist;
+        auto point = (*it)->getPoint();
+        enum pointType pointType = (*it)->getPoint().getPointType();
+        bool isPark = (*it)->getPoint().getPointType() == PARK;
+        if(validDist && isPark)
+            (*it)->marked = true;
     }
 }
-*/
+
 
 #endif /* GRAPH_H_ */

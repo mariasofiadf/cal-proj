@@ -13,8 +13,13 @@
 
 using namespace std;
 
+enum pointType{
+    POINT, PARK, GAS, COFFE, STORE
+};
+
 class Point {
 protected:
+    enum pointType pointType = POINT;
     string name;
     Position position = Position(0, 0);
 public:
@@ -22,9 +27,13 @@ public:
 
     const string &getName() const;
 
+    Position &getPosition();
+
     bool operator==(const Point &rhs) const;
 
     friend ostream &operator<<(ostream &os, const Point &point);
+
+    enum pointType getPointType() const;
 
 };
 
@@ -35,6 +44,7 @@ private:
     double price;
 public:
     PointPark(double x, double y, const string &name, double price);
+    enum pointType getType();
 };
 
 
@@ -46,16 +56,19 @@ public:
 class PointGas : public PointTask{
 public:
     PointGas(double x, double y, const string &name);
+    enum pointType getType();
 };
 
 class PointCoffe : public PointTask{
 public:
     PointCoffe(double x, double y, const string &name);
+    enum pointType getType();
 };
 
-class StorePoint : public PointTask{
+class PointStore : public PointTask{
 public:
-    StorePoint(double x, double y, const string &name);
+    PointStore(double x, double y, const string &name);
+    enum pointType getType();
 };
 
 
