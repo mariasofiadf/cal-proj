@@ -112,7 +112,7 @@ TEST(Graph, markPossibleParks) {
     PointGas G3(2,0, "G3");
     PointCoffe C4(3,2, "C4");
     PointPark PK5(4,3, "PK5", 2.0);
-    PointPark PK6(4,0, "PK6", 2.6);
+    PointPark PK6(4000,0, "PK6", 2.6);
     Point P7(5,1, "P7");
 
     myGraph.addVertex(P1);
@@ -138,7 +138,7 @@ TEST(Graph, markPossibleParks) {
     EXPECT_EQ(V->isMarked(), true);
 
     V = myGraph.findVertex(PK6);
-    EXPECT_EQ(V->isMarked(), true);
+    EXPECT_EQ(V->isMarked(), false); //This Park is not marked because it's more than 1km away from P1
 
     V = myGraph.findVertex(P7);
     EXPECT_EQ(V->isMarked(), false);
