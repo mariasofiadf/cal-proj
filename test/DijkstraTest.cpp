@@ -39,6 +39,4 @@ TEST(Dijkstra, test_dijkstra_map1) {
 
     myGraph.dijkstraShortestPath(7);
     checkAllPaths(myGraph, "1<-2|2<-4|3<-6|4<-3|5<-7|6<-7|7<-|");
-
-
 }
