@@ -16,7 +16,9 @@ using namespace std;
 enum pointType{
     POINT, PARK, GAS, COFFE, STORE
 };
-
+/** class Point
+ *
+ */
 class Point {
 protected:
     enum pointType pointType = POINT;
