@@ -18,10 +18,21 @@ enum pointType{
 };
 /** class Point
  *
+ * @brief
+ * A point can be of different Types:
+ * PointPark
+ * PointTask
+ * PointGas
+ * PointCoffe
+ * PointStore
+ *
  */
 class Point {
 protected:
     enum pointType pointType = POINT;
+    /** @brief name is unique and is used in == operator
+     *
+     */
     string name;
     Position position = Position(0, 0);
 public:
@@ -31,15 +42,30 @@ public:
 
     Position &getPosition();
 
+    /**
+     * @brief Compares name attribute
+     * @param rhs
+     * @return true if Points have the same name
+     */
     bool operator==(const Point &rhs) const;
 
+    /**
+     * @brief Outputs Point name
+     * @param os
+     * @param point
+     * @return Point name
+     */
     friend ostream &operator<<(ostream &os, const Point &point);
 
     enum pointType getPointType() const;
 
 };
 
-
+/** class PointPark
+ *
+ * @brief Child of Point
+ *
+ */
 class PointPark : public Point{
 private:
     static int numParks;
@@ -49,24 +75,43 @@ public:
     enum pointType getType();
 };
 
-
+/** class PointTask
+ *
+ * @brief Child of Point
+ *
+ */
 class PointTask : public Point{
 public:
     PointTask(double x, double y, const string &name);
 };
 
+/** class PointGas
+ *
+ * @brief Child of PointTask
+ *
+ */
 class PointGas : public PointTask{
 public:
     PointGas(double x, double y, const string &name);
     enum pointType getType();
 };
 
+/** class PointCoffe
+ *
+ * @brief Child of PointTask
+ *
+ */
 class PointCoffe : public PointTask{
 public:
     PointCoffe(double x, double y, const string &name);
     enum pointType getType();
 };
 
+/** class PointStore
+ *
+ * @brief Child of PointTask
+ *
+ */
 class PointStore : public PointTask{
 public:
     PointStore(double x, double y, const string &name);
