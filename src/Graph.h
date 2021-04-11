@@ -29,12 +29,10 @@ inline bool instanceof(const T*) {
 class Vertex {
 	Point info;                 // contents
 	std::vector<Edge *> adj;  // outgoing edges
-
-	bool visited;
 	double dist = 0;
 	Vertex *path = nullptr;
 	int queueIndex = 0; 		// required by MutablePriorityQueue
-    bool marked; // required by modifiedDijkstra
+    bool marked;
 	Edge * addEdge(Vertex *dest, double w);
 public:
 	Vertex(Point in);
