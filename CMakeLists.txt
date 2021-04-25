@@ -1,29 +1,35 @@
 cmake_minimum_required(VERSION 3.17)
 project(cal-proj)
 
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+
 # Build the Google tests
 set(GOOGLETEST_PATH lib/googletest-master)
 add_subdirectory(${GOOGLETEST_PATH})
 
+# Build GraphViewerCpp
+set(GRAPHVIEWERCPP_PATH lib/GraphViewerCpp)
+add_subdirectory(${GRAPHVIEWERCPP_PATH})
+include_directories(${GRAPHVIEWERCPP_PATH}/include)
+
 # Add the source files of each TP class
-#file(GLOB TEST CONFIGURE_DEPENDS
-#        "test/*.cpp"
-#        )
+file(GLOB TEST CONFIGURE_DEPENDS
+        "test.cpp"
+        "test/PositionTest.cpp" "test/PointTest.cpp" "test/GraphTest.cpp" "src/Point.cpp" "src/Position.cpp" "src/Graph.h"
+        )
 
 file(GLOB MAIN CONFIGURE_DEPENDS
         "main.cpp"
+        "src/Position.cpp" "src/Position.h" "src/Point.cpp" "src/Point.h" "src/Graph.h"
         )
 
-file(GLOB MAIN CONFIGURE_DEPENDS
-        "src/*.cpp"
-        )
+
 
 add_executable(test
-        test.cpp
-        ${TEST} test/PositionTest.cpp test/PointTest.cpp test/GraphTest.cpp src/Point.cpp src/Position.cpp src/Graph.h )
+        ${TEST})
 
 add_executable(main
-        main.cpp
-        ${MAIN} src/Position.cpp src/Position.h src/Point.cpp src/Point.h src/Graph.h)
+        ${MAIN})
 
-target_link_libraries(test gtest_main gmock_main)
+target_link_libraries(test gtest_main gmock_main graphviewer)
