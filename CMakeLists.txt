@@ -14,20 +14,22 @@ add_subdirectory(${GRAPHVIEWERCPP_PATH})
 include_directories(${GRAPHVIEWERCPP_PATH}/include)
 
 # Add the source files of each TP class
-file(GLOB TEST CONFIGURE_DEPENDS
-        "test.cpp"
-        "test/PositionTest.cpp" "test/PointTest.cpp" "test/GraphTest.cpp" "src/Point.cpp" "src/Position.cpp" "src/Graph.h"
-        )
+#file(GLOB TEST CONFIGURE_DEPENDS
+#        "test.cpp"
+#        "src/Point.cpp" "src/Position.cpp" "src/Graph.h" "src/GraphViewerLoader.cpp" "src/GraphViewerLoader.h"
+#        "test/PositionTest.cpp" "test/PointTest.cpp" "test/GraphTest.cpp" "test/GraphViewerLoaderTest.cpp" "test/GraphGenerator.h"
+#        )
 
 file(GLOB MAIN CONFIGURE_DEPENDS
         "main.cpp"
         "src/Position.cpp" "src/Position.h" "src/Point.cpp" "src/Point.h" "src/Graph.h"
         )
 
-
-
 add_executable(test
-        ${TEST})
+        test.cpp
+        src/Point.cpp src/Position.cpp #src/GraphViewerLoader.cpp
+        test/PositionTest.cpp test/PointTest.cpp test/GraphTest.cpp #test/GraphViewerLoaderTest.cpp #test/GraphGenerator.h
+        )
 
 add_executable(main
         ${MAIN})

@@ -4,7 +4,6 @@
 
 #include <gtest/gtest.h>
 #include "TestAux.h"
-#include "../src/Graph.h"
 
 TEST(Graph, dijkstraShortestPath_2PointsOnly) {
     Graph myGraph;
