@@ -27,8 +27,8 @@ file(GLOB MAIN CONFIGURE_DEPENDS
 
 add_executable(test
         test.cpp
-        src/Point.cpp src/Position.cpp #src/GraphViewerLoader.cpp
-        test/PositionTest.cpp test/PointTest.cpp test/GraphTest.cpp #test/GraphViewerLoaderTest.cpp #test/GraphGenerator.h
+        src/Point.cpp src/Position.cpp src/Graph.cpp src/GraphViewerLoader.cpp
+        test/PositionTest.cpp test/PointTest.cpp test/GraphTest.cpp test/GraphViewerLoaderTest.cpp test/GraphGenerator.h
         )
 
 add_executable(main
