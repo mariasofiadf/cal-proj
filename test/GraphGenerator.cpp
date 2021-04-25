@@ -9,7 +9,7 @@ Graph getTestGraph2(){
 
     Point P1(0,1, "P1");
     PointPark PK2(2,3, "PK2", 3.0);
-    PointGas G3(2,0, "P3");
+    PointGas G3(2,0, "G3");
     PointCoffe C4(3,2, "C4");
     PointPark PK5(4,3, "PK5", 2.0);
     PointPark PK6(4,0, "PK6", 2.6);
