@@ -69,11 +69,11 @@ TEST(Graph, dijkstraShortestPath_DifferentPointTypes) {
 Graph myGraph = getTestGraph2();
 
 myGraph.dijkstraShortestPath(Point(0,0, "P1"));
-checkAllPaths(myGraph, "P1<-|PK2<-P1|P3<-C4|C4<-PK2|PK5<-C4|PK6<-P3|P7<-PK6|");
-checkSinglePath(myGraph.getPath(Point(0,0, "P1"), Point(0,0, "P7")), "P1 PK2 C4 P3 PK6 P7 ");
+checkAllPaths(myGraph, "P1<-|PK2<-P1|G3<-C4|C4<-PK2|PK5<-C4|PK6<-G3|P7<-PK6|");
+checkSinglePath(myGraph.getPath(Point(0,0, "P1"), Point(0,0, "P7")), "P1 PK2 C4 G3 PK6 P7 ");
 
 myGraph.dijkstraShortestPath(Point(0,0, "C4"));
-checkAllPaths(myGraph, "P1<-PK2|PK2<-C4|P3<-C4|C4<-|PK5<-C4|PK6<-P3|P7<-PK6|");
+checkAllPaths(myGraph, "P1<-PK2|PK2<-C4|G3<-C4|C4<-|PK5<-C4|PK6<-G3|P7<-PK6|");
 checkSinglePath(myGraph.getPath(Point(0,0, "C4"), Point(0,0, "P1")), "C4 PK2 P1 ");
 
 }
