@@ -64,42 +64,17 @@ checkSinglePath(myGraph.getPath(P4, P1), "P4 P2 P1 ");
 
 }
 
+#include "GraphGenerator.h"
 TEST(Graph, dijkstraShortestPath_DifferentPointTypes) {
-Graph myGraph;
+Graph myGraph = getTestGraph2();
 
-Point P1(0,1, "P1");
-PointPark PK2(2,3, "PK2", 3.0);
-PointGas G3(2,0, "P3");
-PointCoffe C4(3,2, "C4");
-PointPark PK5(4,3, "PK5", 2.0);
-PointPark PK6(4,0, "PK6", 2.6);
-Point P7(5,1, "P7");
-
-myGraph.addVertex(P1);
-myGraph.addVertex(PK2);
-myGraph.addVertex(G3);
-myGraph.addVertex(C4);
-myGraph.addVertex(PK5);
-myGraph.addVertex(PK6);
-myGraph.addVertex(P7);
-
-myGraph.addBidirectionalEdge(P1, PK2, 1);
-myGraph.addBidirectionalEdge(P1, G3, 5);
-myGraph.addBidirectionalEdge(PK2, C4, 2);
-myGraph.addBidirectionalEdge(G3, C4, 1);
-myGraph.addBidirectionalEdge(G3, PK6, 1);
-myGraph.addBidirectionalEdge(C4, PK5, 1);
-myGraph.addBidirectionalEdge(C4, PK6, 5);
-myGraph.addBidirectionalEdge(PK5, P7, 3);
-myGraph.addBidirectionalEdge(PK6, P7, 1);
-
-myGraph.dijkstraShortestPath(P1);
+myGraph.dijkstraShortestPath(Point(0,0, "P1"));
 checkAllPaths(myGraph, "P1<-|PK2<-P1|P3<-C4|C4<-PK2|PK5<-C4|PK6<-P3|P7<-PK6|");
-checkSinglePath(myGraph.getPath(P1, P7), "P1 PK2 C4 P3 PK6 P7 ");
+checkSinglePath(myGraph.getPath(Point(0,0, "P1"), Point(0,0, "P7")), "P1 PK2 C4 P3 PK6 P7 ");
 
-myGraph.dijkstraShortestPath(C4);
+myGraph.dijkstraShortestPath(Point(0,0, "C4"));
 checkAllPaths(myGraph, "P1<-PK2|PK2<-C4|P3<-C4|C4<-|PK5<-C4|PK6<-P3|P7<-PK6|");
-checkSinglePath(myGraph.getPath(C4, P1), "C4 PK2 P1 ");
+checkSinglePath(myGraph.getPath(Point(0,0, "C4"), Point(0,0, "P1")), "C4 PK2 P1 ");
 
 }
 
