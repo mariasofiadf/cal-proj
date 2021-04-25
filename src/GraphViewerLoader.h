@@ -13,7 +13,7 @@ class GraphViewerLoader {
     GraphViewer* gv;
 
 public:
-    GraphViewerLoader(GraphViewer &gv);
+    GraphViewerLoader(GraphViewer* gv);
 
     void loadGraph(Graph graph);
 };

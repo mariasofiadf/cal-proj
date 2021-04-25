@@ -4,6 +4,7 @@
 
 #include <gtest/gtest.h>
 #include "TestAux.h"
+#include "GraphGenerator.h"
 
 TEST(Graph, dijkstraShortestPath_2PointsOnly) {
     Graph myGraph;
@@ -64,7 +65,6 @@ checkSinglePath(myGraph.getPath(P4, P1), "P4 P2 P1 ");
 
 }
 
-#include "GraphGenerator.h"
 TEST(Graph, dijkstraShortestPath_DifferentPointTypes) {
 Graph myGraph = getTestGraph2();
 

@@ -28,10 +28,23 @@ inline bool instanceof(const T*) {
 
 class Vertex {
 	Point info;                 // contents
-	std::vector<Edge *> adj;  // outgoing edges
+	std::vector<Edge *> adj;
+public:
+    const vector<Edge *> &getAdj() const;
+
+private:
+    // outgoing edges
 	double dist = 0;
 	Vertex *path = nullptr;
 	int queueIndex = 0; 		// required by MutablePriorityQueue
+	int viewerIndex = 0;
+public:
+    int getViewerIndex() const;
+
+public:
+    void setViewerIndex(int viewerIndex);
+
+private:
     bool marked;
 	Edge * addEdge(Vertex *dest, double w);
 public:

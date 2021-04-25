@@ -29,7 +29,7 @@ add_executable(test
         test.cpp
         src/Point.cpp src/Position.cpp src/Graph.cpp src/GraphViewerLoader.cpp
         test/PositionTest.cpp test/PointTest.cpp test/GraphTest.cpp test/GraphViewerLoaderTest.cpp
-        test/GraphGenerator.cpp)
+        test/GraphGenerator.cpp test/GraphViewerTest.cpp)
 
 add_executable(main
         ${MAIN})

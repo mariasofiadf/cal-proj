@@ -43,6 +43,18 @@ bool Vertex::isMarked() const {
     return marked;
 }
 
+void Vertex::setViewerIndex(int viewerIndex) {
+    Vertex::viewerIndex = viewerIndex;
+}
+
+int Vertex::getViewerIndex() const {
+    return viewerIndex;
+}
+
+const vector<Edge *> &Vertex::getAdj() const {
+    return adj;
+}
+
 
 std::vector<Vertex *> Graph::getVertexSet() const {
     return vertexSet;
