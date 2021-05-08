@@ -10,6 +10,7 @@
 
 #define WIDTH 1920
 #define HEIGHT 1080
+/*
 
 TEST(GraphViewerLoaderTest, load){
     GraphViewer gv;
@@ -26,7 +27,15 @@ TEST(GraphViewerLoaderTest, load){
 
     gvl.loadGraph(g);
 
+    g.dijkstraShortestPath(Point(0,0,1));
+
+    gvl.colorPath(g,Point(0,0,1), Point(0,0,20000));
+
+    g.getPath(Point(0,0,1), Point(0,0, 20000));
+
+
+
     gv.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
     gv.join();
-}
+}*/

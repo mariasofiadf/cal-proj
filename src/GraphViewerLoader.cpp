@@ -38,7 +38,7 @@ void GraphViewerLoader::loadGraph(Graph graph) {
         //node0.setSize(node0.getSize()*);
         nodes.push_back(node0);
     }
-    int Eid;
+    int Eid=0;
     for(auto vertex : graph.getVertexSet()){
         for(auto edge : vertex->getAdj()){
             GraphViewer::Edge &edge0 = gv->addEdge(Eid++, nodes.at(vertex->getViewerIndex()), nodes.at(edge->getDest()->getViewerIndex()), GraphViewer::Edge::EdgeType::DIRECTED);
@@ -46,4 +46,35 @@ void GraphViewerLoader::loadGraph(Graph graph) {
         }
     }
 
+}
+
+void GraphViewerLoader::colorPath(Graph graph, Point start, Point end) {
+    Vertex * Vend = graph.findVertex(end);
+    if(!Vend)
+        return;
+
+    Vertex * Vto = graph.findVertex(end);
+    Vertex * Vfrom = Vto->getPath();
+    int i;
+    do {
+        GraphViewer::Node to = gv->getNode(Vto->getPoint().getId()-1);
+        GraphViewer::Node from = gv->getNode(Vfrom->getPoint().getId()-1);
+        //to.setColor(GraphViewer::GREEN);
+        //vector<GraphViewer::Edge *> edges = gv->getEdges();
+        for(int x = 0; x < gv->getEdges().size(); x++){
+            GraphViewer::Edge e = gv->getEdge(x);
+            if(e.getFrom()->getId() == from.getId() && e.getTo()->getId()==to.getId()) {
+                e.setColor(GraphViewer::GREEN);
+                from.setColor(GraphViewer::GREEN);
+                to.setColor(GraphViewer::GREEN);
+            }
+
+        }
+
+        Vto = Vfrom;
+        Vfrom = Vfrom->getPath();
+    } while(Vfrom != NULL);
+
+    free(Vfrom);
+    free(Vto);
 }

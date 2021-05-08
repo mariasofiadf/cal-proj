@@ -3,8 +3,13 @@
 //
 
 #include <gtest/gtest.h>
+#include <graphviewer.h>
 #include "TestAux.h"
 #include "GraphGenerator.h"
+#include "../src/GraphViewerLoader.h"
+
+#define WIDTH 1920
+#define HEIGHT 1080
 
 TEST(Graph, dijkstraShortestPath_2PointsOnly) {
     Graph myGraph;
@@ -26,43 +31,56 @@ TEST(Graph, dijkstraShortestPath_2PointsOnly) {
     checkSinglePath(myGraph.getPath(P2, P1), "P2 P1 ");
 }
 
-TEST(Graph, dijkstraShortestPath_Simple) {
-Graph myGraph;
+    TEST(Graph, dijkstraShortestPath_Simple) {
+    Graph myGraph;
 
-Point P1(0,1, 1);
-Point P2(2,3,2);
-Point P3(2,0, 3);
-Point P4(3,2, 4);
-Point P5(4,3, 5);
-Point P6(4,0, 6);
-Point P7(5,1, 7);
+    Point P1(0,10, 1);
+    Point P2(20,30,2);
+    Point P3(20,0, 3);
+    Point P4(30,20, 4);
+    Point P5(40,30, 5);
+    Point P6(40,0, 6);
+    Point P7(50,10, 7);
 
-myGraph.addVertex(P1);
-myGraph.addVertex(P2);
-myGraph.addVertex(P3);
-myGraph.addVertex(P4);
-myGraph.addVertex(P5);
-myGraph.addVertex(P6);
-myGraph.addVertex(P7);
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addVertex(P4);
+    myGraph.addVertex(P5);
+    myGraph.addVertex(P6);
+    myGraph.addVertex(P7);
 
-myGraph.addBidirectionalEdge(P1, P2, 1);
-myGraph.addBidirectionalEdge(P1, P3, 5);
-myGraph.addBidirectionalEdge(P2, P4, 2);
-myGraph.addBidirectionalEdge(P3, P4, 1);
-myGraph.addBidirectionalEdge(P3, P6, 1);
-myGraph.addBidirectionalEdge(P4, P5, 1);
-myGraph.addBidirectionalEdge(P4, P6, 5);
-myGraph.addBidirectionalEdge(P5, P7, 3);
-myGraph.addBidirectionalEdge(P6, P7, 1);
+    myGraph.addBidirectionalEdge(P1, P2, 1);
+    myGraph.addBidirectionalEdge(P1, P3, 5);
+    myGraph.addBidirectionalEdge(P2, P4, 2);
+    myGraph.addBidirectionalEdge(P3, P4, 1);
+    myGraph.addBidirectionalEdge(P3, P6, 1);
+    myGraph.addBidirectionalEdge(P4, P5, 1);
+    myGraph.addBidirectionalEdge(P4, P6, 5);
+    myGraph.addBidirectionalEdge(P5, P7, 3);
+    myGraph.addBidirectionalEdge(P6, P7, 1);
 
-myGraph.dijkstraShortestPath(P1);
-checkAllPaths(myGraph, "P1<-|P2<-P1|P3<-P4|P4<-P2|P5<-P4|P6<-P3|P7<-P6|");
-checkSinglePath(myGraph.getPath(P1, P7), "P1 P2 P4 P3 P6 P7 ");
+    myGraph.dijkstraShortestPath(P1);
+    checkAllPaths(myGraph, "1<-|2<-1|3<-4|4<-2|5<-4|6<-3|7<-6|");
+    checkSinglePath(myGraph.getPath(P1, P7), "1 2 4 3 6 7 ");
 
-myGraph.dijkstraShortestPath(P4);
-checkAllPaths(myGraph, "P1<-P2|P2<-P4|P3<-P4|P4<-|P5<-P4|P6<-P3|P7<-P6|");
-checkSinglePath(myGraph.getPath(P4, P1), "P4 P2 P1 ");
+  /*  myGraph.dijkstraShortestPath(P4);
+    checkAllPaths(myGraph, "1<-2|2<-4|3<-4|4<-|5<-4|6<-3|7<-6|");
+    checkSinglePath(myGraph.getPath(P4, P1), "4 2 1 ");*/
 
+    GraphViewer graphViewer;
+
+    graphViewer.setCenter(sf::Vector2f(WIDTH/2, HEIGHT/2));
+
+    GraphViewerLoader graphViewerLoader(&graphViewer);
+
+    graphViewerLoader.loadGraph(myGraph);
+
+    graphViewerLoader.colorPath(myGraph, P1, P7);
+
+    graphViewer.createWindow(WIDTH, HEIGHT);
+    // Join viewer thread (blocks till window closed)
+    graphViewer.join();
 }
 
 TEST(Graph, dijkstraShortestPath_DifferentPointTypes) {
