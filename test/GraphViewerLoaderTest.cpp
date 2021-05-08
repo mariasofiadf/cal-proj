@@ -6,6 +6,7 @@
 //#include "../src/Graph.h"
 #include "../src/GraphViewerLoader.h"
 #include "GraphGenerator.h"
+#include "../src/GraphLoader.h"
 
 #define WIDTH 1920
 #define HEIGHT 1080
@@ -17,7 +18,11 @@ TEST(GraphViewerLoaderTest, load){
 
     GraphViewerLoader gvl(&gv);
 
-    Graph g = getTestGraph2();
+    Graph g;
+
+    GraphLoader graphLoader(&g);
+
+    graphLoader.loadMap("../data/porto/porto_full_nodes_xy.txt", "../data/porto/porto_full_edges.txt");
 
     gvl.loadGraph(g);
 

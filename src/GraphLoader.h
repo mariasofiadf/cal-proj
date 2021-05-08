@@ -15,12 +15,12 @@
 #include <sqlite3.h>
 
 class GraphLoader {
-    Graph graph;
+    Graph * graph;
 
 public:
-    GraphLoader(const Graph &graph) : graph(graph) {}
+    GraphLoader(Graph * graph) : graph(graph) {}
 
-    void loadMap(string filename);
+    void loadMap(string nodesFilename, string edgesFilename);
 };
 
 

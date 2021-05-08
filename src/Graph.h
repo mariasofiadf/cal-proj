@@ -91,7 +91,7 @@ class Graph {
 public:
     ~Graph();
 	Vertex *findVertex(const Point &in) const;
-	bool addVertex(const Point &in);
+	bool addVertex(Point &in);
 	bool addEdge(const Point &sourc, const Point &dest, double w);
 	bool addBidirectionalEdge(const Point &sourc, const Point &dest, double w);
     std::vector<Vertex *> getVertexSet() const;

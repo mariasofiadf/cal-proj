@@ -7,13 +7,13 @@
 Graph getTestGraph2(){
     Graph myGraph;
 
-    Point P1(0,1, "P1");
-    PointPark PK2(2,3, "PK2", 3.0);
-    PointGas G3(2,0, "G3");
-    PointCoffe C4(3,2, "C4");
-    PointPark PK5(4,3, "PK5", 2.0);
-    PointPark PK6(4,0, "PK6", 2.6);
-    Point P7(5,1, "P7");
+    Point P1(0,1, 1);
+    PointPark PK2(2,3, 1, 3.0);
+    PointGas G3(2,0, 3);
+    PointCoffe C4(3,2, 4);
+    PointPark PK5(4,3, 5, 2.0);
+    PointPark PK6(4,0, 6, 2.6);
+    Point P7(5,1, 7);
 
     myGraph.addVertex(P1);
     myGraph.addVertex(PK2);

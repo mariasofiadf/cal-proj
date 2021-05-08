@@ -9,8 +9,8 @@
 TEST(Graph, dijkstraShortestPath_2PointsOnly) {
     Graph myGraph;
 
-    Point P1(0,0, "P1");
-    Point P2(0,0, "P2");
+    Point P1(0,0, 1);
+    Point P2(0,0, 2);
     myGraph.addVertex(P1);
     myGraph.addVertex(P2);
     myGraph.addBidirectionalEdge(P1, P2, 1);
@@ -29,13 +29,13 @@ TEST(Graph, dijkstraShortestPath_2PointsOnly) {
 TEST(Graph, dijkstraShortestPath_Simple) {
 Graph myGraph;
 
-Point P1(0,1, "P1");
-Point P2(2,3, "P2");
-Point P3(2,0, "P3");
-Point P4(3,2, "P4");
-Point P5(4,3, "P5");
-Point P6(4,0, "P6");
-Point P7(5,1, "P7");
+Point P1(0,1, 1);
+Point P2(2,3,2);
+Point P3(2,0, 3);
+Point P4(3,2, 4);
+Point P5(4,3, 5);
+Point P6(4,0, 6);
+Point P7(5,1, 7);
 
 myGraph.addVertex(P1);
 myGraph.addVertex(P2);
@@ -68,26 +68,26 @@ checkSinglePath(myGraph.getPath(P4, P1), "P4 P2 P1 ");
 TEST(Graph, dijkstraShortestPath_DifferentPointTypes) {
 Graph myGraph = getTestGraph2();
 
-myGraph.dijkstraShortestPath(Point(0,0, "P1"));
+myGraph.dijkstraShortestPath(Point(0,0, 1));
 checkAllPaths(myGraph, "P1<-|PK2<-P1|G3<-C4|C4<-PK2|PK5<-C4|PK6<-G3|P7<-PK6|");
-checkSinglePath(myGraph.getPath(Point(0,0, "P1"), Point(0,0, "P7")), "P1 PK2 C4 G3 PK6 P7 ");
+checkSinglePath(myGraph.getPath(Point(0,0, 1), Point(0,0, 7)), "P1 PK2 C4 G3 PK6 P7 ");
 
-myGraph.dijkstraShortestPath(Point(0,0, "C4"));
+myGraph.dijkstraShortestPath(Point(0,0, 4));
 checkAllPaths(myGraph, "P1<-PK2|PK2<-C4|G3<-C4|C4<-|PK5<-C4|PK6<-G3|P7<-PK6|");
-checkSinglePath(myGraph.getPath(Point(0,0, "C4"), Point(0,0, "P1")), "C4 PK2 P1 ");
+checkSinglePath(myGraph.getPath(Point(0,0, 4), Point(0,0, 1)), "C4 PK2 P1 ");
 
 }
 
 TEST(Graph, markPossibleParks) {
     Graph myGraph;
 
-    Point P1(0,50, "P1");
-    PointPark PK2(2,3, "PK2", 3.0);
-    PointGas G3(2,0, "G3");
-    PointCoffe C4(3,2, "C4");
-    PointPark PK5(4,3, "PK5", 2.0);
-    PointPark PK6(4000,0, "PK6", 2.6);
-    Point P7(5,1, "P7");
+    Point P1(0,50, 1);
+    PointPark PK2(2,3, 2, 3.0);
+    PointGas G3(2,0, 3);
+    PointCoffe C4(3,2, 4);
+    PointPark PK5(4,3, 5, 2.0);
+    PointPark PK6(4000,0, 6, 2.6);
+    Point P7(5,1, 7);
 
     myGraph.addVertex(P1);
     myGraph.addVertex(PK2);

@@ -34,13 +34,18 @@ protected:
      *
      */
     string name;
+    int id;
     Position position = Position(0, 0);
 public:
-    Point(double x, double y, string name);
+    Point(double x, double y, int id);
 
     const string &getName() const;
 
     Position &getPosition();
+
+    int getId() const;
+
+    void setId(int id);
 
     /**
      * @brief Compares name attribute
@@ -71,7 +76,7 @@ private:
     static int numParks;
     double price;
 public:
-    PointPark(double x, double y, const string &name, double price);
+    PointPark(double x, double y, const int id, double price);
     enum pointType getType();
 };
 
@@ -82,7 +87,7 @@ public:
  */
 class PointTask : public Point{
 public:
-    PointTask(double x, double y, const string &name);
+    PointTask(double x, double y, const int id);
 };
 
 /** class PointGas
@@ -92,7 +97,7 @@ public:
  */
 class PointGas : public PointTask{
 public:
-    PointGas(double x, double y, const string &name);
+    PointGas(double x, double y, const int id);
     enum pointType getType();
 };
 
@@ -103,7 +108,7 @@ public:
  */
 class PointCoffe : public PointTask{
 public:
-    PointCoffe(double x, double y, const string &name);
+    PointCoffe(double x, double y, const int id);
     enum pointType getType();
 };
 
@@ -114,8 +119,9 @@ public:
  */
 class PointStore : public PointTask{
 public:
-    PointStore(double x, double y, const string &name);
+    PointStore(double x, double y, const int id);
     enum pointType getType();
+
 };
 
 
