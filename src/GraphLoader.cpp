@@ -7,10 +7,15 @@
 
 #include <fstream>
 void GraphLoader::loadMap(string nodesFilename, string edgesFilename) {
+    loadNodes(nodesFilename);
+    loadEdges(edgesFilename);
+}
+
+void GraphLoader::loadNodes(string nodesFilename){
     fstream myNodesFile;
     myNodesFile.open(nodesFilename, ios::in);
     if (myNodesFile) {
-        int nCount; int i;
+        int nCount; int i = 0;
         myNodesFile >> nCount;
         while(i < nCount){
             double latitude, longitude; char c;
@@ -29,4 +34,27 @@ void GraphLoader::loadMap(string nodesFilename, string edgesFilename) {
     }
 
 
+}
+
+void GraphLoader::loadEdges(string edgesFilename) {
+    fstream myEdgesFile;
+    myEdgesFile.open(edgesFilename, ios::in);
+    if (myEdgesFile) {
+        int eCount; int id1, id2;
+        myEdgesFile >> eCount;
+        while(eCount){
+            double latitude, longitude; char c;
+            myEdgesFile >> c >> id1 >> c >> id2>> c;
+            graph->addEdge(Point(0,0,id1), Point(0,0,id2), 0);
+            if (myEdgesFile.eof())
+                break;
+            eCount--;
+        }
+
+        myEdgesFile.close();
+    }
+    else{
+        cout << "Error opening Edges file";
+        return;
+    }
 }

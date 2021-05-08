@@ -21,6 +21,8 @@ public:
     GraphLoader(Graph * graph) : graph(graph) {}
 
     void loadMap(string nodesFilename, string edgesFilename);
+    void loadNodes(string nodesFilename);
+    void loadEdges(string edgesFilename);
 };
 
 

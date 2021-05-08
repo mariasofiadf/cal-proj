@@ -3,7 +3,7 @@
 //
 
 #include "GraphViewerLoader.h"
-#define SCALE 1
+#define SCALE 10
 GraphViewerLoader::GraphViewerLoader(GraphViewer *gv) : gv(gv){
 }
 
@@ -33,16 +33,17 @@ void GraphViewerLoader::loadGraph(Graph graph) {
                 node0.setOutlineColor(GraphViewer::BLACK);
                 break;
         }
-        node0.setColor(GraphViewer::WHITE);
-        //node0.setOutlineThickness(3);
+        node0.setColor(GraphViewer::BLACK);
         //node0.setLabel(to_string(vertex->getPoint().getId()));
-        //node0.setSize(node0.getSize()*10);
+        //node0.setSize(node0.getSize()*);
         nodes.push_back(node0);
     }
     int Eid;
     for(auto vertex : graph.getVertexSet()){
-        for(auto edge : vertex->getAdj())
+        for(auto edge : vertex->getAdj()){
             GraphViewer::Edge &edge0 = gv->addEdge(Eid++, nodes.at(vertex->getViewerIndex()), nodes.at(edge->getDest()->getViewerIndex()), GraphViewer::Edge::EdgeType::DIRECTED);
+            edge0.setColor(GraphViewer::GRAY);
+        }
     }
 
 }
