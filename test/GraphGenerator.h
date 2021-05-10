@@ -11,6 +11,10 @@
 
 //#include "../src/Graph.h"
 
+
+
+Graph getTestGraph();
+
 Graph getTestGraph2();
 
 Graph getTestGraph3();
