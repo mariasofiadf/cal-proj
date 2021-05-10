@@ -107,7 +107,7 @@ public:
     //Functions for ModifiedDiskstra's
     void markPossibleParks(Point &source);
 
-    unsigned int primAlgorithm();
+    float primAlgorithm();
 };
 
 
