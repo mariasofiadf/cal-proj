@@ -55,10 +55,13 @@ public:
     const Point &getInfo() const;
     Vertex *getPath() const;
 
+
     bool isMarked() const;
 
     friend class Graph;
 	friend class MutablePriorityQueue<Vertex>;
+
+    bool visited;
 };
 
 class Edge {
@@ -103,6 +106,8 @@ public:
     std::vector<Point> getPath(const Point &origin, const Point &dest) const;
     //Functions for ModifiedDiskstra's
     void markPossibleParks(Point &source);
+
+    unsigned int primAlgorithm();
 };
 
 

@@ -202,3 +202,40 @@ void Graph::markPossibleParks(Point &source) {
             (*it)->marked = true;
     }
 }
+
+
+unsigned int Graph::primAlgorithm() {
+    if(vertexSet[0] == NULL) return 0;
+    for(auto v: vertexSet){
+        v->visited = false;
+        v->dist = INF;
+        v->path = NULL;
+    }
+    vertexSet[0]->dist = 0;
+    MutablePriorityQueue<Vertex> queue;
+    queue.insert(vertexSet[0]);
+    while(!queue.empty()) {
+        Vertex *vertex = queue.extractMin();
+        vertex->visited=true;
+        for(Edge * edge:vertex->adj){
+            if(!edge->dest->visited) {
+                if (edge->dest->dist > edge->weight) {
+                    double dist = edge->dest->dist;
+                    edge->dest->dist = edge->weight;
+                    edge->dest->path = vertex;
+                    if (dist == INF) {
+                        queue.insert(edge->dest);
+                    } else
+                        queue.decreaseKey(edge->dest);
+                }
+            }
+        }
+    }
+
+    unsigned int total = 0;
+    for(auto v: vertexSet) {
+        if(v->visited)
+            total+=v->dist;
+    }
+    return total;
+}
