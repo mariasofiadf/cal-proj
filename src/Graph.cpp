@@ -89,7 +89,7 @@ Vertex * Graph::findVertex(const Point &in) const {
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
-bool Graph::addVertex(const Point &in) {
+bool Graph::addVertex(Point &in) {
     if (findVertex(in) != nullptr)
         return false;
     vertexSet.push_back(new Vertex(in));

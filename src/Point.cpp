@@ -5,18 +5,18 @@
 #include "Point.h"
 
 
-Point::Point(double x, double y, string name) {
+Point::Point( int id, double x, double y) {
     Position position(x,y);
-    this->name = name;
+    this->id = id;
     this->position = position;
 }
 
 bool Point::operator==(const Point &rhs) const {
-    return name == rhs.name;
+    return id == rhs.id;
 }
 
 ostream &operator<<(ostream &os, const Point &point) {
-    os << point.name;
+    os << point.id;
     return os;
 }
 
@@ -32,26 +32,34 @@ enum pointType Point::getPointType() const {
     return pointType;
 }
 
+int Point::getId() const {
+    return id;
+}
 
-PointPark::PointPark(double x, double y, const string &name, double price) : Point(x, y, name), price(price) {
+void Point::setId(int id) {
+    Point::id = id;
+}
+
+
+PointPark::PointPark( const int id, double x, double y, double price) : Point(x, y, id), price(price) {
     this->pointType = PARK;
 }
 
 
-PointTask::PointTask(double x, double y, const string &name) : Point(x, y, name) {
+PointTask::PointTask(const int id, double x, double y) : Point(x, y, id) {
 
 }
 
-PointGas::PointGas(double x, double y, const string &name) : PointTask(x, y, name) {
+PointGas::PointGas(const int id, double x, double y) : PointTask(x, y, id) {
     this->pointType = GAS;
 }
 
 
-PointCoffe::PointCoffe(double x, double y, const string &name) : PointTask(x, y, name) {
+PointCoffe::PointCoffe(const int id, double x, double y) : PointTask(x, y, id) {
     this->pointType = COFFE;
 }
 
 
-PointStore::PointStore(double x, double y, const string &name) : PointTask(x, y, name) {
+PointStore::PointStore(const int id, double x, double y) : PointTask(x, y, id) {
     this->pointType = STORE;
 }

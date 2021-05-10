@@ -16,6 +16,8 @@ public:
     GraphViewerLoader(GraphViewer* gv);
 
     void loadGraph(Graph graph);
+
+    void colorPath(Graph graph, Point start, Point end);
 };
 
 

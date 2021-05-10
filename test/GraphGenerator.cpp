@@ -7,31 +7,31 @@
 Graph getTestGraph2(){
     Graph myGraph;
 
-    Point P1(0,1, "P1");
-    PointPark PK2(2,3, "PK2", 3.0);
-    PointGas G3(2,0, "G3");
-    PointCoffe C4(3,2, "C4");
-    PointPark PK5(4,3, "PK5", 2.0);
-    PointPark PK6(4,0, "PK6", 2.6);
-    Point P7(5,1, "P7");
+    Point P0(0,1, 1);
+    PointPark PK1(1,3, 1, 3.0);
+    PointGas G2(2,0, 3);
+    PointCoffe C3(3,2, 4);
+    PointPark PK4(4,3, 5, 2.0);
+    PointPark PK5(5,0, 6, 2.6);
+    Point P6(6,1, 7);
 
-    myGraph.addVertex(P1);
-    myGraph.addVertex(PK2);
-    myGraph.addVertex(G3);
-    myGraph.addVertex(C4);
+    myGraph.addVertex(P0);
+    myGraph.addVertex(PK1);
+    myGraph.addVertex(G2);
+    myGraph.addVertex(C3);
+    myGraph.addVertex(PK4);
     myGraph.addVertex(PK5);
-    myGraph.addVertex(PK6);
-    myGraph.addVertex(P7);
+    myGraph.addVertex(P6);
 
-    myGraph.addBidirectionalEdge(P1, PK2, 1);
-    myGraph.addBidirectionalEdge(P1, G3, 5);
-    myGraph.addBidirectionalEdge(PK2, C4, 2);
-    myGraph.addBidirectionalEdge(G3, C4, 1);
-    myGraph.addBidirectionalEdge(G3, PK6, 1);
-    myGraph.addBidirectionalEdge(C4, PK5, 1);
-    myGraph.addBidirectionalEdge(C4, PK6, 5);
-    myGraph.addBidirectionalEdge(PK5, P7, 3);
-    myGraph.addBidirectionalEdge(PK6, P7, 1);
+    myGraph.addBidirectionalEdge(P0, PK1, 1);
+    myGraph.addBidirectionalEdge(P0, G2, 5);
+    myGraph.addBidirectionalEdge(PK1, C3, 2);
+    myGraph.addBidirectionalEdge(G2, C3, 1);
+    myGraph.addBidirectionalEdge(G2, PK5, 1);
+    myGraph.addBidirectionalEdge(C3, PK4, 1);
+    myGraph.addBidirectionalEdge(C3, PK5, 5);
+    myGraph.addBidirectionalEdge(PK4, P6, 3);
+    myGraph.addBidirectionalEdge(PK5, P6, 1);
 
     return myGraph;
 }
