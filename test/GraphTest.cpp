@@ -64,6 +64,8 @@ TEST(Graph, matching) {
 
     myGraph.addBidirectionalEdge(P2,P0,P2.getPosition().distance(P0.getPosition()));
 
+    myGraph.matchingOdd();
+
     GraphViewer graphViewer;
     GraphViewerLoader graphViewerLoader(&graphViewer);
     graphViewerLoader.loadGraph(myGraph);
@@ -73,6 +75,7 @@ TEST(Graph, matching) {
     graphViewer.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
     graphViewer.join();
+
 }
 
 TEST(Graph, getOddVertices) {
