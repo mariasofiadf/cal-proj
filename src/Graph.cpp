@@ -204,7 +204,7 @@ void Graph::markPossibleParks(Point &source) {
 }
 
 
-unsigned int Graph::primAlgorithm() {
+float Graph::primAlgorithm() {
     if(vertexSet[0] == NULL) return 0;
     for(auto v: vertexSet){
         v->visited = false;
@@ -232,7 +232,7 @@ unsigned int Graph::primAlgorithm() {
         }
     }
 
-    unsigned int total = 0;
+    float total = 0;
     for(auto v: vertexSet) {
         if(v->visited)
             total+=v->dist;

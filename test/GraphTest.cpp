@@ -25,3 +25,27 @@ TEST(Graph, dijkstra_4x4) {
     checkSinglePath(myGraph.getPath(P0, P7), "1 2 7 12 17 18 ");
 
 }
+
+TEST(Graph, prim) {
+    Graph myGraph = getTestGraph3();
+
+    float cost = myGraph.primAlgorithm();
+    float expectedCost = 10.4 + 11.2+17.5+15.8;
+    EXPECT_EQ( expectedCost, cost);
+
+    stringstream ss;
+    for(const auto v : myGraph.getVertexSet()) {
+        ss << v->getInfo() << "<-";
+        if ( v->getPath() != nullptr )
+            ss << v->getPath()->getInfo();
+        ss << "|";
+    }
+    cout << ss.str() << endl;
+
+    Point P1(1,0,0);
+    Point P4(4,0,0);
+    Point P5(5,0,0);
+
+    checkSinglePath(myGraph.getPath(P1, P5), "1 3 2 5 ");
+    checkSinglePath(myGraph.getPath(P1, P4), "1 3 4 ");
+}
