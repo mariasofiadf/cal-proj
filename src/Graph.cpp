@@ -239,3 +239,40 @@ float Graph::primAlgorithm() {
     }
     return total;
 }
+
+
+vector<Vertex*> Graph::getOddVertices(){
+    vector<Vertex*> res;
+    for(auto v : vertexSet){
+        if((v->getAdj().size() % 2)!=0)
+            res.push_back(v);
+    }
+    return res;
+}
+void Graph::matchingOdd(){
+    for(auto v: vertexSet){
+        v->visited = false;
+    }
+    vector<Vertex*> oddSet = getOddVertices();
+    Vertex * closest; double minDist = 9999999; double dist;
+    for(vector<Vertex*>::iterator it = oddSet.begin(); it != oddSet.end(); it++){
+        Vertex v1 = *(*it);
+        if((*it)->visited) continue;
+        minDist = 9999999;
+        for(vector<Vertex*>::iterator it2 = oddSet.begin(); it2 != oddSet.end(); it2++)
+        {
+            if((*it) == (*it2)) continue;
+            Vertex v2 = *(*it2);
+            if((*it2)->visited) continue;
+            dist = (*it)->getPoint().getPosition().distance((*it2)->getPoint().getPosition());
+            if( dist < minDist){
+                minDist = dist;
+                closest = (*it2);
+            }
+
+        }
+        addBidirectionalEdge((*it)->getPoint(),closest->getPoint(), minDist);
+        (*it)->visited = true; closest->visited = true;
+    }
+    return;
+}
