@@ -20,7 +20,7 @@ void GraphLoader::loadNodes(string nodesFilename){
         while(i < nCount){
             double latitude, longitude; char c;
             myNodesFile >> c >> i >> c >> latitude >> c >> longitude >> c;
-            Point pt(latitude, longitude, i);
+            Point pt(i, latitude, longitude);
             graph->addVertex(pt);
             if (myNodesFile.eof())
                 break;
@@ -45,7 +45,7 @@ void GraphLoader::loadEdges(string edgesFilename) {
         while(eCount){
             double latitude, longitude; char c;
             myEdgesFile >> c >> id1 >> c >> id2>> c;
-            graph->addEdge(Point(0,0,id1), Point(0,0,id2), 0);
+            graph->addEdge(Point(id1,0,0), Point(id2, 0,0), 0);
             if (myEdgesFile.eof())
                 break;
             eCount--;

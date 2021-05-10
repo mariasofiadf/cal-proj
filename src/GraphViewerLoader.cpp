@@ -3,7 +3,7 @@
 //
 
 #include "GraphViewerLoader.h"
-#define SCALE 10
+#define SCALE 1
 GraphViewerLoader::GraphViewerLoader(GraphViewer *gv) : gv(gv){
 }
 
@@ -34,7 +34,7 @@ void GraphViewerLoader::loadGraph(Graph graph) {
                 break;
         }
         node0.setColor(GraphViewer::BLACK);
-        //node0.setLabel(to_string(vertex->getPoint().getId()));
+        node0.setLabel(to_string(vertex->getPoint().getId()));
         //node0.setSize(node0.getSize()*);
         nodes.push_back(node0);
     }
@@ -57,8 +57,8 @@ void GraphViewerLoader::colorPath(Graph graph, Point start, Point end) {
     Vertex * Vfrom = Vto->getPath();
     int i;
     do {
-        GraphViewer::Node to = gv->getNode(Vto->getPoint().getId()-1);
-        GraphViewer::Node from = gv->getNode(Vfrom->getPoint().getId()-1);
+        GraphViewer::Node to = gv->getNode(Vto->getPoint().getId());
+        GraphViewer::Node from = gv->getNode(Vfrom->getPoint().getId());
         //to.setColor(GraphViewer::GREEN);
         //vector<GraphViewer::Edge *> edges = gv->getEdges();
         for(int x = 0; x < gv->getEdges().size(); x++){

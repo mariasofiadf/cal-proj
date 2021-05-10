@@ -5,7 +5,7 @@
 #include "Point.h"
 
 
-Point::Point(double x, double y, int id) {
+Point::Point( int id, double x, double y) {
     Position position(x,y);
     this->id = id;
     this->position = position;
@@ -41,25 +41,25 @@ void Point::setId(int id) {
 }
 
 
-PointPark::PointPark(double x, double y, const int id, double price) : Point(x, y, id), price(price) {
+PointPark::PointPark( const int id, double x, double y, double price) : Point(x, y, id), price(price) {
     this->pointType = PARK;
 }
 
 
-PointTask::PointTask(double x, double y, const int id) : Point(x, y, id) {
+PointTask::PointTask(const int id, double x, double y) : Point(x, y, id) {
 
 }
 
-PointGas::PointGas(double x, double y, const int id) : PointTask(x, y, id) {
+PointGas::PointGas(const int id, double x, double y) : PointTask(x, y, id) {
     this->pointType = GAS;
 }
 
 
-PointCoffe::PointCoffe(double x, double y, const int id) : PointTask(x, y, id) {
+PointCoffe::PointCoffe(const int id, double x, double y) : PointTask(x, y, id) {
     this->pointType = COFFE;
 }
 
 
-PointStore::PointStore(double x, double y, const int id) : PointTask(x, y, id) {
+PointStore::PointStore(const int id, double x, double y) : PointTask(x, y, id) {
     this->pointType = STORE;
 }

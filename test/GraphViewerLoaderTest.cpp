@@ -10,7 +10,6 @@
 
 #define WIDTH 1920
 #define HEIGHT 1080
-/*
 
 TEST(GraphViewerLoaderTest, load){
     GraphViewer gv;
@@ -23,19 +22,17 @@ TEST(GraphViewerLoaderTest, load){
 
     GraphLoader graphLoader(&g);
 
-    graphLoader.loadMap("../data/porto/porto_full_nodes_xy.txt", "../data/porto/porto_full_edges.txt");
+    graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt");
 
     gvl.loadGraph(g);
 
-    g.dijkstraShortestPath(Point(0,0,1));
+    g.dijkstraShortestPath(Point(1,0,0));
 
-    gvl.colorPath(g,Point(0,0,1), Point(0,0,20000));
+    gvl.colorPath(g,Point(1,0,0), Point(18,0,0));
 
-    g.getPath(Point(0,0,1), Point(0,0, 20000));
-
-
+    g.getPath(Point(1,0,0), Point(18,0, 0));
 
     gv.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
     gv.join();
-}*/
+}
