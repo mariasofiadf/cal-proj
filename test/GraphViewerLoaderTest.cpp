@@ -22,8 +22,8 @@ TEST(GraphViewerLoaderTest, load){
 
     GraphLoader graphLoader(&g);
 
-    graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt");
-
+    //graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt");
+    graphLoader.loadMap("../data/porto/porto_strong_nodes_xy.txt", "../data/porto/porto_strong_edges.txt");
     gvl.loadGraph(g);
 
     g.dijkstraShortestPath(Point(1,0,0));

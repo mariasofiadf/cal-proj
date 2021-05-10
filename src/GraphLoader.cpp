@@ -15,13 +15,14 @@ void GraphLoader::loadNodes(string nodesFilename){
     fstream myNodesFile;
     myNodesFile.open(nodesFilename, ios::in);
     if (myNodesFile) {
-        int nCount; int i = 0;
+        int nCount; int i;
         myNodesFile >> nCount;
-        while(i < nCount){
+        while(nCount){
             double latitude, longitude; char c;
             myNodesFile >> c >> i >> c >> latitude >> c >> longitude >> c;
             Point pt(i, latitude, longitude);
             graph->addVertex(pt);
+            nCount--;
             if (myNodesFile.eof())
                 break;
         }
