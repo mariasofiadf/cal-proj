@@ -107,10 +107,11 @@ public:
     //Functions for ModifiedDiskstra's
     void markPossibleParks(Point &source);
 
-    unsigned int primAlgorithm();
-
     void matchingOdd();
     vector<Vertex*> getOddVertices();
+
+    float primAlgorithm();
+
 };
 
 
