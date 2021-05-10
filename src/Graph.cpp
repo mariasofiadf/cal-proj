@@ -239,3 +239,16 @@ unsigned int Graph::primAlgorithm() {
     }
     return total;
 }
+
+
+vector<Vertex*> Graph::getOddVertices(){
+    vector<Vertex*> res;
+    for(auto v : vertexSet){
+        if((v->getAdj().size() % 2)!=0)
+            res.push_back(v);
+    }
+    return res;
+}
+void Graph::matchingOdd(){
+    return;
+}

@@ -33,7 +33,7 @@ void GraphViewerLoader::loadGraph(Graph graph) {
                 node0.setOutlineColor(GraphViewer::BLACK);
                 break;
         }
-        node0.setColor(GraphViewer::BLACK);
+        node0.setColor(GraphViewer::WHITE);
         node0.setLabel(to_string(vertex->getPoint().getId()));
         //node0.setSize(node0.getSize()*);
         nodes.push_back(node0);

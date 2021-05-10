@@ -25,3 +25,97 @@ TEST(Graph, dijkstra_4x4) {
     checkSinglePath(myGraph.getPath(P0, P7), "1 2 7 12 17 18 ");
 
 }
+
+TEST(Graph, matching) {
+    Graph myGraph;
+
+    Point P0(0,0,300);
+    Point P1(1,300,400);
+    Point P2(2,300,100);
+    Point P3(3,400,100);
+    Point P4(4,500,0);
+    Point P5(5,500,400);
+    Point P6(6,525,225);
+    Point P7(7,725,200);
+    Point P8(8,800,400);
+    myGraph.addVertex(P0);
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addVertex(P4);
+    myGraph.addVertex(P5);
+    myGraph.addVertex(P6);
+    myGraph.addVertex(P7);
+    myGraph.addVertex(P8);
+
+    myGraph.addBidirectionalEdge(P1,P5,P1.getPosition().distance(P5.getPosition()));
+
+    myGraph.addBidirectionalEdge(P5,P6,P5.getPosition().distance(P6.getPosition()));
+
+    myGraph.addBidirectionalEdge(P6,P7,P6.getPosition().distance(P7.getPosition()));
+
+    myGraph.addBidirectionalEdge(P7,P8,P7.getPosition().distance(P8.getPosition()));
+
+    myGraph.addBidirectionalEdge(P6,P3,P6.getPosition().distance(P3.getPosition()));
+
+    myGraph.addBidirectionalEdge(P3,P4,P3.getPosition().distance(P4.getPosition()));
+
+    myGraph.addBidirectionalEdge(P3,P2,P3.getPosition().distance(P2.getPosition()));
+
+    myGraph.addBidirectionalEdge(P2,P0,P2.getPosition().distance(P0.getPosition()));
+
+    GraphViewer graphViewer;
+    GraphViewerLoader graphViewerLoader(&graphViewer);
+    graphViewerLoader.loadGraph(myGraph);
+
+    graphViewer.setCenter(sf::Vector2f(WIDTH/2, HEIGHT/2));
+
+    graphViewer.createWindow(WIDTH, HEIGHT);
+    // Join viewer thread (blocks till window closed)
+    graphViewer.join();
+}
+
+TEST(Graph, getOddVertices) {
+
+    Graph myGraph;
+
+    Point P0(0,0,300);
+    Point P1(1,300,400);
+    Point P2(2,300,100);
+    Point P3(3,400,100);
+    Point P4(4,500,0);
+    Point P5(5,500,400);
+    Point P6(6,525,225);
+    Point P7(7,725,200);
+    Point P8(8,800,400);
+    myGraph.addVertex(P0);
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addVertex(P4);
+    myGraph.addVertex(P5);
+    myGraph.addVertex(P6);
+    myGraph.addVertex(P7);
+    myGraph.addVertex(P8);
+
+    myGraph.addBidirectionalEdge(P1,P5,P1.getPosition().distance(P5.getPosition()));
+
+    myGraph.addBidirectionalEdge(P5,P6,P5.getPosition().distance(P6.getPosition()));
+
+    myGraph.addBidirectionalEdge(P6,P7,P6.getPosition().distance(P7.getPosition()));
+
+    myGraph.addBidirectionalEdge(P7,P8,P7.getPosition().distance(P8.getPosition()));
+
+    myGraph.addBidirectionalEdge(P6,P3,P6.getPosition().distance(P3.getPosition()));
+
+    myGraph.addBidirectionalEdge(P3,P4,P3.getPosition().distance(P4.getPosition()));
+
+    myGraph.addBidirectionalEdge(P3,P2,P3.getPosition().distance(P2.getPosition()));
+
+    myGraph.addBidirectionalEdge(P2,P0,P2.getPosition().distance(P0.getPosition()));
+
+    vector<Vertex*> vec = myGraph.getOddVertices();
+
+    ASSERT_TRUE(vec.size() == 6);
+
+}

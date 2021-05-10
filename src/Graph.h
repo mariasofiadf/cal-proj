@@ -108,6 +108,9 @@ public:
     void markPossibleParks(Point &source);
 
     unsigned int primAlgorithm();
+
+    void matchingOdd();
+    vector<Vertex*> getOddVertices();
 };
 
 
