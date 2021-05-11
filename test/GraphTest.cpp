@@ -117,3 +117,54 @@ TEST(Graph, markPossibleParks) {
     V = myGraph.findVertex(P7);
     EXPECT_EQ(V->isMarked(), false);
 }
+
+/*
+TEST(Graph, disconnects) {
+    Graph myGraph;
+
+    Point P1(0,0, "P1");
+    Point P2(0,0, "P2");
+    Point P3(0,0, "P3");
+    Point P4(0,0, "P4");
+    Point P5(0,0, "P5");
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addVertex(P4);
+    myGraph.addVertex(P5);
+    myGraph.addEdge(P1, P2, 1);
+    myGraph.addEdge(P1, P3, 1);
+    myGraph.addEdge(P2, P3, 1);
+    myGraph.addEdge(P3, P4, 1);
+    myGraph.addEdge(P4, P5, 1);
+
+    Vertex * V3 = myGraph.findVertex(P3);
+    Edge * aresta = V3->getAdj()[2];
+
+    EXPECT_EQ(disconnects(myGraph,aresta), true);
+*/
+
+ TEST(Graph, disconnects) {
+    Graph myGraph;
+
+    Point P1(0,0, "P1");
+    Point P2(0,0, "P2");
+    Point P3(0,0, "P3");
+    Point P4(0,0, "P4");
+    Point P5(0,0, "P5");
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addVertex(P4);
+    myGraph.addVertex(P5);
+    myGraph.addBidirectionalEdge(P1, P2, 1);
+    myGraph.addBidirectionalEdge(P1, P3, 1);
+    myGraph.addBidirectionalEdge(P2, P3, 1);
+    myGraph.addBidirectionalEdge(P3, P4, 1);
+    myGraph.addBidirectionalEdge(P4, P5, 1);
+
+    //myGraph.getEuler(P1);
+    Vertex * V3 = myGraph.findVertex(P3);
+    Edge * aresta = V3->getAdj()[2];
+    EXPECT_EQ(myGraph.disconnects(myGraph,aresta), true);
+}

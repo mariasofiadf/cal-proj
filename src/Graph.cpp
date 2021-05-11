@@ -18,6 +18,43 @@ Edge *Vertex::addEdge(Vertex *d, double w) {
     return e;
 }
 
+Edge *Vertex::addEdge(Edge *e) {
+    adj.push_back(e);
+    return e;
+}
+
+
+bool Graph::removeEdge(const Vertex &sourc, const Vertex &dest) {
+    Vertex *sourc_vert = findVertex(sourc.getPoint());
+    Vertex *dest_vert = findVertex(dest.getPoint());
+    if(sourc_vert && dest_vert){
+        dest_vert->removeEdgeFromTo(sourc_vert,dest_vert);
+        return sourc_vert->removeEdgeTo(dest_vert);
+    }
+    return false;
+}
+
+
+bool Vertex::removeEdgeTo(Vertex *d) {
+    for(auto it = adj.begin(); it != adj.end(); ++it){
+        if((*it)->dest == d){
+            adj.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Vertex::removeEdgeFromTo(Vertex *s, Vertex *d) {
+    for(auto it = adj.begin(); it != adj.end(); ++it){
+        if((*it)->dest == d && (*it)->orig == s){
+            adj.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+
 bool Vertex::operator<(Vertex & vertex) const {
     return this->dist < vertex.dist;
 }
@@ -108,6 +145,8 @@ bool Graph::addEdge(const Point &sourc, const Point &dest, double w) {
     if (v1 == nullptr || v2 == nullptr)
         return false;
     v1->addEdge(v2, w);
+    Edge *e = new Edge(v1, v2, w);
+    v2->addEdge(e);
     return true;
 }
 
@@ -201,4 +240,65 @@ void Graph::markPossibleParks(Point &source) {
         if(validDist && isPark)
             (*it)->marked = true;
     }
+}
+
+/**************** Euler Circuit  ***************/
+
+void Graph::DFS(Vertex * v)
+{
+    // Mark the current node as visited and print it
+    v->DFS_visited = true;
+
+
+    // Recur for all the vertices adjacent to
+    // this vertex
+    for (auto i = v->getAdj().begin(); i != v->getAdj().end(); ++i)
+        if (!((*i)->getDest()->DFS_visited))
+            DFS((*i)->getDest());
+}
+
+
+bool Graph::disconnects(Graph mod , Edge * aresta) {
+    bool res = true;
+    mod.removeEdge(*(aresta->getOrig()),*(aresta->getDest()));
+    mod.DFS(*(mod.getVertexSet().begin()));
+    for(auto element : mod.vertexSet) {
+        if (!(element->DFS_visited)) {res = false;}
+    }
+    for(auto element : mod.vertexSet) { //reseting DFS values for entire graph
+        element->DFS_visited = false;
+    }
+    return !res;
+}
+
+std::vector<Point> Graph::getEuler(const Point &origin) {
+    std::vector<Point> res;
+    Point origvertex = origin;
+    Graph mod;
+    mod = *this;
+
+    while (mod.getVertexSet().size() > 2) {
+        auto ponto = mod.findVertex(origvertex);
+        Edge *aresta = ponto->getAdj()[0];
+
+        if (!disconnects(mod, aresta)) {
+            res.push_back(aresta->getDest()->getPoint());
+            printf("added %s", res.end());
+            mod.removeEdge(*aresta->getOrig(), *aresta->getDest());
+            std::vector<Vertex *> vetor2;
+            for(Vertex * vertice2 : mod.getVertexSet()) {
+                if (vertice2->getAdj().size() == 0) {
+                    vetor2.push_back(vertice2);
+                }
+            }
+            for (auto elim : vetor2) {
+                for (auto it = mod.getVertexSet().begin();it != mod.getVertexSet().end(); it++) {
+                    if (elim == (*it)) {mod.getVertexSet().erase(it);}
+                }
+            }
+
+            origvertex = aresta->getDest()->getPoint();
+        }
+    }
+    return res;
 }
