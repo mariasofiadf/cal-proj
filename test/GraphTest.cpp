@@ -3,120 +3,85 @@
 //
 
 #include <gtest/gtest.h>
+#include <graphviewer.h>
 #include "TestAux.h"
 #include "GraphGenerator.h"
+#include "../src/GraphViewerLoader.h"
+#include "../src/GraphLoader.h"
 
-TEST(Graph, dijkstraShortestPath_2PointsOnly) {
+#define WIDTH 1920
+#define HEIGHT 1080
+
+TEST(Graph, dijkstra_4x4) {
     Graph myGraph;
 
-    Point P1(0,0, "P1");
-    Point P2(0,0, "P2");
-    myGraph.addVertex(P1);
-    myGraph.addVertex(P2);
-    myGraph.addBidirectionalEdge(P1, P2, 1);
+    GraphLoader graphLoader(&myGraph);
+    graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt");
+    Point P0(1,0,0);
+    Point P7(18,0,0);
 
-    myGraph.dijkstraShortestPath(P1);
-
-    checkAllPaths(myGraph, "P1<-|P2<-P1|");
-    checkSinglePath(myGraph.getPath(P1, P2), "P1 P2 ");
-
-    myGraph.dijkstraShortestPath(P2);
-
-    checkAllPaths(myGraph, "P1<-P2|P2<-|");
-    checkSinglePath(myGraph.getPath(P2, P1), "P2 P1 ");
-}
-
-TEST(Graph, dijkstraShortestPath_Simple) {
-Graph myGraph;
-
-Point P1(0,1, "P1");
-Point P2(2,3, "P2");
-Point P3(2,0, "P3");
-Point P4(3,2, "P4");
-Point P5(4,3, "P5");
-Point P6(4,0, "P6");
-Point P7(5,1, "P7");
-
-myGraph.addVertex(P1);
-myGraph.addVertex(P2);
-myGraph.addVertex(P3);
-myGraph.addVertex(P4);
-myGraph.addVertex(P5);
-myGraph.addVertex(P6);
-myGraph.addVertex(P7);
-
-myGraph.addBidirectionalEdge(P1, P2, 1);
-myGraph.addBidirectionalEdge(P1, P3, 5);
-myGraph.addBidirectionalEdge(P2, P4, 2);
-myGraph.addBidirectionalEdge(P3, P4, 1);
-myGraph.addBidirectionalEdge(P3, P6, 1);
-myGraph.addBidirectionalEdge(P4, P5, 1);
-myGraph.addBidirectionalEdge(P4, P6, 5);
-myGraph.addBidirectionalEdge(P5, P7, 3);
-myGraph.addBidirectionalEdge(P6, P7, 1);
-
-myGraph.dijkstraShortestPath(P1);
-checkAllPaths(myGraph, "P1<-|P2<-P1|P3<-P4|P4<-P2|P5<-P4|P6<-P3|P7<-P6|");
-checkSinglePath(myGraph.getPath(P1, P7), "P1 P2 P4 P3 P6 P7 ");
-
-myGraph.dijkstraShortestPath(P4);
-checkAllPaths(myGraph, "P1<-P2|P2<-P4|P3<-P4|P4<-|P5<-P4|P6<-P3|P7<-P6|");
-checkSinglePath(myGraph.getPath(P4, P1), "P4 P2 P1 ");
+    myGraph.dijkstraShortestPath(P0);
+    checkAllPaths(myGraph, "0<-|1<-|2<-1|3<-2|4<-3|5<-|6<-1|7<-2|8<-7|9<-8|10<-|11<-6|12<-7|13<-12|14<-13|15<-|16<-11|17<-12|18<-17|19<-18|20<-|21<-16|22<-17|23<-22|24<-23|");
+    checkSinglePath(myGraph.getPath(P0, P7), "1 2 7 12 17 18 ");
 
 }
 
-TEST(Graph, dijkstraShortestPath_DifferentPointTypes) {
-Graph myGraph = getTestGraph2();
+TEST(Graph, matching) {
+    Graph myGraph = getTestGraph();
 
-myGraph.dijkstraShortestPath(Point(0,0, "P1"));
-checkAllPaths(myGraph, "P1<-|PK2<-P1|G3<-C4|C4<-PK2|PK5<-C4|PK6<-G3|P7<-PK6|");
-checkSinglePath(myGraph.getPath(Point(0,0, "P1"), Point(0,0, "P7")), "P1 PK2 C4 G3 PK6 P7 ");
+    myGraph.matchingOdd();
 
-myGraph.dijkstraShortestPath(Point(0,0, "C4"));
-checkAllPaths(myGraph, "P1<-PK2|PK2<-C4|G3<-C4|C4<-|PK5<-C4|PK6<-G3|P7<-PK6|");
-checkSinglePath(myGraph.getPath(Point(0,0, "C4"), Point(0,0, "P1")), "C4 PK2 P1 ");
+    ASSERT_EQ(myGraph.getOddVertices().size(), 0);
+
+    Point P0(0,0,300);
+    Point P1(1,300,400);
+    Vertex * V0 = myGraph.findVertex(P0);
+    Vertex * V1 = myGraph.findVertex(P1);
+
+    bool found = false;
+    for(auto e : V0->getAdj()){
+        if(e->getDest() == V1)
+            found = true;
+    }
+
+    ASSERT_TRUE(found);
 
 }
 
-TEST(Graph, markPossibleParks) {
-    Graph myGraph;
+TEST(Graph, getOddVertices) {
 
-    Point P1(0,50, "P1");
-    PointPark PK2(2,3, "PK2", 3.0);
-    PointGas G3(2,0, "G3");
-    PointCoffe C4(3,2, "C4");
-    PointPark PK5(4,3, "PK5", 2.0);
-    PointPark PK6(4000,0, "PK6", 2.6);
-    Point P7(5,1, "P7");
+    Graph myGraph = getTestGraph();
 
-    myGraph.addVertex(P1);
-    myGraph.addVertex(PK2);
-    myGraph.addVertex(G3);
-    myGraph.addVertex(C4);
-    myGraph.addVertex(PK5);
-    myGraph.addVertex(PK6);
-    myGraph.addVertex(P7);
+    vector<Vertex*> vec = myGraph.getOddVertices();
 
-    myGraph.markPossibleParks(P1);
-
-    Vertex* V = myGraph.findVertex(P1);
-    EXPECT_EQ(V->isMarked(), false);
-
-    V = myGraph.findVertex(G3);
-    EXPECT_EQ(V->isMarked(), false);
-
-    V = myGraph.findVertex(C4);
-    EXPECT_EQ(V->isMarked(), false);
-
-    V = myGraph.findVertex(PK5);
-    EXPECT_EQ(V->isMarked(), true);
-
-    V = myGraph.findVertex(PK6);
-    EXPECT_EQ(V->isMarked(), false); //This Park is not marked because it's more than 1km away from P1
-
-    V = myGraph.findVertex(P7);
-    EXPECT_EQ(V->isMarked(), false);
+    ASSERT_TRUE(vec.size() == 6);
 }
+
+TEST(Graph, prim) {
+    Graph myGraph = getTestGraph3();
+
+    float cost = myGraph.primAlgorithm();
+    float expectedCost = 10.4 + 11.2+17.5+15.8;
+    EXPECT_EQ( expectedCost, cost);
+
+    stringstream ss;
+    for(const auto v : myGraph.getVertexSet()) {
+        ss << v->getInfo() << "<-";
+        if ( v->getPath() != nullptr )
+            ss << v->getPath()->getInfo();
+        ss << "|";
+    }
+    cout << ss.str() << endl;
+
+    Point P1(1,0,0);
+    Point P4(4,0,0);
+    Point P5(5,0,0);
+
+    checkSinglePath(myGraph.getPath(P1, P5), "1 3 2 5 ");
+    checkSinglePath(myGraph.getPath(P1, P4), "1 3 4 ");
+
+}
+/*
 
  TEST(Graph, disconnects) {
     Graph myGraph;
@@ -171,4 +136,4 @@ TEST(Graph, getEuler) {
     EXPECT_EQ("P5", res[4].getName());
 
 }
-
+*/

@@ -138,7 +138,7 @@ Vertex * Graph::findVertex(const Point &in) const {
  *  Adds a vertex with a given content or info (in) to a graph (this).
  *  Returns true if successful, and false if a vertex with that content already exists.
  */
-bool Graph::addVertex(const Point &in) {
+bool Graph::addVertex(Point &in) {
     if (findVertex(in) != nullptr)
         return false;
     vertexSet.push_back(new Vertex(in));
@@ -364,4 +364,77 @@ std::vector<Point> Graph::getEuler(const Point &origin) {
     }
 
     return res;
+}
+
+float Graph::primAlgorithm() {
+    if(vertexSet[0] == NULL) return 0;
+    for(auto v: vertexSet){
+        v->visited = false;
+        v->dist = INF;
+        v->path = NULL;
+    }
+    vertexSet[0]->dist = 0;
+    MutablePriorityQueue<Vertex> queue;
+    queue.insert(vertexSet[0]);
+    while(!queue.empty()) {
+        Vertex *vertex = queue.extractMin();
+        vertex->visited=true;
+        for(Edge * edge:vertex->adj){
+            if(!edge->dest->visited) {
+                if (edge->dest->dist > edge->weight) {
+                    double dist = edge->dest->dist;
+                    edge->dest->dist = edge->weight;
+                    edge->dest->path = vertex;
+                    if (dist == INF) {
+                        queue.insert(edge->dest);
+                    } else
+                        queue.decreaseKey(edge->dest);
+                }
+            }
+        }
+    }
+
+    float total = 0;
+    for(auto v: vertexSet) {
+        if(v->visited)
+            total+=v->dist;
+    }
+    return total;
+}
+
+
+vector<Vertex*> Graph::getOddVertices(){
+    vector<Vertex*> res;
+    for(auto v : vertexSet){
+        if((v->getAdj().size() % 2)!=0)
+            res.push_back(v);
+    }
+    return res;
+}
+void Graph::matchingOdd(){
+    for(auto v: vertexSet){
+        v->visited = false;
+    }
+    vector<Vertex*> oddSet = getOddVertices();
+    Vertex * closest; double minDist = 9999999; double dist;
+    for(vector<Vertex*>::iterator it = oddSet.begin(); it != oddSet.end(); it++){
+        Vertex v1 = *(*it);
+        if((*it)->visited) continue;
+        minDist = 9999999;
+        for(vector<Vertex*>::iterator it2 = oddSet.begin(); it2 != oddSet.end(); it2++)
+        {
+            if((*it) == (*it2)) continue;
+            Vertex v2 = *(*it2);
+            if((*it2)->visited) continue;
+            dist = (*it)->getPoint().getPosition().distance((*it2)->getPoint().getPosition());
+            if( dist < minDist){
+                minDist = dist;
+                closest = (*it2);
+            }
+
+        }
+        addBidirectionalEdge((*it)->getPoint(),closest->getPoint(), minDist);
+        (*it)->visited = true; closest->visited = true;
+    }
+    return;
 }

@@ -59,10 +59,13 @@ public:
     bool removeEdgeFromTo(Vertex *s, Vertex *d);
     bool DFS_visited = false;
 
+
     bool isMarked() const;
 
     friend class Graph;
 	friend class MutablePriorityQueue<Vertex>;
+
+    bool visited;
 };
 
 class Edge {
@@ -95,7 +98,7 @@ class Graph {
 public:
     ~Graph();
 	Vertex *findVertex(const Point &in) const;
-	bool addVertex(const Point &in);
+	bool addVertex(Point &in);
 	bool addEdge(const Point &sourc, const Point &dest, double w);
     bool removeEdge(const Vertex &sourc, const Vertex &dest);
 	bool addBidirectionalEdge(const Point &sourc, const Point &dest, double w);
@@ -119,6 +122,11 @@ public:
     void delete_lonely_points();
 
     bool removeVertex(const Point &in);
+    void matchingOdd();
+    vector<Vertex*> getOddVertices();
+
+    float primAlgorithm();
+
 };
 
 
