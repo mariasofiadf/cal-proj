@@ -118,8 +118,7 @@ TEST(Graph, markPossibleParks) {
     EXPECT_EQ(V->isMarked(), false);
 }
 
-/*
-TEST(Graph, disconnects) {
+ TEST(Graph, disconnects) {
     Graph myGraph;
 
     Point P1(0,0, "P1");
@@ -132,19 +131,20 @@ TEST(Graph, disconnects) {
     myGraph.addVertex(P3);
     myGraph.addVertex(P4);
     myGraph.addVertex(P5);
-    myGraph.addEdge(P1, P2, 1);
-    myGraph.addEdge(P1, P3, 1);
-    myGraph.addEdge(P2, P3, 1);
-    myGraph.addEdge(P3, P4, 1);
-    myGraph.addEdge(P4, P5, 1);
+    myGraph.addBidirectionalEdge(P1, P3, 1);
+    myGraph.addBidirectionalEdge(P2, P3, 1);
+    myGraph.addBidirectionalEdge(P3, P4, 1);
+    myGraph.addBidirectionalEdge(P4, P5, 1);
 
-    Vertex * V3 = myGraph.findVertex(P3);
-    Edge * aresta = V3->getAdj()[2];
+    //myGraph.getEuler(P1);
+    Vertex * V2 = myGraph.findVertex(P2);
+    Edge * aresta = V2->getAdj()[0];
 
-    EXPECT_EQ(disconnects(myGraph,aresta), true);
-*/
 
- TEST(Graph, disconnects) {
+    EXPECT_EQ(myGraph.disconnects(*aresta), true);
+}
+
+TEST(Graph, getEuler) {
     Graph myGraph;
 
     Point P1(0,0, "P1");
@@ -163,8 +163,12 @@ TEST(Graph, disconnects) {
     myGraph.addBidirectionalEdge(P3, P4, 1);
     myGraph.addBidirectionalEdge(P4, P5, 1);
 
-    //myGraph.getEuler(P1);
-    Vertex * V3 = myGraph.findVertex(P3);
-    Edge * aresta = V3->getAdj()[2];
-    EXPECT_EQ(myGraph.disconnects(myGraph,aresta), true);
+    vector<Point>res = myGraph.getEuler(P1);
+    EXPECT_EQ("P1", res[0].getName());
+    EXPECT_EQ("P2", res[1].getName());
+    EXPECT_EQ("P3", res[2].getName());
+    EXPECT_EQ("P4", res[3].getName());
+    EXPECT_EQ("P5", res[4].getName());
+
 }
+
