@@ -18,3 +18,6 @@ Graph getTestGraph();
 Graph getTestGraph2();
 
 Graph getTestGraph3();
+
+//O exemplo dos slides
+Graph getTestGraph4();
