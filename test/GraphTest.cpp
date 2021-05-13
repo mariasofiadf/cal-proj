@@ -81,16 +81,16 @@ TEST(Graph, prim) {
     checkSinglePath(myGraph.getPath(P1, P4), "1 3 4 ");
 
 }
-/*
+
 
  TEST(Graph, disconnects) {
     Graph myGraph;
 
-    Point P1(0,0, "P1");
-    Point P2(0,0, "P2");
-    Point P3(0,0, "P3");
-    Point P4(0,0, "P4");
-    Point P5(0,0, "P5");
+    Point P1(1,0,0);
+    Point P2(2,0,0);
+    Point P3(3,0,0);
+    Point P4(4,0,0);
+    Point P5(5,0,0);
     myGraph.addVertex(P1);
     myGraph.addVertex(P2);
     myGraph.addVertex(P3);
@@ -112,11 +112,11 @@ TEST(Graph, prim) {
 TEST(Graph, getEuler) {
     Graph myGraph;
 
-    Point P1(0,0, "P1");
-    Point P2(0,0, "P2");
-    Point P3(0,0, "P3");
-    Point P4(0,0, "P4");
-    Point P5(0,0, "P5");
+    Point P1(1,0,0);
+    Point P2(2,0,0);
+    Point P3(3,0,0);
+    Point P4(4,0,0);
+    Point P5(5,0,0);
     myGraph.addVertex(P1);
     myGraph.addVertex(P2);
     myGraph.addVertex(P3);
@@ -129,11 +129,11 @@ TEST(Graph, getEuler) {
     myGraph.addBidirectionalEdge(P4, P5, 1);
 
     vector<Point>res = myGraph.getEuler(P1);
-    EXPECT_EQ("P1", res[0].getName());
-    EXPECT_EQ("P2", res[1].getName());
-    EXPECT_EQ("P3", res[2].getName());
-    EXPECT_EQ("P4", res[3].getName());
-    EXPECT_EQ("P5", res[4].getName());
+    EXPECT_EQ(1, res[0].getId());
+    EXPECT_EQ(2, res[1].getId());
+    EXPECT_EQ(3, res[2].getId());
+    EXPECT_EQ(4, res[3].getId());
+    EXPECT_EQ(5, res[4].getId());
 
 }
-*/
+

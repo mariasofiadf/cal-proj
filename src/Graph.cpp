@@ -265,7 +265,7 @@ bool Graph::removeVertex(const Point &in) {
         return false;
     vector<Vertex *>::iterator ite;
     for (auto it = vertexSet.begin(); it != vertexSet.end(); it++) {
-        if ((*it)->getPoint().getName() == in.getName()) {
+        if ((*it)->getPoint().getId() == in.getId()) {
             ite = it;
         }
     }
@@ -406,7 +406,7 @@ float Graph::primAlgorithm() {
 vector<Vertex*> Graph::getOddVertices(){
     vector<Vertex*> res;
     for(auto v : vertexSet){
-        if((v->getAdj().size() % 2)!=0)
+        if(((v->getAdj().size()/2) % 2)!=0)
             res.push_back(v);
     }
     return res;
