@@ -5,8 +5,8 @@
 #include <gtest/gtest.h>
 #include <graphviewer.h>
 
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 800 //mudei para 800x800 porque como estava fica muito grande para o meu ecrã de pobre :( se quiserem voltem a trocar na paz
+#define HEIGHT 800
 
 //Here, one of the nodes should be blinking
 //This is a proof of concept for future Algorithm Visualization

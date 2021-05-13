@@ -81,3 +81,59 @@ TEST(Graph, prim) {
     checkSinglePath(myGraph.getPath(P1, P4), "1 3 4 ");
 
 }
+
+
+ TEST(Graph, disconnects) {
+    Graph myGraph;
+
+    Point P1(1,0,0);
+    Point P2(2,0,0);
+    Point P3(3,0,0);
+    Point P4(4,0,0);
+    Point P5(5,0,0);
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addVertex(P4);
+    myGraph.addVertex(P5);
+    myGraph.addBidirectionalEdge(P1, P3, 1);
+    myGraph.addBidirectionalEdge(P2, P3, 1);
+    myGraph.addBidirectionalEdge(P3, P4, 1);
+    myGraph.addBidirectionalEdge(P4, P5, 1);
+
+    //myGraph.getEuler(P1);
+    Vertex * V2 = myGraph.findVertex(P2);
+    Edge * aresta = V2->getAdj()[0];
+
+
+    EXPECT_EQ(myGraph.disconnects(*aresta), true);
+}
+
+TEST(Graph, getEuler) {
+    Graph myGraph;
+
+    Point P1(1,0,0);
+    Point P2(2,0,0);
+    Point P3(3,0,0);
+    Point P4(4,0,0);
+    Point P5(5,0,0);
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addVertex(P4);
+    myGraph.addVertex(P5);
+    myGraph.addBidirectionalEdge(P1, P2, 1);
+    myGraph.addBidirectionalEdge(P1, P3, 1);
+    myGraph.addBidirectionalEdge(P2, P3, 1);
+    myGraph.addBidirectionalEdge(P3, P4, 1);
+    myGraph.addBidirectionalEdge(P4, P5, 1);
+
+    vector<Point>res = myGraph.getEuler(P1);
+    EXPECT_EQ(1, res[0].getId());
+    EXPECT_EQ(2, res[1].getId());
+    EXPECT_EQ(3, res[2].getId());
+    EXPECT_EQ(4, res[3].getId());
+    EXPECT_EQ(5, res[4].getId());
+
+}
+

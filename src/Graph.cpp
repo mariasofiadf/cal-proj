@@ -18,6 +18,55 @@ Edge *Vertex::addEdge(Vertex *d, double w) {
     return e;
 }
 
+Edge *Vertex::addEdge(Edge *e) {
+    adj.push_back(e);
+    return e;
+}
+
+
+bool Graph::removeEdge(const Vertex &sourc, const Vertex &dest) {
+    Vertex *sourc_vert = findVertex(sourc.getPoint());
+    Vertex *dest_vert = findVertex(dest.getPoint());
+    if(sourc_vert && dest_vert){
+        dest_vert->removeEdgeFromTo(sourc_vert,dest_vert);
+        return sourc_vert->removeEdgeTo(dest_vert);
+    }
+    return false;
+}
+
+
+bool Vertex::removeEdgeTo(Vertex *d) {
+    for(auto it = adj.begin(); it != adj.end(); ++it){
+        if((*it)->dest == d){
+            adj.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Vertex::removeEdgeFromTo(Vertex *s, Vertex *d) {
+    for(auto it = adj.begin(); it != adj.end(); ++it){
+        if((*it)->dest == d && (*it)->orig == s){
+            adj.erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Graph::removeBidirectionalEdge(const Vertex &sourc, const Vertex &dest) {
+    Vertex *sourc_vert = findVertex(sourc.getPoint());
+    Vertex *dest_vert = findVertex(dest.getPoint());
+    if(sourc_vert && dest_vert){
+        dest_vert->removeEdgeFromTo(sourc_vert,dest_vert);
+        dest_vert->removeEdgeFromTo(dest_vert,sourc_vert);
+        sourc_vert->removeEdgeTo(sourc_vert);
+        return sourc_vert->removeEdgeTo(dest_vert);
+    }
+    return false;
+}
+
 bool Vertex::operator<(Vertex & vertex) const {
     return this->dist < vertex.dist;
 }
@@ -108,6 +157,8 @@ bool Graph::addEdge(const Point &sourc, const Point &dest, double w) {
     if (v1 == nullptr || v2 == nullptr)
         return false;
     v1->addEdge(v2, w);
+    Edge *e = new Edge(v1, v2, w);
+    v2->addEdge(e);
     return true;
 }
 
@@ -119,8 +170,12 @@ bool Graph::addBidirectionalEdge(const Point &sourc, const Point &dest, double w
         return false;
     auto e1 = v1->addEdge(v2, w);
     auto e2 = v2->addEdge(v1, w);
+    auto e3 = v2->addEdge(e1);
+    auto e4 = v1->addEdge(e2);
     e1->reverse = e2;
     e2->reverse = e1;
+    e3->reverse = e4;
+    e4->reverse = e3;
     return true;
 }
 
@@ -203,6 +258,113 @@ void Graph::markPossibleParks(Point &source) {
     }
 }
 
+/**************** Euler Circuit  ***************/
+
+bool Graph::removeVertex(const Point &in) {
+    if (findVertex(in) == nullptr)
+        return false;
+    vector<Vertex *>::iterator ite;
+    for (auto it = vertexSet.begin(); it != vertexSet.end(); it++) {
+        if ((*it)->getPoint().getId() == in.getId()) {
+            ite = it;
+        }
+    }
+    vertexSet.erase(ite);
+    return true;
+}
+
+
+void Graph::DFS(Vertex * v)
+{
+    // Mark the current node as visited and print it
+    v->DFS_visited = true;
+
+
+    // Recur for all the vertices adjacent to
+    // this vertex
+    for (auto i = v->getAdj().begin(); i != v->getAdj().end(); ++i)
+        if (!((*i)->getDest()->DFS_visited))
+            DFS((*i)->getDest());
+}
+
+
+bool Graph::disconnects(Edge aresta) {
+    bool res = true;
+    Vertex * vertorig = aresta.getOrig();
+    Vertex * vertdest = aresta.getDest();
+    removeEdge(*(aresta.getOrig()),*(aresta.getDest()));
+    removeEdge(*(aresta.getDest()),*(aresta.getOrig()));
+    DFS(*(getVertexSet().begin()));
+    for(auto element : vertexSet) {
+        if (!(element->DFS_visited)) {res = false;}
+    }
+    for(auto element : vertexSet) { //reseting DFS values for entire graph
+        element->DFS_visited = false;
+    }
+    addBidirectionalEdge(aresta.getOrig()->getPoint(),(aresta.getDest()->getPoint()),aresta.getWeight());
+    return !res;
+}
+
+void Graph::delete_lonely_points() {
+    vector<Vertex *>::iterator it;
+    vector<Vertex *> vetorcopy = getVertexSet();
+    for (it = vetorcopy.begin() ; it != vetorcopy.end(); it++) {
+
+        if((*it)->getAdj().size() == 0) {
+            break;
+        }
+    }
+    if(it != vetorcopy.end()) {
+        this->removeVertex((*it)->getPoint());
+    }
+}
+
+std::vector<Point>  Graph::handle_euler(std::vector<Point> res , Vertex * vertice, Edge *aresta) {
+    res.push_back(vertice->getPoint());
+    this->removeBidirectionalEdge(*aresta->getOrig(), *aresta->getDest());
+    this->delete_lonely_points();
+    return res;
+
+}
+
+std::vector<Point> Graph::getEuler(const Point &origin) {
+    std::vector<Point> res;
+    Graph grafo = *this;
+    Vertex* vertice = this->findVertex(origin);
+    bool flag_entered_noBridge = false;
+
+    while (true) {
+        flag_entered_noBridge = false;
+
+        for(Edge *aresta : vertice->getAdj()) {
+            if(aresta->getOrig() == vertice) {
+                Edge aresta1 = *aresta;
+                if(!disconnects(aresta1)) {
+                    res = this->handle_euler(res,vertice,aresta);
+                    vertice = aresta->getDest();
+                    flag_entered_noBridge = true;
+                    break;
+                }
+            }
+        }
+        if(!flag_entered_noBridge) {
+            for(Edge *aresta : vertice->getAdj()) {
+                if(aresta->getOrig() == vertice) {
+                    res = this->handle_euler(res,vertice,aresta);
+                    vertice = aresta->getDest();
+                    break;
+                }
+            }
+        }
+        if(vertice->getAdj().size() == 0) {
+            res.push_back(vertice->getPoint());
+            break;
+        }
+
+    }
+
+    return res;
+}
 
 float Graph::primAlgorithm() {
     if(vertexSet[0] == NULL) return 0;
@@ -244,7 +406,7 @@ float Graph::primAlgorithm() {
 vector<Vertex*> Graph::getOddVertices(){
     vector<Vertex*> res;
     for(auto v : vertexSet){
-        if((v->getAdj().size() % 2)!=0)
+        if(((v->getAdj().size()/2) % 2)!=0)
             res.push_back(v);
     }
     return res;

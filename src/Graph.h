@@ -47,6 +47,7 @@ public:
 private:
     bool marked;
 	Edge * addEdge(Vertex *dest, double w);
+    Edge * addEdge(Edge * e);
 public:
 	Vertex(Point in);
 	bool operator<(Vertex & vertex) const; // // required by MutablePriorityQueue
@@ -54,6 +55,9 @@ public:
 	double getDist() const;
     const Point &getInfo() const;
     Vertex *getPath() const;
+    bool removeEdgeTo(Vertex *d);
+    bool removeEdgeFromTo(Vertex *s, Vertex *d);
+    bool DFS_visited = false;
 
 
     bool isMarked() const;
@@ -96,7 +100,13 @@ public:
 	Vertex *findVertex(const Point &in) const;
 	bool addVertex(Point &in);
 	bool addEdge(const Point &sourc, const Point &dest, double w);
+    bool removeEdge(const Vertex &sourc, const Vertex &dest);
 	bool addBidirectionalEdge(const Point &sourc, const Point &dest, double w);
+    bool removeBidirectionalEdge(const Vertex &sourc, const Vertex &dest);
+    bool disconnects(Edge aresta) ;
+    std::vector<Point> handle_euler(std::vector<Point> res , Vertex * vertice, Edge *aresta);
+    bool isConnected();
+    void DFS(Vertex * v);
     std::vector<Vertex *> getVertexSet() const;
 
 	// Fp07 - minimum spanning tree
@@ -107,6 +117,11 @@ public:
     //Functions for ModifiedDiskstra's
     void markPossibleParks(Point &source);
 
+    vector<Point> getEuler(const Point &origin);
+
+    void delete_lonely_points();
+
+    bool removeVertex(const Point &in);
     void matchingOdd();
     vector<Vertex*> getOddVertices();
 
