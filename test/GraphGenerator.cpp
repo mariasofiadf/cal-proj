@@ -106,15 +106,15 @@ Graph getTestGraph3(){
 Graph getTestGraph4(){
     Graph myGraph;
 
-    Point P1(1,3, 0);
-    Point P2(2,7,0);
-    Point P3(3,8, 2);
-    Point P4(4,10,3);
-    Point P5(5,11,1);
-    Point P6(6,5,3);
-    Point P7(7,6,4);
-    Point P8(8,3,3);
-    Point P9(9,0,1);
+    Point P1(1,300, 0);
+    Point P2(2,700,0);
+    Point P3(3,800, 200);
+    Point P4(4,1000,300);
+    Point P5(5,1100,100);
+    Point P6(6,500,300);
+    Point P7(7,600,400);
+    Point P8(8,300,300);
+    Point P9(9,0,100);
     myGraph.addVertex(P1);
     myGraph.addVertex(P2);
     myGraph.addVertex(P3);
