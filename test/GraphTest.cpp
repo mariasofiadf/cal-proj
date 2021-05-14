@@ -152,7 +152,8 @@ TEST(Graph, getEuler2) {
     myGraph.addBidirectionalEdge(P1, P2, P1.getPosition().distance(P2.getPosition()));
     myGraph.addBidirectionalEdge(P1, P3, P1.getPosition().distance(P3.getPosition()));
     myGraph.addBidirectionalEdge(P2, P3, P2.getPosition().distance(P3.getPosition()));
-    //vector<Point>res = myGraph.getEuler(P1);
+
+    vector<Point>res = myGraph.getEuler(P1);
 
 
 }

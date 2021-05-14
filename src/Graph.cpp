@@ -330,6 +330,7 @@ std::vector<Point>  Graph::handle_euler(std::vector<Point> res , Vertex * vertic
 std::vector<Point> Graph::getEuler(const Point &origin) {
     std::vector<Point> res;
     Graph grafo = *this;
+    Graph original = *this;
     Vertex* vertice = this->findVertex(origin);
     bool flag_entered_noBridge = false;
 
@@ -356,6 +357,12 @@ std::vector<Point> Graph::getEuler(const Point &origin) {
                 }
             }
         }
+
+        if(res.size() == original.getVertexSet().size()) {
+            return res;
+        }
+
+
         if(vertice->getAdj().size() == 0) {
             res.push_back(vertice->getPoint());
             break;
