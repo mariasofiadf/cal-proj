@@ -109,6 +109,8 @@ TEST(Graph, prim) {
     EXPECT_EQ(myGraph.disconnects(*aresta), true);
 }
 
+
+
 TEST(Graph, getEuler) {
     Graph myGraph;
 
@@ -134,6 +136,50 @@ TEST(Graph, getEuler) {
     EXPECT_EQ(3, res[2].getId());
     EXPECT_EQ(4, res[3].getId());
     EXPECT_EQ(5, res[4].getId());
+
+}
+
+TEST(Graph, getEuler2) {
+    Graph myGraph;
+    Point P1(1,300, 0);
+    Point P2(2,700,0);
+    Point P3(3,800, 200);
+
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+
+    myGraph.addBidirectionalEdge(P1, P2, P1.getPosition().distance(P2.getPosition()));
+    myGraph.addBidirectionalEdge(P1, P3, P1.getPosition().distance(P3.getPosition()));
+    myGraph.addBidirectionalEdge(P2, P3, P2.getPosition().distance(P3.getPosition()));
+    //vector<Point>res = myGraph.getEuler(P1);
+
+
+}
+
+TEST(Graph, cutShort) {
+    Graph myGraph = getTestGraph4();
+    Point P0(0,0,300);
+    Point P1(1,3, 0);
+    Point P2(2,7,0);
+    Point P3(3,8, 2);
+    Point P4(4,10,3);
+    Point P5(5,11,1);
+    Point P6(6,5,3);
+    Point P7(7,6,4);
+    Point P8(8,3,3);
+    Point P9(9,0,1);
+
+    //vector<Point>res = myGraph.getEuler(P1);
+    vector<Point> res {P1, P2, P3, P4, P5,P3, P6, P7, P6, P8, P9, P1};
+    myGraph.cutShort(&res);
+    for(auto i: res){
+        cout << i.getId() << "|";
+    }
+    cout <<endl;
+
+    vector<Point> expected {P1, P2, P3, P4, P5, P6, P7, P8, P9, P1};
+    EXPECT_EQ(res, expected);
 
 }
 

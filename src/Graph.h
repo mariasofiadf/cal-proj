@@ -29,26 +29,17 @@ inline bool instanceof(const T*) {
 class Vertex {
 	Point info;                 // contents
 	std::vector<Edge *> adj;
-public:
-    const vector<Edge *> &getAdj() const;
-
-private:
     // outgoing edges
 	double dist = 0;
 	Vertex *path = nullptr;
 	int queueIndex = 0; 		// required by MutablePriorityQueue
 	int viewerIndex = 0;
-public:
-    int getViewerIndex() const;
-
-public:
-    void setViewerIndex(int viewerIndex);
-
-private:
     bool marked;
-	Edge * addEdge(Vertex *dest, double w);
+    Edge * addEdge(Vertex *dest, double w);
     Edge * addEdge(Edge * e);
 public:
+    int getViewerIndex() const;
+    void setViewerIndex(int viewerIndex);
 	Vertex(Point in);
 	bool operator<(Vertex & vertex) const; // // required by MutablePriorityQueue
 	Point getPoint() const;
@@ -58,6 +49,8 @@ public:
     bool removeEdgeTo(Vertex *d);
     bool removeEdgeFromTo(Vertex *s, Vertex *d);
     bool DFS_visited = false;
+
+    const vector<Edge *> &getAdj() const;
 
 
     bool isMarked() const;
@@ -127,6 +120,7 @@ public:
 
     float primAlgorithm();
 
+    float cutShort(vector<Point> *eulerPath);
 };
 
 

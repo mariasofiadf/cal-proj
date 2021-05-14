@@ -102,3 +102,39 @@ Graph getTestGraph3(){
 
     return myGraph;
 }
+
+Graph getTestGraph4(){
+    Graph myGraph;
+
+    Point P1(1,300, 0);
+    Point P2(2,700,0);
+    Point P3(3,800, 200);
+    Point P4(4,1000,300);
+    Point P5(5,1100,100);
+    Point P6(6,500,300);
+    Point P7(7,600,400);
+    Point P8(8,300,300);
+    Point P9(9,0,100);
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addVertex(P4);
+    myGraph.addVertex(P5);
+    myGraph.addVertex(P6);
+    myGraph.addVertex(P7);
+    myGraph.addVertex(P8);
+    myGraph.addVertex(P9);
+
+    myGraph.addBidirectionalEdge(P1, P9, 0);
+    myGraph.addBidirectionalEdge(P1, P2, 0);
+    myGraph.addBidirectionalEdge(P2, P3, 0);
+    myGraph.addBidirectionalEdge(P3, P4,  0);
+    myGraph.addBidirectionalEdge(P4, P5, 0);
+    myGraph.addBidirectionalEdge(P5, P3, 0);
+    myGraph.addBidirectionalEdge(P3, P6, 0);
+    myGraph.addBidirectionalEdge(P6, P7, 0);
+    myGraph.addBidirectionalEdge(P8, P6, 0);
+    myGraph.addBidirectionalEdge(P8, P9, 0);
+
+    return myGraph;
+}
