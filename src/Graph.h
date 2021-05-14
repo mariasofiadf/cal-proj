@@ -121,6 +121,8 @@ public:
     float primAlgorithm();
 
     float cutShort(vector<Point> *eulerPath);
+
+    int numberofelements(vector<Point> res);
 };
 
 

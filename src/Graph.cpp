@@ -327,6 +327,15 @@ std::vector<Point>  Graph::handle_euler(std::vector<Point> res , Vertex * vertic
 
 }
 
+int Graph::numberofelements(vector<Point> res) {
+    int result = 0;
+    unordered_set<int> set = {};
+    for (auto element : res) {
+        set.insert(element.getId());
+    }
+    return set.size();
+}
+
 std::vector<Point> Graph::getEuler(const Point &origin) {
     std::vector<Point> res;
     Graph grafo = *this;
@@ -358,7 +367,7 @@ std::vector<Point> Graph::getEuler(const Point &origin) {
             }
         }
 
-        if(res.size() == original.getVertexSet().size()) {
+        if(this->numberofelements(res) == original.getVertexSet().size()) {
             return res;
         }
 
