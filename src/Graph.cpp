@@ -447,19 +447,18 @@ float Graph::cutShort(vector<Point>* path) {
     Point root = path->front();
     Vertex * v = findVertex(root);
     bool add = true;
-    for(vector<Point>::iterator it = path->begin()+1; it != path->end(); it++){
-        if(!v->visited){
-            pathCost +=  (*v).getAdj().front()->weight;
-            v->visited = true;
-        }else{
-            it = path->erase(it);
-        }
-        v = findVertex(*it);
-    }
-
     for(auto i: *path){
         cout << i.getId() << "|";
     }
     cout <<endl;
+    for(vector<Point>::iterator it = path->begin()+1; it != path->end(); it++){
+        v = findVertex(*it);
+       if(!v->visited){
+            //pathCost +=  (*v).getAdj().front()->weight;
+            v->visited = true;
+        }else it = path->erase(it) -1;//go to the point after the one erased
+
+    }
+
     return pathCost;
 }

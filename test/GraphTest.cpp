@@ -154,10 +154,9 @@ TEST(Graph, cutShort) {
     //vector<Point>res = myGraph.getEuler(P1);
     vector<Point> res {P1, P2, P3, P4, P5,P3, P6, P7, P6, P8, P9, P1};
     myGraph.cutShort(&res);
-    /*for(auto i: res){
-        cout << i.getId() << "|";
-    }*/
 
+    vector<Point> expected {P1, P2, P3, P4, P5, P6, P7, P8, P9, P1};
+    EXPECT_EQ(res, expected);
 
 }
 
