@@ -339,6 +339,7 @@ int Graph::numberofelements(vector<Point> res) {
 std::vector<Point> Graph::getEuler(const Point &origin) {
     std::vector<Point> res;
     Graph grafo = *this;
+    vector<Vertex *> backup = grafo.getVertexSet();
     Graph original = *this;
     Vertex* vertice = this->findVertex(origin);
     bool flag_entered_noBridge = false;
@@ -368,6 +369,7 @@ std::vector<Point> Graph::getEuler(const Point &origin) {
         }
 
         if(this->numberofelements(res) == original.getVertexSet().size()) {
+            this->vertexSet = backup;
             return res;
         }
 
@@ -378,7 +380,7 @@ std::vector<Point> Graph::getEuler(const Point &origin) {
         }
 
     }
-
+    this->vertexSet = backup;
     return res;
 }
 

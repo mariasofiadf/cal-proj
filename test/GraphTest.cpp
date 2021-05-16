@@ -162,6 +162,35 @@ TEST(Graph, getEuler2) {
 
 }
 
+TEST(Graph, VertexSetAlterationAfterEuler) {
+    Graph myGraph;
+
+    Point P1(1,0,0);
+    Point P2(2,0,0);
+    Point P3(3,0,0);
+    Point P4(4,0,0);
+    Point P5(5,0,0);
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addVertex(P4);
+    myGraph.addVertex(P5);
+    myGraph.addBidirectionalEdge(P1, P2, 1);
+    myGraph.addBidirectionalEdge(P1, P3, 1);
+    myGraph.addBidirectionalEdge(P2, P3, 1);
+    myGraph.addBidirectionalEdge(P3, P4, 1);
+    myGraph.addBidirectionalEdge(P4, P5, 1);
+    vector<Vertex *> original = myGraph.getVertexSet();
+
+    vector<Point>res = myGraph.getEuler(P1);
+    vector<Vertex *> after = myGraph.getVertexSet();
+
+    for (int i = 0;i < original.size();i++) {
+        EXPECT_EQ(original[i]->getPoint().getId(),after[i]->getPoint().getId());
+    }
+
+}
+
 TEST(Graph, cutShort) {
     Graph myGraph = getTestGraph4();
     Point P0(0,0,300);
