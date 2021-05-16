@@ -155,6 +155,10 @@ TEST(Graph, getEuler2) {
 
     vector<Point>res = myGraph.getEuler(P1);
 
+    for(auto i: res){
+        cout << i.getId() << "|";
+    }
+    cout <<endl;
 
 }
 
@@ -171,8 +175,8 @@ TEST(Graph, cutShort) {
     Point P8(8,3,3);
     Point P9(9,0,1);
 
-    //vector<Point>res = myGraph.getEuler(P1);
-    vector<Point> res {P1, P2, P3, P4, P5,P3, P6, P7, P6, P8, P9, P1};
+    vector<Point>res = myGraph.getEuler(P1);
+    //vector<Point> res {P1, P2, P3, P4, P5,P3, P6, P7, P6, P8, P9, P1};
     myGraph.cutShort(&res);
     for(auto i: res){
         cout << i.getId() << "|";

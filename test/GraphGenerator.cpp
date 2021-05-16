@@ -133,6 +133,7 @@ Graph getTestGraph4(){
     myGraph.addBidirectionalEdge(P5, P3, 0);
     myGraph.addBidirectionalEdge(P3, P6, 0);
     myGraph.addBidirectionalEdge(P6, P7, 0);
+    myGraph.addBidirectionalEdge(P6, P7, 0);
     myGraph.addBidirectionalEdge(P8, P6, 0);
     myGraph.addBidirectionalEdge(P8, P9, 0);
 
