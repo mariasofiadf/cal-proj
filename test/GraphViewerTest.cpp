@@ -11,7 +11,7 @@
 //Here, one of the nodes should be blinking
 //This is a proof of concept for future Algorithm Visualization
 
-TEST(GraphViewer, blinkingNode){
+/*TEST(GraphViewer, blinkingNode){
     GraphViewer gv;
     // Set coordinates of window center
     gv.setCenter(sf::Vector2f(WIDTH/2, HEIGHT/2));
@@ -33,4 +33,4 @@ TEST(GraphViewer, blinkingNode){
         sleep(1);
     }
     gv.join();
-}
+}*/

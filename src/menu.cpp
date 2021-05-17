@@ -19,17 +19,20 @@ void initialMenu(){
     showMapOptions();
 }
 
-void chooseStart(Graph &graph, GraphViewer &gv){
-    int startID;
-    cout << "Please enter your starting point:\n";
-    startID = getInt(0, graph.getVertexSet().size());
+void choosePoints(Graph &graph, GraphViewer &gv){
+    int startID, destinyID;
+    cout << "Enter your starting point:\n";
+    startID = getInt(0, graph.getVertexSet().size() -1);
 
-    GraphViewer::Node &node0 = gv.getNode(startID);
-    node0.setColor(GraphViewer::GREEN);
+    cout << "Enter your destiny:\n";
+    destinyID = getInt(0, graph.getVertexSet().size() -1);
+
+    GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
+    start.setColor(GraphViewer::GREEN);
+    destiny.setColor(GraphViewer::RED);
     gv.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
     gv.join();
-
 
 
 
@@ -50,6 +53,7 @@ void displayMap(int map){
             break;
         case 2: //8x8
             graphLoader.loadMap("../data/GridGraphs/8x8/nodes.txt", "../data/GridGraphs/8x8/edges.txt");
+            nodeSize = 20;
             break;
         case 3: //Maia
             break;
@@ -66,9 +70,11 @@ void displayMap(int map){
     gvl.loadGraph(g, scale, thickness, nodeSize);
 
 
-    chooseStart(g, gv);
+    choosePoints(g, gv);
 }
 
+void chooseTasks(){
+}
 
 
 void showMapOptions(){
@@ -97,6 +103,7 @@ void showMapOptions(){
         }
     } while (option != 5);
 
+    chooseTasks();
 }
 
 
