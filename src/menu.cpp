@@ -19,8 +19,24 @@ void initialMenu(){
     showMapOptions();
 }
 
+void chooseStart(Graph &graph, GraphViewer &gv){
+    int startID;
+    cout << "Please enter your starting point:\n";
+    startID = getInt(0, graph.getVertexSet().size());
+
+    GraphViewer::Node &node0 = gv.getNode(startID);
+    node0.setColor(GraphViewer::GREEN);
+    gv.createWindow(WIDTH, HEIGHT);
+    // Join viewer thread (blocks till window closed)
+    gv.join();
+
+
+
+
+}
+
 void displayMap(int map){
-    int scale = 1;
+    int scale = 1, nodeSize = 10, thickness = 5;
     GraphViewer gv;
     gv.setCenter(sf::Vector2f(WIDTH/2, HEIGHT/2));     // Set coordinates of window center
     GraphViewerLoader gvl(&gv);
@@ -30,6 +46,7 @@ void displayMap(int map){
     switch (map) {
         case 1: //4x4
             graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt");
+            nodeSize = 20;
             break;
         case 2: //8x8
             graphLoader.loadMap("../data/GridGraphs/8x8/nodes.txt", "../data/GridGraphs/8x8/edges.txt");
@@ -38,19 +55,21 @@ void displayMap(int map){
             break;
         case 4: //Porto
             graphLoader.loadMap("../data/porto/porto_strong_nodes_xy.txt", "../data/porto/porto_strong_edges.txt");
-            scale = 20;
+            scale = 10;
+            nodeSize = 100;
+            thickness =30;
             break;
 
 
     }
 
-    gvl.loadGraph(g, scale);
+    gvl.loadGraph(g, scale, thickness, nodeSize);
 
-    gv.createWindow(WIDTH, HEIGHT);
-    // Join viewer thread (blocks till window closed)
-    gv.join();
 
+    chooseStart(g, gv);
 }
+
+
 
 void showMapOptions(){
     int option;

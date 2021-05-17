@@ -36,6 +36,7 @@ void GraphViewerLoader::loadGraph(Graph graph, int scale, int thickness, int nod
         node0.setColor(GraphViewer::WHITE);
         node0.setLabel(to_string(vertex->getPoint().getId()));
         node0.setSize(nodeSize);
+        //node0.setColor(sf::Color::Cyan);
         nodes.push_back(node0);
     }
     int Eid=0;

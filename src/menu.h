@@ -25,5 +25,9 @@ void initialMenu();
 
 void showMapOptions();
 
+void displayMap(int map);
+
+void chooseStart(Graph &graph, GraphViewer &gv);
+
 
 #endif //UNTITLED_MENU_H
