@@ -55,9 +55,15 @@ void displayMap(int map){
             graphLoader.loadMap("../data/GridGraphs/8x8/nodes.txt", "../data/GridGraphs/8x8/edges.txt");
             nodeSize = 20;
             break;
-        case 3: //Maia
+        case 3: //16x16
+            graphLoader.loadMap("../data/GridGraphs/16x16/nodes.txt", "../data/GridGraphs/16x16/edges.txt");
+            scale = 3;
+            nodeSize = 50;
+            //thickness = 20;
             break;
-        case 4: //Porto
+        case 4: //Maia
+            break;
+        case 5: //Porto
             graphLoader.loadMap("../data/porto/porto_strong_nodes_xy.txt", "../data/porto/porto_strong_edges.txt");
             scale = 10;
             nodeSize = 100;
@@ -78,30 +84,15 @@ void chooseTasks(){
 
 
 void showMapOptions(){
-    int option;
-    do
-    {
+    int option = 0;
+    while(option != 6){
         //system("clear");
         clear();
-        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] Maia\n[4] Porto\n[5] Leave\n";
-        option = getInt(1, 5);
-        switch (option) {
-            case 1:
-                displayMap(1);
-                break;
-            case 2:
-                displayMap(2);
-                break;
-            case 3:
-                displayMap(3);
-                break;
-            case 4:
-                displayMap(4);
-                break;
-            case 5:
-                break;
-        }
-    } while (option != 5);
+        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n[4] Maia\n[5] Porto\n[6] Leave\n";
+        option = getInt(1, 6);
+
+        if(option != 6 && option != 0) displayMap(option);
+    }
 
     chooseTasks();
 }
