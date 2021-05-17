@@ -66,9 +66,9 @@ void displayMap(int map){
             break;
         case 5: //Porto
             graphLoader.loadMap("../data/porto/porto_strong_nodes_xy.txt", "../data/porto/porto_strong_edges.txt");
-            scale = 10;
+            scale = 30;
             nodeSize = 100;
-            thickness =30;
+            thickness = 40;
             break;
 
 
@@ -84,6 +84,7 @@ void displayMap(int map){
 }
 
 void chooseTasks(){
+
 }
 
 
