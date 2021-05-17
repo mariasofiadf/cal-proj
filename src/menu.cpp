@@ -30,6 +30,7 @@ void choosePoints(Graph &graph, GraphViewer &gv){
     GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
     start.setColor(GraphViewer::GREEN);
     destiny.setColor(GraphViewer::RED);
+
     gv.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
     gv.join();
@@ -74,7 +75,10 @@ void displayMap(int map){
     }
 
     gvl.loadGraph(g, scale, thickness, nodeSize);
-
+    gv.createWindow(WIDTH, HEIGHT);
+    // Join viewer thread (blocks till window closed)
+    gv.join();
+    gv.closeWindow();
 
     choosePoints(g, gv);
 }
