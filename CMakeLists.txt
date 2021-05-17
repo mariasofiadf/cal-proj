@@ -22,7 +22,7 @@ include_directories(${GRAPHVIEWERCPP_PATH}/include)
 
 file(GLOB MAIN CONFIGURE_DEPENDS
         "main.cpp"
-        "src/Position.cpp" "src/Position.h" "src/Point.cpp" "src/Point.h" "src/Graph.h"
+        "src/*.cpp"
         )
 
 add_executable(test
@@ -35,4 +35,4 @@ add_executable(main
         ${MAIN})
 
 target_link_libraries(test gtest_main gmock_main graphviewer)
-target_link_libraries(test sqlite3)
+target_link_libraries(main graphviewer)
