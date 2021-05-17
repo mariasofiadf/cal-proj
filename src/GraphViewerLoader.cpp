@@ -3,11 +3,11 @@
 //
 
 #include "GraphViewerLoader.h"
-#define SCALE 1
+#define SCALE 20
 GraphViewerLoader::GraphViewerLoader(GraphViewer *gv) : gv(gv){
 }
 
-void GraphViewerLoader::loadGraph(Graph graph) {
+void GraphViewerLoader::loadGraph(Graph graph, int scale, int thickness, int nodeSize) {
     // Set coordinates of window center
     vector<GraphViewer::Node> nodes;
 
@@ -15,7 +15,7 @@ void GraphViewerLoader::loadGraph(Graph graph) {
     for( auto vertex : graph.getVertexSet()){
         // Create node
         vertex->setViewerIndex(Vid);
-        GraphViewer::Node &node0 = gv->addNode(Vid++, sf::Vector2f((float) abs(vertex->getPoint().getPosition().getX()*SCALE), (float) abs(vertex->getPoint().getPosition().getY()*SCALE)));
+        GraphViewer::Node &node0 = gv->addNode(Vid++, sf::Vector2f((float) abs(vertex->getPoint().getPosition().getX()*scale), (float) abs(vertex->getPoint().getPosition().getY()*scale)));
         switch (vertex->getPoint().getPointType()) {
             case COFFE:
                 node0.setOutlineColor(GraphViewer::GRAY);
@@ -35,14 +35,15 @@ void GraphViewerLoader::loadGraph(Graph graph) {
         }
         node0.setColor(GraphViewer::WHITE);
         node0.setLabel(to_string(vertex->getPoint().getId()));
-        //node0.setSize(node0.getSize()*);
+        node0.setSize(nodeSize);
         nodes.push_back(node0);
     }
     int Eid=0;
     for(auto vertex : graph.getVertexSet()){
         for(auto edge : vertex->getAdj()){
             GraphViewer::Edge &edge0 = gv->addEdge(Eid++, nodes.at(vertex->getViewerIndex()), nodes.at(edge->getDest()->getViewerIndex()), GraphViewer::Edge::EdgeType::DIRECTED);
-            edge0.setColor(GraphViewer::GRAY);
+            edge0.setColor(GraphViewer::BLACK);
+            edge0.setThickness(thickness);
         }
     }
 
@@ -68,7 +69,6 @@ void GraphViewerLoader::colorPath(Graph graph, Point start, Point end) {
                 from.setColor(GraphViewer::GREEN);
                 to.setColor(GraphViewer::GREEN);
             }
-
         }
 
         Vto = Vfrom;

@@ -15,7 +15,8 @@ class GraphViewerLoader {
 public:
     GraphViewerLoader(GraphViewer* gv);
 
-    void loadGraph(Graph graph);
+    void loadGraph(Graph graph, int scale = 1, int thickness = 5.0, int nodeSize = 10.0);
+
 
     void colorPath(Graph graph, Point start, Point end);
 };

@@ -22,15 +22,15 @@ TEST(GraphViewerLoaderTest, load){
 
     GraphLoader graphLoader(&g);
 
-    graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt");
+    graphLoader.loadMap("../data/GridGraphs/8x8/nodes.txt", "../data/GridGraphs/8x8/edges.txt");
     //graphLoader.loadMap("../data/porto/porto_strong_nodes_xy.txt", "../data/porto/porto_strong_edges.txt");
     gvl.loadGraph(g);
 
-    g.dijkstraShortestPath(Point(1,0,0));
+    /*g.dijkstraShortestPath(Point(1,0,0));
 
-    gvl.colorPath(g,Point(1,0,0), Point(18,0,0));
+    gvl.colorPath(g,Point(1,0,0), Point(18,0,0));*/
 
-    g.getPath(Point(1,0,0), Point(18,0, 0));
+    //g.getPath(Point(1,0,0), Point(18,0, 0));
 
     gv.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
