@@ -56,12 +56,6 @@ void GraphLoader::loadNodes(string nodesFilename, int Pnumber, int Cnumber, int 
             if (myNodesFile.eof())
                 break;
         }
-        /*
-        graph->setParks(numberParks);
-        graph->setGas(numberGas);
-        graph->setCoffe(numberCoffe);
-        graph->setStore(numberStore);
-         */
 
         myNodesFile.close();
     }
