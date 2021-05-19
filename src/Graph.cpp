@@ -480,3 +480,22 @@ float Graph::cutShort(vector<Point>* path) {
 
     return pathCost;
 }
+
+Graph Graph::extractMSTfromPath() {
+    for(auto v: vertexSet){
+        v->visited = false;
+    }
+
+    for(auto v: vertexSet){
+        v->adj = vector<Edge*>{};
+        if(v->path == NULL)
+            continue;
+        if(!v->visited and !v->path->visited){
+            addBidirectionalEdge(v, v->path);
+            v->visited=true;
+            v->path->visited = true;
+        }
+    }
+    return Graph();
+}
+
