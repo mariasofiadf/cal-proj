@@ -25,7 +25,7 @@ TEST(GlobalTest, _4x4){
 
     graphViewerLoader.loadGraph(graph);
 
-    int ids[] = {0, 4, 16, 20};
+    int ids[] = {0, 4, 16, 22};
 
     Graph abstractGraph;
     for(auto i: ids)
@@ -44,11 +44,10 @@ TEST(GlobalTest, _4x4){
     }
 
     abstractGraph.primAlgorithm();
+    abstractGraph.extractMSTfromPath();
 
     GraphViewer graphViewerAbs;
-
     GraphViewerLoader graphViewerLoaderAbs(&graphViewerAbs);
-
     graphViewerLoaderAbs.loadGraph(abstractGraph);
 
     graphViewer.setCenter(sf::Vector2f(WIDTH/2, HEIGHT/2));
@@ -59,5 +58,21 @@ TEST(GlobalTest, _4x4){
     graphViewerAbs.setCenter(sf::Vector2f(WIDTH/2, HEIGHT/2));
     graphViewerAbs.createWindow(WIDTH, HEIGHT);
     graphViewerAbs.join();
+    graphViewerAbs.closeWindow();
+
+    abstractGraph.matchingOdd();
+
+    GraphViewer graphViewerMatchingOdd;
+    GraphViewerLoader graphViewerLoaderMatchingOdd(&graphViewerMatchingOdd);
+    graphViewerLoaderMatchingOdd.loadGraph(abstractGraph);
+    graphViewerMatchingOdd.createWindow(WIDTH, HEIGHT);
+    graphViewerMatchingOdd.join();
+
+    vector<Point> route = abstractGraph.getEuler(abstractGraph.getVertexSet().at(0)->getPoint());
+
+    for(auto p : route){
+        cout << p << " ; ";
+    }
+
 
 }

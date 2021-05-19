@@ -490,8 +490,8 @@ Graph Graph::extractMSTfromPath() {
         v->adj = vector<Edge*>{};
         if(v->path == NULL)
             continue;
-        if(!v->visited and !v->path->visited){
-            addBidirectionalEdge(v, v->path);
+        if(!v->visited || !v->path->visited){
+            addBidirectionalEdge(v->getPoint(), v->path->getPoint(),v->getPoint().getPosition().distance(v->path->getPoint().getPosition()));
             v->visited=true;
             v->path->visited = true;
         }
