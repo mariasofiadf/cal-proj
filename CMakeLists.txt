@@ -9,7 +9,7 @@ set(GOOGLETEST_PATH lib/googletest-master)
 add_subdirectory(${GOOGLETEST_PATH})
 
 # Build GraphViewerCpp
-set(GRAPHVIEWERCPP_PATH lib/GraphViewerCpp)
+set(GRAPHVIEWERCPP_PATH lib/NewGraphViewerCpp)
 add_subdirectory(${GRAPHVIEWERCPP_PATH})
 include_directories(${GRAPHVIEWERCPP_PATH}/include)
 
