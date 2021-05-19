@@ -15,6 +15,10 @@ bool Point::operator==(const Point &rhs) const {
     return id == rhs.id;
 }
 
+bool Point::operator!=(const Point &rhs) const {
+    return id != rhs.id;
+}
+
 ostream &operator<<(ostream &os, const Point &point) {
     os << point.id;
     return os;

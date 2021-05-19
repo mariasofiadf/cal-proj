@@ -20,9 +20,9 @@ class GraphLoader {
 public:
     GraphLoader(Graph * graph) : graph(graph) {}
 
-    void loadMap(string nodesFilename, string edgesFilename);
+    void loadMap(string nodesFilename, string edgesFilename, int loadBidirectional = 0);
     void loadNodes(string nodesFilename);
-    void loadEdges(string edgesFilename);
+    void loadEdges(string edgesFilename, int loadBidirectional = 0);
 };
 
 
