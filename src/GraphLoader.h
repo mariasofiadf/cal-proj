@@ -20,9 +20,11 @@ class GraphLoader {
 public:
     GraphLoader(Graph * graph) : graph(graph) {}
 
-    void loadMap(string nodesFilename, string edgesFilename);
-    void loadNodes(string nodesFilename);
-    void loadEdges(string edgesFilename);
+    void loadMap(string nodesFilename, string edgesFilename, int loadBidirectional = 0);
+    void loadEdges(string edgesFilename, int loadBidirectional = 0);
+    void loadNodes(string nodesFilename, float Pnumber = 0.05, float Cnumber = 0.05, float Gnumber = 0.05, float Snumber = 0.05);
+
+    pointType getRandomPointType(int nodes, int &normal, int &park, int &coffee, int &gas, int &store);
 };
 
 

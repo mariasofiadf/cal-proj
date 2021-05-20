@@ -45,7 +45,6 @@ TEST(Graph, matching) {
     }
 
     ASSERT_TRUE(found);
-
 }
 
 TEST(Graph, getOddVertices) {

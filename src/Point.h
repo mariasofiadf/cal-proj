@@ -54,6 +54,8 @@ public:
      */
     bool operator==(const Point &rhs) const;
 
+    bool operator!=(const Point &rhs) const;
+
     /**
      * @brief Outputs Point name
      * @param os

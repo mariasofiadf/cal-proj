@@ -123,6 +123,7 @@ public:
     float cutShort(vector<Point> *eulerPath);
 
     int numberofelements(vector<Point> res);
+    Graph extractMSTfromPath();
 };
 
 
