@@ -24,7 +24,7 @@ void initialMenu();
 
 void displayMap(int map);
 
-void choosePoints(Graph  * graph, GraphViewer &gv);
+void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl);
 
 void chooseOptimization(Graph * graph);
 

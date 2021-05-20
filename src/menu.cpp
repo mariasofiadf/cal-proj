@@ -30,7 +30,7 @@ void chooseTasks(Graph * graph){
 
 }
 
-void choosePoints(Graph  * graph, GraphViewer &gv){
+void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     int startID, destinyID;
     cout << "Enter your starting point:\n";
     startID = getInt(0, graph->getVertexSet().size() -1);
@@ -38,15 +38,25 @@ void choosePoints(Graph  * graph, GraphViewer &gv){
     cout << "Enter your destiny:\n";
     destinyID = getInt(0, graph->getVertexSet().size() -1);
 
-    cout << "Are you doing tasks? (Y/N) \n";
-    bool doTasks = getYesNo();
-
-    if(doTasks)
-        chooseTasks(graph);
-
+    //Coloring origin and destiny points
     GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
     start.setColor(GraphViewer::GREEN);
     destiny.setColor(GraphViewer::RED);
+    Point origin(startID, 0, 0);
+    Point destinyPoint(destinyID, 0, 0);
+
+    cout << "Are you doing tasks? (Y/N) \n";
+    bool doTasks = getYesNo();
+
+  /*  if(!doTasks){
+
+        graph->dijkstraShortestPath(origin);
+        gvl.colorPath(*graph, origin, destinyPoint);
+        graph->getPath(origin, destinyPoint);
+    }*/
+    //chooseTasks(graph);
+
+
 
     gv.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
@@ -107,10 +117,11 @@ void displayMap(int map){
 
     gvl.loadGraph(g, scale, thickness, nodeSize);
     gv.createWindow(WIDTH, HEIGHT);
+
     // Join viewer thread (blocks till window closed)
     gv.join();
     gv.closeWindow();
-    choosePoints(&g, gv);
+    choosePoints(&g, gv, gvl);
 
     chooseOptimization(&g);
 }
