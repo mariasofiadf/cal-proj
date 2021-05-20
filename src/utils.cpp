@@ -5,6 +5,13 @@
 #include "utils.h"
 
 using namespace std;
+
+void printText( string text ) {
+    cout << std::setfill( '*' ) << setw( 40 ) << '*' <<  endl;
+    cout << '*' << left << setfill(' ' )<< setw( 40 - 2 ) << text<< setw( 40 - 2 )<< " *"<< endl;
+    cout << setfill( '*') << setw( 40 ) << '*' <<  endl;
+}
+
 int getInt(int lower, int upper) // Inclusive
 {
     int choice;
