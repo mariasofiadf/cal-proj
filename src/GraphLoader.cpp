@@ -29,7 +29,7 @@ void GraphLoader::loadNodes(string nodesFilename, float pPark, float pCoffee, fl
             double latitude, longitude; char c;
             myNodesFile >> c >> i >> c >> latitude >> c >> longitude >> c;
             pointType type = getRandomPointType(nCount,nNormal, nPark, nCoffee, nGas, nStore);
-/*            if(type == PARK) {
+            if(type == PARK) {
                 PointPark ptp(i, latitude, longitude, 1.0); //MUDAR O PREÇO!
                 graph->addVertex(ptp);
             } else if(type == COFFE){
@@ -44,7 +44,7 @@ void GraphLoader::loadNodes(string nodesFilename, float pPark, float pCoffee, fl
             } else{
                 Point pt(i, latitude, longitude);
                 graph->addVertex(pt);
-            }*/
+            }
             nCount--;
             if (myNodesFile.eof())
                 break;

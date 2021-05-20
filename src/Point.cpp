@@ -45,25 +45,25 @@ void Point::setId(int id) {
 }
 
 
-PointPark::PointPark( const int id, double x, double y, double price) : Point(x, y, id), price(price) {
+PointPark::PointPark( const int id, double x, double y, double price) : Point(id, x, y), price(price) {
     this->pointType = PARK;
 }
 
 
-PointTask::PointTask(const int id, double x, double y) : Point(x, y, id) {
+PointTask::PointTask(const int id, double x, double y) : Point(id, x, y) {
 
 }
 
-PointGas::PointGas(const int id, double x, double y) : PointTask(x, y, id) {
+PointGas::PointGas(const int id, double x, double y) : PointTask(id, x, y) {
     this->pointType = GAS;
 }
 
 
-PointCoffe::PointCoffe(const int id, double x, double y) : PointTask(x, y, id) {
+PointCoffe::PointCoffe(const int id, double x, double y) : PointTask(id, x, y) {
     this->pointType = COFFE;
 }
 
 
-PointStore::PointStore(const int id, double x, double y) : PointTask(x, y, id) {
+PointStore::PointStore(const int id, double x, double y) : PointTask(id, x, y) {
     this->pointType = STORE;
 }

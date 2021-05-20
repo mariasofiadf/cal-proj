@@ -18,25 +18,23 @@ void GraphViewerLoader::loadGraph(Graph graph, int scale, int thickness, int nod
         GraphViewer::Node &node0 = gv->addNode(Vid++, sf::Vector2f((float) abs(vertex->getPoint().getPosition().getX()*scale), (float) abs(vertex->getPoint().getPosition().getY()*scale)));
         switch (vertex->getPoint().getPointType()) {
             case COFFE:
-                node0.setOutlineColor(GraphViewer::GRAY);
+                node0.setColor(GraphViewer::GRAY);
                 break;
             case GAS:
-                node0.setOutlineColor(GraphViewer::YELLOW);
+                node0.setColor(GraphViewer::YELLOW);
                 break;
             case STORE:
-                node0.setOutlineColor(GraphViewer::RED);
+                node0.setColor(GraphViewer::RED);
                 break;
             case PARK:
-                node0.setOutlineColor(GraphViewer::BLUE);
+                node0.setColor(GraphViewer::BLUE);
                 break;
             default:
-                node0.setOutlineColor(GraphViewer::BLACK);
+                node0.setColor(GraphViewer::WHITE);
                 break;
         }
-        node0.setColor(GraphViewer::WHITE);
         node0.setLabel(to_string(vertex->getPoint().getId()));
         node0.setSize(nodeSize);
-        //node0.setColor(sf::Color::Cyan);
         nodes.push_back(node0);
     }
     int Eid=0;
