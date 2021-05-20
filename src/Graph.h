@@ -128,7 +128,7 @@ public:
 
     vector<vector<Vertex*>> getSCC();
     void fillOrder(Vertex * v, stack<Vertex*>&stack);
-    vector<Vertex*> DFSUtil(Vertex * v);
+    vector<Vertex*> DFSUtil(Vertex * v, vector<Vertex*> &vector);
     Graph getTranspose();
 };
 

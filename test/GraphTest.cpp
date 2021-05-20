@@ -242,3 +242,4 @@ TEST(Graph, getTranspose) {
         v = v->getAdj().at(1)->getDest();
     }while(v->getPoint().getId() != 0);
 }
+

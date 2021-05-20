@@ -500,15 +500,51 @@ Graph Graph::extractMSTfromPath() {
 }
 
 vector<vector<Vertex *>> Graph::getSCC() {
-    return vector<vector<Vertex *>>();
+
+    vector<vector<Vertex *>> res;
+    stack<Vertex*> stack;
+    for(auto v :vertexSet)
+        v->visited = false;
+
+
+    for(auto v :vertexSet){
+        if(!v->visited)
+            fillOrder(v, stack);
+    }
+
+    Graph gr = getTranspose();
+
+    for(auto v :vertexSet)
+        v->visited = false;
+
+    while(!stack.empty()){
+        Vertex * v = stack.top(); stack.pop();
+        if(!v->visited)
+        {
+            vector<Vertex *> vec;
+            gr.DFSUtil(v, vec);
+            res.push_back(vec);
+        }
+    }
+    return res;
 }
 
 void Graph::fillOrder(Vertex *v, stack<Vertex *> &stack) {
-
+    v->visited = true;
+    for(auto e : v->getAdj()){
+        if(!e->dest->visited)
+            fillOrder(e->dest, stack);
+    }
+    stack.push(v);
 }
 
-vector<Vertex *> Graph::DFSUtil(Vertex *v) {
-    return vector<Vertex *>();
+vector<Vertex *> Graph::DFSUtil(Vertex *v, vector<Vertex*> &vector) {
+    v->visited = true;
+    vector.push_back(v);
+    for(auto e : v->getAdj()){
+        if(!e->dest->visited)
+            DFSUtil(e->dest, vector);
+    }
 }
 
 Graph Graph::getTranspose() {
