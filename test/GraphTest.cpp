@@ -212,3 +212,33 @@ TEST(Graph, cutShort) {
 
 }
 
+TEST(Graph, getTranspose) {
+    Graph myGraph;
+    Point P0(0,-10,-10);
+    Point P1(1,10,-10);
+    Point P2(2,10,10);
+    Point P3(3,-10,10);
+
+    myGraph.addVertex(P0);
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addEdge(P0, P1, 1);
+    myGraph.addEdge(P1, P2, 1);
+    myGraph.addEdge(P2, P3, 1);
+    myGraph.addEdge(P3, P0, 1);
+
+    Graph transposed = myGraph.getTranspose();
+
+    for(auto v : transposed.getVertexSet()){
+        ASSERT_EQ(v->getAdj().size(), 2);
+    }
+
+    Vertex * v = transposed.findVertex(P3);
+    int i = 3;
+    do {
+        ASSERT_EQ(v->getPoint().getId(), i);
+        i--;
+        v = v->getAdj().at(1)->getDest();
+    }while(v->getPoint().getId() != 0);
+}

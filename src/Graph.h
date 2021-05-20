@@ -9,6 +9,7 @@
 #include <limits>
 #include <algorithm>
 #include <unordered_set>
+#include <stack>
 #include "MutablePriorityQueue.h"
 
 #include "Point.h"
@@ -124,6 +125,11 @@ public:
 
     int numberofelements(vector<Point> res);
     Graph extractMSTfromPath();
+
+    vector<vector<Vertex*>> getSCC();
+    void fillOrder(Vertex * v, stack<Vertex*>&stack);
+    vector<Vertex*> DFSUtil(Vertex * v);
+    Graph getTranspose();
 };
 
 

@@ -499,3 +499,30 @@ Graph Graph::extractMSTfromPath() {
     return Graph();
 }
 
+vector<vector<Vertex *>> Graph::getSCC() {
+    return vector<vector<Vertex *>>();
+}
+
+void Graph::fillOrder(Vertex *v, stack<Vertex *> &stack) {
+
+}
+
+vector<Vertex *> Graph::DFSUtil(Vertex *v) {
+    return vector<Vertex *>();
+}
+
+Graph Graph::getTranspose() {
+    Graph graph;
+    for(auto v : vertexSet){
+        Point p = v->getPoint();
+        graph.addVertex(p);
+    }
+    for(auto v : vertexSet){
+        for(auto e: v->getAdj()){
+            if(e->getOrig()->getPoint().getId() == v->getPoint().getId())
+                graph.addEdge(v->getPoint(), e->getDest()->getPoint(), e->weight);
+        }
+    }
+    return graph;
+}
+
