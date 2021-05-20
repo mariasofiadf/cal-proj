@@ -26,6 +26,10 @@ void initialMenu(){
     }
 }
 
+void chooseTasks(Graph * graph){
+
+}
+
 void choosePoints(Graph  * graph, GraphViewer &gv){
     int startID, destinyID;
     cout << "Enter your starting point:\n";
@@ -33,6 +37,12 @@ void choosePoints(Graph  * graph, GraphViewer &gv){
 
     cout << "Enter your destiny:\n";
     destinyID = getInt(0, graph->getVertexSet().size() -1);
+
+    cout << "Are you doing tasks? (Y/N) \n";
+    bool doTasks = getYesNo();
+
+    if(doTasks)
+        chooseTasks(graph);
 
     GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
     start.setColor(GraphViewer::GREEN);
@@ -46,22 +56,20 @@ void choosePoints(Graph  * graph, GraphViewer &gv){
 
 }
 
-void chooseTasks(Graph * graph){
+void chooseOptimization(Graph * graph){
     int option;
 
     cout << "Pretende otimizar:\n";
-    cout << "Choose a map: \n" << "[1] Distância percorrida até ao parque de estacionamento\n"
-                                  "[2] Preço a pagar pelo estacionamento\n"
-                                  "[3] Distância a percorrer a pé até ao ponto de destino D\n"
-                                  "[4] Leave\n";
+    cout << "[1] Distância percorrida até ao parque de estacionamento\n"
+            "[2] Preço a pagar pelo estacionamento\n"
+            "[3] Distância a percorrer a pé até ao ponto de destino D\n"
+            "[4] Leave\n";
     option = getInt(1, 4);
 
     if(option == 4 )
         return;
     //getPark(option, graph);
 
-    cout << "Are you doing tasks? (Y/N) \n";
-    bool doTasks = getYesNo();
 }
 
 void displayMap(int map){
@@ -74,15 +82,15 @@ void displayMap(int map){
     GraphLoader graphLoader(&g);
     switch (map) {
         case 1: //4x4
-            graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt");
+            graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt", 1);
             nodeSize = 20;
             break;
         case 2: //8x8
-            graphLoader.loadMap("../data/GridGraphs/8x8/nodes.txt", "../data/GridGraphs/8x8/edges.txt");
+            graphLoader.loadMap("../data/GridGraphs/8x8/nodes.txt", "../data/GridGraphs/8x8/edges.txt", 1);
             nodeSize = 20;
             break;
         case 3: //16x16
-            graphLoader.loadMap("../data/GridGraphs/16x16/nodes.txt", "../data/GridGraphs/16x16/edges.txt");
+            graphLoader.loadMap("../data/GridGraphs/16x16/nodes.txt", "../data/GridGraphs/16x16/edges.txt", 1);
             scale = 3;
             nodeSize = 50;
             //thickness = 20;
@@ -95,8 +103,6 @@ void displayMap(int map){
             nodeSize = 100;
             thickness = 40;
             break;
-
-
     }
 
     gvl.loadGraph(g, scale, thickness, nodeSize);
@@ -106,7 +112,7 @@ void displayMap(int map){
     gv.closeWindow();
     choosePoints(&g, gv);
 
-    chooseTasks(&g);
+    chooseOptimization(&g);
 }
 
 

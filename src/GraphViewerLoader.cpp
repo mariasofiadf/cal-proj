@@ -24,7 +24,7 @@ void GraphViewerLoader::loadGraph(Graph graph, int scale, int thickness, int nod
                 node0.setColor(GraphViewer::YELLOW);
                 break;
             case STORE:
-                node0.setColor(GraphViewer::RED);
+                node0.setColor(GraphViewer::ORANGE);
                 break;
             case PARK:
                 node0.setColor(GraphViewer::BLUE);

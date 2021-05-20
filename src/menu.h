@@ -26,6 +26,8 @@ void displayMap(int map);
 
 void choosePoints(Graph  * graph, GraphViewer &gv);
 
+void chooseOptimization(Graph * graph);
+
 void chooseTasks(Graph * graph);
 
 
