@@ -12,6 +12,7 @@
 #include "../test/GraphGenerator.h"
 
 TEST(GlobalTest, _4x4){
+/*
 
     Graph graph;
 
@@ -73,6 +74,7 @@ TEST(GlobalTest, _4x4){
     for(auto p : route){
         cout << p << " ; ";
     }
+*/
 
 
 }
