@@ -7,25 +7,32 @@
 
 using namespace std;
 
-void printText( string text ) {
-    cout << std::setfill( '*' ) << setw( 40 ) << '*' <<  endl;
-    cout << '*' << left << setfill(' ' )<< setw( 40 - 2 ) << text<< setw( 40 - 2 )<< " *"<< endl;
-    cout << setfill( '*') << setw( 40 ) << '*' <<  endl;
-}
+
 
 void initialMenu(){
     string text = "     À procura de estacionamento";
-    printText(text);
-    showMapOptions();
+
+    int option = 0;
+    Graph * graph;
+
+    while(option != 6){
+        clear();
+        printText(text);
+        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n[4] Maia\n[5] Porto\n[6] Leave\n";
+        option = getInt(1, 6);
+
+        if(option != 6 && option != 0)
+            displayMap(option);
+    }
 }
 
-void choosePoints(Graph &graph, GraphViewer &gv){
+void choosePoints(Graph  * graph, GraphViewer &gv){
     int startID, destinyID;
     cout << "Enter your starting point:\n";
-    startID = getInt(0, graph.getVertexSet().size() -1);
+    startID = getInt(0, graph->getVertexSet().size() -1);
 
     cout << "Enter your destiny:\n";
-    destinyID = getInt(0, graph.getVertexSet().size() -1);
+    destinyID = getInt(0, graph->getVertexSet().size() -1);
 
     GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
     start.setColor(GraphViewer::GREEN);
@@ -37,6 +44,24 @@ void choosePoints(Graph &graph, GraphViewer &gv){
 
 
 
+}
+
+void chooseTasks(Graph * graph){
+    int option;
+
+    cout << "Pretende otimizar:\n";
+    cout << "Choose a map: \n" << "[1] Distância percorrida até ao parque de estacionamento\n"
+                                  "[2] Preço a pagar pelo estacionamento\n"
+                                  "[3] Distância a percorrer a pé até ao ponto de destino D\n"
+                                  "[4] Leave\n";
+    option = getInt(1, 4);
+
+    if(option == 4 )
+        return;
+    //getPark(option, graph);
+
+    cout << "Are you doing tasks? (Y/N) \n";
+    bool doTasks = getYesNo();
 }
 
 void displayMap(int map){
@@ -79,28 +104,11 @@ void displayMap(int map){
     // Join viewer thread (blocks till window closed)
     gv.join();
     gv.closeWindow();
+    choosePoints(&g, gv);
 
-    choosePoints(g, gv);
+    chooseTasks(&g);
 }
 
-void chooseTasks(){
-
-}
-
-
-void showMapOptions(){
-    int option = 0;
-    while(option != 6){
-        //system("clear");
-        clear();
-        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n[4] Maia\n[5] Porto\n[6] Leave\n";
-        option = getInt(1, 6);
-
-        if(option != 6 && option != 0) displayMap(option);
-    }
-
-    chooseTasks();
-}
 
 
 
