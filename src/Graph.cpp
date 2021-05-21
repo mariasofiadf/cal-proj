@@ -503,9 +503,8 @@ vector<vector<Vertex *>> Graph::getSCC() {
 
     vector<vector<Vertex *>> res;
     stack<Vertex*> stack;
-    for(auto v :vertexSet)
+    for(auto v : vertexSet)
         v->visited = false;
-
 
     for(auto v :vertexSet){
         if(!v->visited)
@@ -519,6 +518,7 @@ vector<vector<Vertex *>> Graph::getSCC() {
 
     while(!stack.empty()){
         Vertex * v = stack.top(); stack.pop();
+        v = gr.findVertex(v->getPoint());
         if(!v->visited)
         {
             vector<Vertex *> vec;
@@ -542,7 +542,7 @@ void Graph::DFSUtil(Vertex *v, vector<Vertex*> &vector) {
     v->visited = true;
     vector.push_back(v);
     for(auto e : v->getAdj()){
-        if(!e->dest->visited)
+        if(!e->dest->visited && e->getOrig()->getPoint().getId() == v->getPoint().getId())
             DFSUtil(e->dest, vector);
     }
 }
@@ -556,7 +556,7 @@ Graph Graph::getTranspose() {
     for(auto v : vertexSet){
         for(auto e: v->getAdj()){
             if(e->getOrig()->getPoint().getId() == v->getPoint().getId())
-                graph.addEdge(v->getPoint(), e->getDest()->getPoint(), e->weight);
+                graph.addEdge(e->getDest()->getPoint(), v->getPoint(), e->weight);
         }
     }
     return graph;

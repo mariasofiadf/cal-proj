@@ -146,7 +146,6 @@ Graph getTestGraph5(){
     Point P1(1, 0, 0);
     Point P2(2, 10, 0);
     Point P3(3, 10, 10);
-
     Point P4(4, 20, 0);
     Point P5(5, 20, 10);
     Point P6(6, 30, 10);
@@ -173,4 +172,6 @@ Graph getTestGraph5(){
     myGraph.addEdge(P6, P4, 1);
     myGraph.addEdge(P7, P6, 1);
     myGraph.addEdge(P7, P8, 1);
+
+    return myGraph;
 }

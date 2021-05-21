@@ -239,8 +239,9 @@ TEST(Graph, getTranspose) {
     do {
         ASSERT_EQ(v->getPoint().getId(), i);
         i--;
-        v = v->getAdj().at(1)->getDest();
+        v = v->getAdj().at(0)->getDest();
     }while(v->getPoint().getId() != 0);
+
 }
 
 
@@ -306,9 +307,16 @@ TEST(Graph, DFSUtil) {
     }
 }
 
-/*
+
 TEST(Graph, getSCC) {
     Graph myGraph = getTestGraph5();
 
+    vector<vector<Vertex *>> scc = myGraph.getSCC();
 
-}*/
+    for(auto component : scc){
+        for(auto vertex : component){
+            cout << vertex->getPoint().getId();
+        }
+        cout << endl;
+    }
+}
