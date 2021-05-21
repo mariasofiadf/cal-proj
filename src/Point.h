@@ -76,10 +76,12 @@ public:
 class PointPark : public Point{
 private:
     static int numParks;
-    double price;
+    double fixPrice;
+    double priceRate;
 public:
-    PointPark(const int id, double x, double y, double price);
+    PointPark(const int id, double x, double y);
     enum pointType getType();
+    double getPricePaid(int time);
 };
 
 /** class PointTask
