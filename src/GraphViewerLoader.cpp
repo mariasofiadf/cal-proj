@@ -69,6 +69,8 @@ void GraphViewerLoader::colorPath(Graph graph, Point start, Point end) {
                 e.setColor(GraphViewer::GREEN);
                 //from.setColor(GraphViewer::GREEN);
                 //to.setColor(GraphViewer::GREEN);
+            }else if(e.getFrom()->getId() == to.getId() && e.getTo()->getId()==from.getId()){
+                e.setColor(GraphViewer::GREEN);
             }
         }
 

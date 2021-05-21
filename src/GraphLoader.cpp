@@ -30,8 +30,10 @@ void GraphLoader::loadNodes(string nodesFilename, float pPark, float pCoffee, fl
             myNodesFile >> c >> i >> c >> latitude >> c >> longitude >> c;
             pointType type = getRandomPointType(nCount,nNormal, nPark, nCoffee, nGas, nStore);
             if(type == PARK) {
-                PointPark ptp(i, latitude, longitude, 1.0); //MUDAR O PREÇO!
-                graph->addVertex(ptp);
+                //srand (i);
+                PointPark * ptp = new PointPark(i, latitude, longitude); //MUDAR O PREÇO!
+                graph->addPark(ptp);
+                graph->addVertex(*ptp);
             } else if(type == COFFE){
                 PointCoffe ptc(i, latitude, longitude);
                 graph->addVertex(ptc);
@@ -69,6 +71,8 @@ void GraphLoader::loadEdges(string edgesFilename, int loadBidirectional) {
             double latitude, longitude; char c;
             myEdgesFile >> c >> id1 >> c >> id2>> c;
             Point p1(id1,0,0), p2(id2,0,0);
+            Vertex* v1 = graph->findVertex(p1), *v2 = graph->findVertex(p2);
+            p1 = v1->getPoint(); p2 = v2->getPoint();
             if(loadBidirectional)
                 graph->addBidirectionalEdge(p1,p2,p1.getPosition().distance(p2.getPosition()) );
             else

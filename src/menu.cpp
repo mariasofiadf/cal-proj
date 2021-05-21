@@ -30,6 +30,23 @@ void chooseTasks(Graph * graph){
 
 }
 
+int chooseOptimization(Graph * graph, Point * destiny, Point * orig){
+    int option;
+    int timeParked = 0;
+    cout << "Pretende otimizar:\n";
+    cout << "[1] Distância percorrida até ao parque de estacionamento\n"
+            "[2] Preço a pagar pelo estacionamento\n"
+            "[3] Distância a percorrer a pé até ao ponto de destino D\n"
+            "[4] Leave\n";
+    option = getInt(1, 4);
+    cout << "Insira o tempo de estacionamento (min)...\n";
+    timeParked = getInt(0, 500000);
+
+
+    Point * destPark = graph->getPark(option, destiny, orig, 15);
+    return  destPark->getId();
+}
+
 void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     int startID, destinyID;
     cout << "Enter your starting point:\n";
@@ -42,21 +59,29 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
     start.setColor(GraphViewer::GREEN);
     destiny.setColor(GraphViewer::RED);
-    Point origin(startID, 0, 0);
-    Point destinyPoint(destinyID, 0, 0);
+
 
     cout << "Are you doing tasks? (Y/N) \n";
     bool doTasks = getYesNo();
 
+
+
+    //chooseTasks(graph);
+    Point origin(startID, 0, 0);
+    Point destinyPoint(destinyID, 0, 0);
+    int parkID = chooseOptimization(graph, &destinyPoint, &origin);
+    Point parkPoint(parkID, 0, 0);
+
+    GraphViewer::Node &park = gv.getNode(parkID);
+    park.setColor(GraphViewer::RED);
+
     if(!doTasks){
 
         graph->dijkstraShortestPath(origin);
-        gvl.colorPath(*graph, origin, destinyPoint);
+        if(!graph->getPath(origin, parkPoint).empty())
+            gvl.colorPath(*graph, origin, destinyPoint);
         //graph->getPath(origin, destinyPoint);
     }
-    //chooseTasks(graph);
-
-
 
     gv.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
@@ -64,23 +89,10 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
 
 
 
-}
-
-void chooseOptimization(Graph * graph){
-    int option;
-
-    cout << "Pretende otimizar:\n";
-    cout << "[1] Distância percorrida até ao parque de estacionamento\n"
-            "[2] Preço a pagar pelo estacionamento\n"
-            "[3] Distância a percorrer a pé até ao ponto de destino D\n"
-            "[4] Leave\n";
-    option = getInt(1, 4);
-
-    if(option == 4 )
-        return;
-    //getPark(option, graph);
 
 }
+
+
 
 void displayMap(int map){
     int scale = 1, nodeSize = 10, thickness = 5;
@@ -123,7 +135,7 @@ void displayMap(int map){
     gv.closeWindow();
     choosePoints(&g, gv, gvl);
 
-    chooseOptimization(&g);
+
 }
 
 
