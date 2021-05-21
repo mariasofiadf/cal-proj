@@ -68,6 +68,7 @@ class Edge {
     double weight;              // edge weight
     bool selected = false;      // Fp07
     Edge *reverse = nullptr; // Fp07
+    int viewerIndex = 0;
 public:
     Edge(Vertex *o, Vertex *d, double w);
     friend class Graph;
@@ -76,6 +77,10 @@ public:
     double getWeight() const;
     Vertex *getOrig() const;
     Vertex *getDest() const;
+
+    int getViewerIndex() const;
+
+    void setViewerIndex(int viewerIndex);
 };
 
 /********************** Edge  ****************************/

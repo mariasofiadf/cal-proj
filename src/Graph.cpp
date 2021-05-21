@@ -124,6 +124,14 @@ Vertex *Edge::getDest() const {
     return dest;
 }
 
+int Edge::getViewerIndex() const {
+    return viewerIndex;
+}
+
+void Edge::setViewerIndex(int viewerIndex) {
+    Edge::viewerIndex = viewerIndex;
+}
+
 /*
  * Auxiliary function to find a vertex with a given content.
  */
