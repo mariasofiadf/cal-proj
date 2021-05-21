@@ -9,6 +9,7 @@
 #include <limits>
 #include <algorithm>
 #include <unordered_set>
+#include <stack>
 #include "MutablePriorityQueue.h"
 
 #include "Point.h"
@@ -67,6 +68,7 @@ class Edge {
     double weight;              // edge weight
     bool selected = false;      // Fp07
     Edge *reverse = nullptr; // Fp07
+    int viewerIndex = 0;
 public:
     Edge(Vertex *o, Vertex *d, double w);
     friend class Graph;
@@ -75,6 +77,10 @@ public:
     double getWeight() const;
     Vertex *getOrig() const;
     Vertex *getDest() const;
+
+    int getViewerIndex() const;
+
+    void setViewerIndex(int viewerIndex);
 };
 
 /********************** Edge  ****************************/
@@ -126,11 +132,17 @@ public:
     int numberofelements(vector<Point> res);
     Graph extractMSTfromPath();
 
+    vector<vector<Vertex*>> getSCC();
+    void fillOrder(Vertex * v, stack<Vertex*>&stack);
+    void DFSUtil(Vertex * v, vector<Vertex*> &vector);
+    Graph getTranspose();
+
     Point * getPark(int optimization, Point * dest ,Point * origin, int timeParked);
     void addPark(PointPark * park);
 
     Point * getParkByPrice(Point *dest, Point *orig, int timeParked);
     Point * getParkByDistance(Point * dest);
+
 };
 
 

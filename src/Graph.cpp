@@ -124,6 +124,14 @@ Vertex *Edge::getDest() const {
     return dest;
 }
 
+int Edge::getViewerIndex() const {
+    return viewerIndex;
+}
+
+void Edge::setViewerIndex(int viewerIndex) {
+    Edge::viewerIndex = viewerIndex;
+}
+
 /*
  * Auxiliary function to find a vertex with a given content.
  */
@@ -504,6 +512,69 @@ Graph Graph::extractMSTfromPath() {
     return Graph();
 }
 
+vector<vector<Vertex *>> Graph::getSCC() {
+
+    vector<vector<Vertex *>> res;
+    stack<Vertex*> stack;
+    for(auto v : vertexSet)
+        v->visited = false;
+
+    for(auto v :vertexSet){
+        if(!v->visited)
+            fillOrder(v, stack);
+    }
+
+    Graph gr = getTranspose();
+
+    for(auto v :vertexSet)
+        v->visited = false;
+
+    while(!stack.empty()){
+        Vertex * v = stack.top(); stack.pop();
+        v = gr.findVertex(v->getPoint());
+        if(!v->visited)
+        {
+            vector<Vertex *> vec;
+            gr.DFSUtil(v, vec);
+            res.push_back(vec);
+        }
+    }
+    return res;
+}
+
+void Graph::fillOrder(Vertex *v, stack<Vertex *> &stack) {
+    v->visited = true;
+    for(auto e : v->getAdj()){
+        if(!e->dest->visited)
+            fillOrder(e->dest, stack);
+    }
+    stack.push(v);
+}
+
+void Graph::DFSUtil(Vertex *v, vector<Vertex*> &vector) {
+    v->visited = true;
+    vector.push_back(v);
+    for(auto e : v->getAdj()){
+        if(!e->dest->visited && e->getOrig()->getPoint().getId() == v->getPoint().getId())
+            DFSUtil(e->dest, vector);
+    }
+}
+
+Graph Graph::getTranspose() {
+    Graph graph;
+    for(auto v : vertexSet){
+        Point p = v->getPoint();
+        graph.addVertex(p);
+    }
+    for(auto v : vertexSet){
+        for(auto e: v->getAdj()){
+            if(e->getOrig()->getPoint().getId() == v->getPoint().getId())
+                graph.addEdge(e->getDest()->getPoint(), v->getPoint(), e->weight);
+        }
+    }
+    return graph;
+}
+
 Point *Graph::getPark(int optimization, Point *destiny, Point * origin, int timeParked) {
     Point * destPark = nullptr;
     switch (optimization) {
@@ -546,5 +617,3 @@ Point *Graph::getParkByPrice(Point *dest, Point *orig, int timeParked) {
 
     return parkToReturn;
 }
-
-

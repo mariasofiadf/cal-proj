@@ -21,3 +21,5 @@ Graph getTestGraph3();
 
 //O exemplo dos slides
 Graph getTestGraph4();
+
+Graph getTestGraph5();
