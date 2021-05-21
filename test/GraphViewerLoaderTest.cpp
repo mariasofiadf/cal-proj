@@ -26,9 +26,12 @@ TEST(GraphViewerLoaderTest, load){
     //graphLoader.loadMap("../data/porto/porto_strong_nodes_xy.txt", "../data/porto/porto_strong_edges.txt");
     gvl.loadGraph(g);
 
-    /*g.dijkstraShortestPath(Point(1,0,0));
+    g.dijkstraShortestPath(Point(1,0,0));
 
-    gvl.colorPath(g,Point(1,0,0), Point(18,0,0));*/
+    Point p1(1,0,0);
+    Point p2(56,0,0);
+
+    gvl.colorPath(g,p1, p2);
 
     //g.getPath(Point(1,0,0), Point(18,0, 0));
 

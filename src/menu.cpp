@@ -48,12 +48,12 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     cout << "Are you doing tasks? (Y/N) \n";
     bool doTasks = getYesNo();
 
-  /*  if(!doTasks){
+    if(!doTasks){
 
         graph->dijkstraShortestPath(origin);
         gvl.colorPath(*graph, origin, destinyPoint);
-        graph->getPath(origin, destinyPoint);
-    }*/
+        //graph->getPath(origin, destinyPoint);
+    }
     //chooseTasks(graph);
 
 

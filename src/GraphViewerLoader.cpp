@@ -40,9 +40,11 @@ void GraphViewerLoader::loadGraph(Graph graph, int scale, int thickness, int nod
     int Eid=0;
     for(auto vertex : graph.getVertexSet()){
         for(auto edge : vertex->getAdj()){
-            GraphViewer::Edge &edge0 = gv->addEdge(Eid++, nodes.at(vertex->getViewerIndex()), nodes.at(edge->getDest()->getViewerIndex()), GraphViewer::Edge::EdgeType::DIRECTED);
-            edge0.setColor(GraphViewer::BLACK);
-            edge0.setThickness(thickness);
+            if(edge->getOrig()->getPoint().getId() == vertex->getPoint().getId()) {
+                GraphViewer::Edge &edge0 = gv->addEdge(Eid++, nodes.at(vertex->getViewerIndex()), nodes.at(edge->getDest()->getViewerIndex()), GraphViewer::Edge::EdgeType::DIRECTED);
+                edge0.setColor(GraphViewer::BLACK);
+                edge0.setThickness(thickness);
+            }
         }
     }
 
@@ -59,16 +61,23 @@ void GraphViewerLoader::colorPath(Graph graph, Point start, Point end) {
     do {
         GraphViewer::Node to = gv->getNode(Vto->getPoint().getId());
         GraphViewer::Node from = gv->getNode(Vfrom->getPoint().getId());
-        //to.setColor(GraphViewer::GREEN);
+        to.setColor(GraphViewer::GREEN);
         //vector<GraphViewer::Edge *> edges = gv->getEdges();
         for(int x = 0; x < gv->getEdges().size(); x++){
             GraphViewer::Edge e = gv->getEdge(x);
             if(e.getFrom()->getId() == from.getId() && e.getTo()->getId()==to.getId()) {
                 e.setColor(GraphViewer::GREEN);
-                from.setColor(GraphViewer::GREEN);
-                to.setColor(GraphViewer::GREEN);
+                //from.setColor(GraphViewer::GREEN);
+                //to.setColor(GraphViewer::GREEN);
             }
         }
+
+/*        for(auto e : gv->getEdges())
+        {e->setColor(GraphViewer::GREEN);
+            //if(e->getFrom()->getId()==from.getId() & e->getTo()->getId() == to.getId()){
+                e->setColor(GraphViewer::GREEN);
+
+        }*/
 
         Vto = Vfrom;
         Vfrom = Vfrom->getPath();
