@@ -49,11 +49,11 @@ Graph getTestGraph2(){
     Graph myGraph;
 
     Point P0(0,1, 1);
-    PointPark PK1(1,3, 1, 3.0);
+    PointPark PK1(1,3, 1);
     PointGas G2(2,0, 3);
     PointCoffe C3(3,2, 4);
-    PointPark PK4(4,3, 5, 2.0);
-    PointPark PK5(5,0, 6, 2.6);
+    PointPark PK4(4,3, 5);
+    PointPark PK5(5,0, 6);
     Point P6(6,1, 7);
 
     myGraph.addVertex(P0);

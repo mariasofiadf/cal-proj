@@ -24,7 +24,7 @@ void GraphViewerLoader::loadGraph(Graph graph, int scale, int thickness, int nod
                 node0.setColor(GraphViewer::YELLOW);
                 break;
             case STORE:
-                node0.setColor(GraphViewer::RED);
+                node0.setColor(GraphViewer::ORANGE);
                 break;
             case PARK:
                 node0.setColor(GraphViewer::BLUE);
@@ -40,10 +40,12 @@ void GraphViewerLoader::loadGraph(Graph graph, int scale, int thickness, int nod
     int Eid=0;
     for(auto vertex : graph.getVertexSet()){
         for(auto edge : vertex->getAdj()){
-            edge->setViewerIndex(Eid);
-            GraphViewer::Edge &edge0 = gv->addEdge(Eid++, nodes.at(vertex->getViewerIndex()), nodes.at(edge->getDest()->getViewerIndex()), GraphViewer::Edge::EdgeType::DIRECTED);
-            edge0.setColor(GraphViewer::BLACK);
-            edge0.setThickness(thickness);
+            if(edge->getOrig()->getPoint().getId()==vertex->getPoint().getId()){
+                edge->setViewerIndex(Eid);
+                GraphViewer::Edge &edge0 = gv->addEdge(Eid++, nodes.at(vertex->getViewerIndex()), nodes.at(edge->getDest()->getViewerIndex()), GraphViewer::Edge::EdgeType::DIRECTED);
+                edge0.setColor(GraphViewer::BLACK);
+                edge0.setThickness(thickness);
+            }
         }
     }
 }
@@ -59,15 +61,21 @@ void GraphViewerLoader::colorPath(Graph graph, Point start, Point end) {
     do {
         GraphViewer::Node to = gv->getNode(Vto->getViewerIndex());
         GraphViewer::Node from = gv->getNode(Vfrom->getViewerIndex());
+        from.setColor(GraphViewer::GREEN);
+        to.setColor(GraphViewer::GREEN);
         for(auto edge : Vfrom->getAdj()){
             if(edge->getDest()->getPoint().getId() == Vto->getPoint().getId()){
-                GraphViewer::Edge e = gv->getEdge(edge->getViewerIndex());
+                GraphViewer::Edge &e = gv->getEdge(edge->getViewerIndex());
                 e.setColor(GraphViewer::GREEN);
-                from.setColor(GraphViewer::GREEN);
-                to.setColor(GraphViewer::GREEN);
             }
         }
-        
+        for(auto edge : Vto->getAdj()){
+            if(edge->getDest()->getPoint().getId() == Vfrom->getPoint().getId()){
+                GraphViewer::Edge &e = gv->getEdge(edge->getViewerIndex());
+                e.setColor(GraphViewer::GREEN);
+            }
+        }
+
         Vto = Vfrom;
         Vfrom = Vfrom->getPath();
     } while(Vfrom != NULL);

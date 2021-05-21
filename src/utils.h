@@ -6,6 +6,7 @@
 #define UNTITLED_UTILS_H
 
 #include <iostream>
+#include <iomanip>
 #include <string>
 
 using namespace std;
@@ -32,6 +33,9 @@ bool getYesNo();
  *
  */
 void clear();
+
+void printText( string text );
+
 
 
 

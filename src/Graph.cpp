@@ -238,16 +238,21 @@ void Graph::dijkstraShortestPath(const Point &origin) {
 
 std::vector<Point> Graph::getPath(const Point &origin, const Point &dest) const{
     std::vector<Point> res;
-    for (auto v = findVertex(dest); v != NULL; v = v-> path) {
+
+    auto v = findVertex(dest);
+    for (v; v != NULL; v = v-> path) {
         res.push_back(v->info);
         if (v->info == origin)
             break;
     }
+    if(v == NULL)
+        return vector<Point>() ;
+
     reverse(res.begin(), res.end());
     return res;
 }
 
-void Graph::markPossibleParks(Point &source) {
+void Graph::markPossibleParks(Point  *source) {
 
     double maxDist = 1000;
     typename std::vector<Vertex *>::iterator it;
@@ -257,9 +262,9 @@ void Graph::markPossibleParks(Point &source) {
 
     for(it = vertexSet.begin(); it != vertexSet.end(); it++)
     {
-        bool validDist = source.getPosition().distance((*it)->getPoint().getPosition()) < maxDist;
+        bool validDist = source->getPosition().distance((*it)->getPoint().getPosition()) < maxDist;
         auto point = (*it)->getPoint();
-        enum pointType pointType = (*it)->getPoint().getPointType();
+        //enum pointType pointType = (*it)->getPoint().getPointType();
         bool isPark = (*it)->getPoint().getPointType() == PARK;
         if(validDist && isPark)
             (*it)->marked = true;
@@ -570,3 +575,45 @@ Graph Graph::getTranspose() {
     return graph;
 }
 
+Point *Graph::getPark(int optimization, Point *destiny, Point * origin, int timeParked) {
+    Point * destPark = nullptr;
+    switch (optimization) {
+        case 1:
+            //getParkByDistance(destiny, origin);
+            break;
+        case 2:
+            destPark = getParkByPrice( destiny, origin, timeParked);
+            break;
+        case 3:
+            //getParkByWalkingDist(destiny, origin);
+            break;
+        default:
+            break;
+    }
+
+    return destPark;
+}
+
+
+void Graph::addPark(PointPark * park) {
+    parkSet.push_back(park);
+}
+
+Point *Graph::getParkByPrice(Point *dest, Point *orig, int timeParked) {
+    markPossibleParks( orig);
+    Point * parkToReturn = nullptr;
+    int minPrice = INF;
+    bool foundPark = false;
+    for(auto park: parkSet){
+        Vertex * v = findVertex( *park);
+        if(v->isMarked() && park->getPricePaid(timeParked) < minPrice) {
+            minPrice = park->getPricePaid(timeParked);
+            foundPark = true;
+            parkToReturn = park;
+        }
+    }
+    if(!foundPark)
+        cout << "No parks near your destination!";
+
+    return parkToReturn;
+}

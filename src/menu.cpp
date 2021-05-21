@@ -7,29 +7,81 @@
 
 using namespace std;
 
-void printText( string text ) {
-    cout << std::setfill( '*' ) << setw( 40 ) << '*' <<  endl;
-    cout << '*' << left << setfill(' ' )<< setw( 40 - 2 ) << text<< setw( 40 - 2 )<< " *"<< endl;
-    cout << setfill( '*') << setw( 40 ) << '*' <<  endl;
-}
+
 
 void initialMenu(){
     string text = "     À procura de estacionamento";
-    printText(text);
-    showMapOptions();
+
+    int option = 0;
+    Graph * graph;
+
+    while(option != 6){
+        clear();
+        printText(text);
+        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n[4] Maia\n[5] Porto\n[6] Leave\n";
+        option = getInt(1, 6);
+
+        if(option != 6 && option != 0)
+            displayMap(option);
+    }
 }
 
-void choosePoints(Graph &graph, GraphViewer &gv){
+void chooseTasks(Graph * graph){
+
+}
+
+int chooseOptimization(Graph * graph, Point * destiny, Point * orig){
+    int option;
+    int timeParked = 0;
+    cout << "Pretende otimizar:\n";
+    cout << "[1] Distância percorrida até ao parque de estacionamento\n"
+            "[2] Preço a pagar pelo estacionamento\n"
+            "[3] Distância a percorrer a pé até ao ponto de destino D\n"
+            "[4] Leave\n";
+    option = getInt(1, 4);
+    cout << "Insira o tempo de estacionamento (min)...\n";
+    timeParked = getInt(0, 500000);
+
+
+    Point * destPark = graph->getPark(option, destiny, orig, 15);
+    return  destPark->getId();
+}
+
+void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     int startID, destinyID;
     cout << "Enter your starting point:\n";
-    startID = getInt(0, graph.getVertexSet().size() -1);
+    startID = getInt(0, graph->getVertexSet().size() -1);
 
     cout << "Enter your destiny:\n";
-    destinyID = getInt(0, graph.getVertexSet().size() -1);
+    destinyID = getInt(0, graph->getVertexSet().size() -1);
 
+    //Coloring origin and destiny points
     GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
     start.setColor(GraphViewer::GREEN);
     destiny.setColor(GraphViewer::RED);
+
+
+    cout << "Are you doing tasks? (Y/N) \n";
+    bool doTasks = getYesNo();
+
+
+
+    //chooseTasks(graph);
+    Point origin(startID, 0, 0);
+    Point destinyPoint(destinyID, 0, 0);
+    int parkID = chooseOptimization(graph, &destinyPoint, &origin);
+    Point parkPoint(parkID, 0, 0);
+
+    GraphViewer::Node &park = gv.getNode(parkID);
+    park.setColor(GraphViewer::RED);
+
+    if(!doTasks){
+
+        graph->dijkstraShortestPath(origin);
+        if(!graph->getPath(origin, parkPoint).empty())
+            gvl.colorPath(*graph, origin, destinyPoint);
+        //graph->getPath(origin, destinyPoint);
+    }
 
     gv.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
@@ -37,7 +89,10 @@ void choosePoints(Graph &graph, GraphViewer &gv){
 
 
 
+
 }
+
+
 
 void displayMap(int map){
     int scale = 1, nodeSize = 10, thickness = 5;
@@ -49,15 +104,15 @@ void displayMap(int map){
     GraphLoader graphLoader(&g);
     switch (map) {
         case 1: //4x4
-            graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt");
+            graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt", 1);
             nodeSize = 20;
             break;
         case 2: //8x8
-            graphLoader.loadMap("../data/GridGraphs/8x8/nodes.txt", "../data/GridGraphs/8x8/edges.txt");
+            graphLoader.loadMap("../data/GridGraphs/8x8/nodes.txt", "../data/GridGraphs/8x8/edges.txt", 1);
             nodeSize = 20;
             break;
         case 3: //16x16
-            graphLoader.loadMap("../data/GridGraphs/16x16/nodes.txt", "../data/GridGraphs/16x16/edges.txt");
+            graphLoader.loadMap("../data/GridGraphs/16x16/nodes.txt", "../data/GridGraphs/16x16/edges.txt", 1);
             scale = 3;
             nodeSize = 50;
             //thickness = 20;
@@ -70,37 +125,19 @@ void displayMap(int map){
             nodeSize = 100;
             thickness = 40;
             break;
-
-
     }
 
     gvl.loadGraph(g, scale, thickness, nodeSize);
     gv.createWindow(WIDTH, HEIGHT);
+
     // Join viewer thread (blocks till window closed)
     gv.join();
     gv.closeWindow();
+    choosePoints(&g, gv, gvl);
 
-    choosePoints(g, gv);
-}
-
-void chooseTasks(){
 
 }
 
-
-void showMapOptions(){
-    int option = 0;
-    while(option != 6){
-        //system("clear");
-        clear();
-        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n[4] Maia\n[5] Porto\n[6] Leave\n";
-        option = getInt(1, 6);
-
-        if(option != 6 && option != 0) displayMap(option);
-    }
-
-    chooseTasks();
-}
 
 
 

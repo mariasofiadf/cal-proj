@@ -92,7 +92,8 @@ public:
 /*************************** Graph  **************************/
 
 class Graph {
-    std::vector<Vertex *> vertexSet;    // vertex set
+    std::vector<Vertex *> vertexSet;// vertex set
+    vector<PointPark *> parkSet;
 
 public:
     ~Graph();
@@ -114,7 +115,7 @@ public:
     void dijkstraShortestPath(const Point &origin);
     std::vector<Point> getPath(const Point &origin, const Point &dest) const;
     //Functions for ModifiedDiskstra's
-    void markPossibleParks(Point &source);
+    void markPossibleParks(Point *source);
 
     vector<Point> getEuler(const Point &origin);
 
@@ -135,6 +136,13 @@ public:
     void fillOrder(Vertex * v, stack<Vertex*>&stack);
     void DFSUtil(Vertex * v, vector<Vertex*> &vector);
     Graph getTranspose();
+
+    Point * getPark(int optimization, Point * dest ,Point * origin, int timeParked);
+    void addPark(PointPark * park);
+
+    Point * getParkByPrice(Point *dest, Point *orig, int timeParked);
+    Point * getParkByDistance(Point * dest);
+
 };
 
 

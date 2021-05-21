@@ -6,7 +6,6 @@
 #define UNTITLED_MENU_H
 
 #include <string>
-#include <iomanip>
 #include <vector>
 #include "GraphViewerLoader.h"
 #include <graphviewer.h>
@@ -23,11 +22,13 @@
 };*/
 void initialMenu();
 
-void showMapOptions();
-
 void displayMap(int map);
 
-void chooseStart(Graph &graph, GraphViewer &gv);
+void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl);
+
+int chooseOptimization(Graph * graph, Point * destiny);
+
+void chooseTasks(Graph * graph);
 
 
 #endif //UNTITLED_MENU_H
