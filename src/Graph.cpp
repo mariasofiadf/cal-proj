@@ -538,7 +538,7 @@ void Graph::fillOrder(Vertex *v, stack<Vertex *> &stack) {
     stack.push(v);
 }
 
-vector<Vertex *> Graph::DFSUtil(Vertex *v, vector<Vertex*> &vector) {
+void Graph::DFSUtil(Vertex *v, vector<Vertex*> &vector) {
     v->visited = true;
     vector.push_back(v);
     for(auto e : v->getAdj()){

@@ -243,3 +243,72 @@ TEST(Graph, getTranspose) {
     }while(v->getPoint().getId() != 0);
 }
 
+
+TEST(Graph, fillOrder) {
+    Graph myGraph;
+    Point P0(0,-10,-10);
+    Point P1(1,10,-10);
+    Point P2(2,10,10);
+    Point P3(3,-10,10);
+
+    myGraph.addVertex(P0);
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addEdge(P0, P1, 1);
+    myGraph.addEdge(P1, P2, 1);
+    myGraph.addEdge(P2, P3, 1);
+    myGraph.addEdge(P3, P0, 1);
+
+    for(auto v :myGraph.getVertexSet())
+    {
+        v->visited = false;
+    }
+
+    stack<Vertex *>stack;
+    myGraph.fillOrder(myGraph.findVertex(P0), stack);
+
+    int i = 0;
+    while(!stack.empty()){
+        Vertex * v = stack.top(); stack.pop();
+        ASSERT_EQ(v->getPoint().getId(), i);
+        i++;
+    }
+}
+
+TEST(Graph, DFSUtil) {
+    Graph myGraph;
+    Point P0(0, -10, -10);
+    Point P1(1, 10, -10);
+    Point P2(2, 10, 10);
+    Point P3(3, -10, 10);
+
+    myGraph.addVertex(P0);
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addEdge(P0, P1, 1);
+    myGraph.addEdge(P1, P2, 1);
+    myGraph.addEdge(P2, P3, 1);
+    myGraph.addEdge(P3, P0, 1);
+
+    for (auto v :myGraph.getVertexSet()) {
+        v->visited = false;
+    }
+
+    vector<Vertex *> vector;
+    myGraph.DFSUtil(myGraph.findVertex(P0), vector);
+
+    int i = 0;
+    for (auto v : vector) {
+        ASSERT_EQ(v->getPoint().getId(), i);
+        i++;
+    }
+}
+
+/*
+TEST(Graph, getSCC) {
+    Graph myGraph = getTestGraph5();
+
+
+}*/

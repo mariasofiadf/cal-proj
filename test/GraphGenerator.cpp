@@ -139,3 +139,38 @@ Graph getTestGraph4(){
 
     return myGraph;
 }
+
+Graph getTestGraph5(){
+    Graph myGraph;
+    Point P0(0, 0, 10);
+    Point P1(1, 0, 0);
+    Point P2(2, 10, 0);
+    Point P3(3, 10, 10);
+
+    Point P4(4, 20, 0);
+    Point P5(5, 20, 10);
+    Point P6(6, 30, 10);
+    Point P7(7, 40, 10);
+    Point P8(8, 40, 0);
+
+    myGraph.addVertex(P0);
+    myGraph.addVertex(P1);
+    myGraph.addVertex(P2);
+    myGraph.addVertex(P3);
+    myGraph.addVertex(P4);
+    myGraph.addVertex(P5);
+    myGraph.addVertex(P6);
+    myGraph.addVertex(P7);
+    myGraph.addVertex(P8);
+
+    myGraph.addEdge(P0, P1, 1);
+    myGraph.addEdge(P1, P2, 1);
+    myGraph.addEdge(P2, P3, 1);
+    myGraph.addEdge(P3, P0, 1);
+    myGraph.addEdge(P2, P4, 1);
+    myGraph.addEdge(P4, P5, 1);
+    myGraph.addEdge(P5, P6, 1);
+    myGraph.addEdge(P6, P4, 1);
+    myGraph.addEdge(P7, P6, 1);
+    myGraph.addEdge(P7, P8, 1);
+}
