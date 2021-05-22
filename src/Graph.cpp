@@ -579,13 +579,13 @@ Point *Graph::getPark(int optimization, Point *destiny, Point * origin, int time
     Point * destPark = nullptr;
     switch (optimization) {
         case 1:
-            //getParkByDistance(destiny, origin);
+            *destPark = getParkByDistance(destiny, origin);
             break;
         case 2:
             destPark = getParkByPrice( destiny, origin, timeParked);
             break;
         case 3:
-            //getParkByWalkingDist(destiny, origin);
+            //getParkByWalkingDist(destiny);
             break;
         default:
             break;
@@ -617,3 +617,38 @@ Point *Graph::getParkByPrice(Point *dest, Point *orig, int timeParked) {
 
     return parkToReturn;
 }
+
+Point * Graph::getParkByDistance(Point *dest, Point *orig){
+    markPossibleParks(dest);
+    return getClosestMarkedPark(orig);
+}
+
+Point *Graph::getParkByWalkingDist(Point *dest) {
+    markPossibleParks(dest);
+    return getClosestMarkedPark(dest);
+}
+
+Point *Graph::getClosestMarkedPark(Point *orig) {
+    auto s = initSingleSource(*orig);
+
+    MutablePriorityQueue<Vertex> q;
+    q.insert(s);
+    while( ! q.empty() ) {
+        auto v = q.extractMin();
+        for(auto e : v->adj) {
+            auto oldDist = e->dest->dist;
+            if (relax(v, e->dest, e->weight)) {
+                if (oldDist == INF)
+                    q.insert(e->dest);
+                else
+                    q.decreaseKey(e->dest);
+            }
+            if(e->getDest()->marked){
+                return e->getDest()->getPoint();
+            }
+        }
+    }
+    return nullptr;
+}
+
+

@@ -141,8 +141,10 @@ public:
     void addPark(PointPark * park);
 
     Point * getParkByPrice(Point *dest, Point *orig, int timeParked);
-    Point * getParkByDistance(Point * dest);
+    Point * getParkByDistance(Point *dest, Point *orig);
+    Point * getParkByWalkingDist(Point * dest);
 
+    Point * getClosestMarkedPark(Point * source);
 };
 
 

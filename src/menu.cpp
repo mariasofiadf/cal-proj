@@ -93,7 +93,6 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
 }
 
 
-
 void displayMap(int map){
     int scale = 1, nodeSize = 10, thickness = 5;
     GraphViewer gv;
