@@ -80,10 +80,15 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     }
 
     if(!doTasks){
-
-        graph->dijkstraShortestPath(origin);
-        if(!graph->getPath(origin, parkPoint).empty())
-            gvl.colorPath(*graph, origin, destinyPoint);
+        vector<Point> route;
+        vector<int> ids = {startID, parkID, destinyID};
+        graph->Christofides(ids, route);
+        for(int i = 0; i < route.size()-1; i++){
+            Point from = route.at(i), to = route.at(i+1);
+            graph->dijkstraShortestPath(from);
+            if(!graph->getPath(from, to).empty())
+                gvl.colorPath(*graph, from, to);
+        }
         //graph->getPath(origin, destinyPoint);
     }
 

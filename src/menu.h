@@ -30,5 +30,4 @@ int chooseOptimization(Graph * graph, Point * destiny);
 
 void chooseTasks(Graph * graph);
 
-
 #endif //UNTITLED_MENU_H

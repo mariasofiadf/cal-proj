@@ -144,6 +144,8 @@ public:
     Point getParkByDistance(Point *dest, Point *orig);
     Point getParkByWalkingDist(Point * dest);
     Point getClosestMarkedPark(Point * source);
+
+    void Christofides(vector<int> ids, vector<Point> &route);
 };
 
 
