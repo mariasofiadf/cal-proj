@@ -674,7 +674,7 @@ void Graph::Christofides(vector<int > ids, vector<Point> &route) {
     for(auto p : temp)
         route.push_back(p);
 
-    route.push_back(Point(ids.at(0),0,0));
+    //route.push_back(Point(ids.at(0),0,0));
     return;
 }
 

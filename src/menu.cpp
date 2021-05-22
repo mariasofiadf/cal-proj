@@ -83,6 +83,8 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
         vector<Point> route;
         vector<int> ids = {startID, parkID, destinyID};
         graph->Christofides(ids, route);
+        //Point p = route.front();
+        //route.push_back(p);
         for(int i = 0; i < route.size()-1; i++){
             Point from = route.at(i), to = route.at(i+1);
             graph->dijkstraShortestPath(from);
