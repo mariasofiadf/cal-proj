@@ -575,23 +575,18 @@ Graph Graph::getTranspose() {
     return graph;
 }
 
-Point *Graph::getPark(int optimization, Point *destiny, Point * origin, int timeParked) {
-    Point * destPark = nullptr;
+Point Graph::getPark(int optimization, Point *destiny, Point * origin, int timeParked) {
     switch (optimization) {
         case 1:
-            *destPark = getParkByDistance(destiny, origin);
-            break;
+            return getParkByDistance(destiny, origin);
         case 2:
-            destPark = getParkByPrice( destiny, origin, timeParked);
-            break;
+            return getParkByPrice( destiny, origin, timeParked);
         case 3:
-            //getParkByWalkingDist(destiny);
-            break;
+            return getParkByWalkingDist(destiny);
         default:
             break;
     }
-
-    return destPark;
+    return Point(-1,0,0);
 }
 
 
@@ -599,7 +594,7 @@ void Graph::addPark(PointPark * park) {
     parkSet.push_back(park);
 }
 
-Point *Graph::getParkByPrice(Point *dest, Point *orig, int timeParked) {
+Point Graph::getParkByPrice(Point *dest, Point *orig, int timeParked) {
     markPossibleParks( orig);
     Point * parkToReturn = nullptr;
     int minPrice = INF;
@@ -615,20 +610,20 @@ Point *Graph::getParkByPrice(Point *dest, Point *orig, int timeParked) {
     if(!foundPark)
         cout << "No parks near your destination!";
 
-    return parkToReturn;
+    return *parkToReturn;
 }
 
-Point * Graph::getParkByDistance(Point *dest, Point *orig){
+Point Graph::getParkByDistance(Point *dest, Point *orig){
     markPossibleParks(dest);
     return getClosestMarkedPark(orig);
 }
 
-Point *Graph::getParkByWalkingDist(Point *dest) {
+Point Graph::getParkByWalkingDist(Point *dest) {
     markPossibleParks(dest);
     return getClosestMarkedPark(dest);
 }
 
-Point *Graph::getClosestMarkedPark(Point *orig) {
+Point Graph::getClosestMarkedPark(Point *orig) {
     auto s = initSingleSource(*orig);
 
     MutablePriorityQueue<Vertex> q;
@@ -648,7 +643,7 @@ Point *Graph::getClosestMarkedPark(Point *orig) {
             }
         }
     }
-    return nullptr;
+    return Point(-1,0,0);
 }
 
 

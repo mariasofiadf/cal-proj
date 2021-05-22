@@ -42,9 +42,8 @@ int chooseOptimization(Graph * graph, Point * destiny, Point * orig){
     cout << "Insira o tempo de estacionamento (min)...\n";
     timeParked = getInt(0, 500000);
 
-
-    Point * destPark = graph->getPark(option, destiny, orig, 15);
-    return  destPark->getId();
+    Point destPark = graph->getPark(option, destiny, orig, 15);
+    return  destPark.getId();
 }
 
 void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
@@ -72,8 +71,13 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     int parkID = chooseOptimization(graph, &destinyPoint, &origin);
     Point parkPoint(parkID, 0, 0);
 
-    GraphViewer::Node &park = gv.getNode(parkID);
-    park.setColor(GraphViewer::RED);
+    try{
+        GraphViewer::Node &park = gv.getNode(parkID);
+        park.setColor(GraphViewer::RED);
+    }
+    catch (std::out_of_range){
+        cerr << "No park found in graph viewer";
+    }
 
     if(!doTasks){
 
@@ -86,8 +90,6 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     gv.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
     gv.join();
-
-
 
 
 }
