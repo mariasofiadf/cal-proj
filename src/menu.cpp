@@ -58,7 +58,6 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     //Coloring origin and destiny points
 
 
-
     cout << "Are you doing tasks? (Y/N) \n";
     bool doTasks = getYesNo();
 
@@ -69,8 +68,10 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     Point parkPoint(parkID, 0, 0);
 
     GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
-    start.setColor(GraphViewer::BLUE);
-    destiny.setColor(GraphViewer::BLUE);
+    start.setOutlineColor(GraphViewer::RED);
+    start.setOutlineThickness(4);
+    destiny.setOutlineColor(GraphViewer::RED);
+    destiny.setOutlineThickness(4);
 
     GraphViewer::Node &park = gv.getNode(parkID);
     park.setColor(GraphViewer::RED);
