@@ -12,8 +12,8 @@
 #include "GraphLoader.h"
 #include "utils.h"
 
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 800
+#define HEIGHT 800
 /*enum Map{
     quatro,
     oito,

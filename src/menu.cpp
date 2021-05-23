@@ -86,13 +86,22 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
         for(int i = 0; i < route.size()-1; i++){
             Point from = route.at(i), to = route.at(i+1);
             graph->dijkstraShortestPath(from);
-            if(!graph->getPath(from, to).empty())
+            vector<Point> path = graph->getPath(from, to);
+            if(!path.empty()){
                 gvl.colorPath(*graph, from, to);
+                for(vector<Point>::iterator it = path.begin(); it != path.end(); it++)
+                    cout << it->getId() << " -> ";
+            }
         }
         graph->dijkstraShortestPath(route.back());
-        if(!graph->getPath(route.back(), route.front()).empty())
+        vector<Point> path = graph->getPath(route.back(), route.front());
+        if(!path.empty()) {
             gvl.colorPath(*graph, route.back(), route.front());
-        //graph->getPath(origin, destinyPoint);
+            vector<Point>::iterator it = path.begin(); it++;
+            for (it; it != path.end(); it++)
+                cout << it->getId() << " -> ";
+            cout << endl;
+        }
     }
 
     gv.createWindow(WIDTH, HEIGHT);
