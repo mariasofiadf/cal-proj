@@ -43,8 +43,8 @@ int chooseOptimization(Graph * graph, Point * destiny, Point * orig){
     timeParked = getInt(0, 500000);
 
 
-    Point * destPark = graph->getPark(option, destiny, orig, 15);
-    return  destPark->getId();
+    Point destPark = graph->getPark(option, destiny, orig, 15);
+    return  destPark.getId();
 }
 
 void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){

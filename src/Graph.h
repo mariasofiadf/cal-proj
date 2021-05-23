@@ -126,11 +126,14 @@ public:
     int numberofelements(vector<Point> res);
     Graph extractMSTfromPath();
 
-    Point * getPark(int optimization, Point * dest ,Point * origin, int timeParked);
+    Point getPark(int optimization, Point * dest ,Point * origin, int timeParked);
     void addPark(PointPark * park);
 
     Point * getParkByPrice(Point *dest, Point *orig, int timeParked);
-    Point * getParkByDistance(Point * dest);
+    Point getParkByDistance(Point * dest, Point * orig);
+    Point getParkByWalkingDist(Point *dest);
+
+    Point getClosestMarkedPark(Point *orig);
 };
 
 
