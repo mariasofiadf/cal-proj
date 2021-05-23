@@ -18,7 +18,7 @@ void initialMenu(){
     while(option != 6){
         clear();
         printText(text);
-        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n[4] Maia\n[5] Porto\n[6] Leave\n";
+        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n[4] 32x32\n[5] Porto\n[6] Leave\n";
         option = getInt(1, 6);
 
         if(option != 6 && option != 0)
@@ -153,7 +153,10 @@ void displayMap(int map){
             nodeSize = 50;
             //thickness = 20;
             break;
-        case 4: //Maia
+        case 4: //100x100
+            graphLoader.loadMap("../data/GridGraphs/32x32/nodes.txt", "../data/GridGraphs/32x32/edges.txt", 1);
+            scale = 3;
+            nodeSize = 50;
             break;
         case 5: //Porto
             graphLoader.loadMap("../data/porto/porto_strong_nodes_xy.txt", "../data/porto/porto_strong_edges.txt");
