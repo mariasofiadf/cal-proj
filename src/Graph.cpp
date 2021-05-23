@@ -576,3 +576,34 @@ Point Graph::getClosestMarkedPark(Point *orig) {
     return Point(-1,0,0);
 }
 
+void Graph::Christofides(vector<int > ids, vector<Point> &route) {
+
+    Graph abstractGraph;
+    for(auto i: ids)
+    {
+        Point p = findVertex(Point(i,0,0))->getPoint();
+        abstractGraph.addVertex(p);
+    }
+
+    for(auto v: abstractGraph.getVertexSet())
+    {
+        for(auto v2: abstractGraph.getVertexSet())
+        {
+            if(v->getPoint() != v2->getPoint())
+                abstractGraph.addEdge(v->getPoint(), v2->getPoint(), v->getPoint().getPosition().distance(v2->getPoint().getPosition()));
+        }
+    }
+
+    abstractGraph.primAlgorithm();
+    abstractGraph.extractMSTfromPath();
+
+    abstractGraph.matchingOdd();
+
+    vector<Point> temp = abstractGraph.getEuler(abstractGraph.getVertexSet().at(0)->getPoint());
+
+    for(auto p : temp)
+        route.push_back(p);
+
+    return;
+}
+

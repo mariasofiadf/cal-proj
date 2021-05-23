@@ -61,17 +61,19 @@ void GraphViewerLoader::colorPath(Graph graph, Point start, Point end) {
     do {
         GraphViewer::Node to = gv->getNode(Vto->getPoint().getId());
         GraphViewer::Node from = gv->getNode(Vfrom->getPoint().getId());
-        to.setColor(GraphViewer::GREEN);
+        if(to.getColor() == GraphViewer::WHITE)
+            to.setColor(GraphViewer::GREEN);
         //vector<GraphViewer::Edge *> edges = gv->getEdges();
         for(int x = 0; x < gv->getEdges().size(); x++){
             GraphViewer::Edge e = gv->getEdge(x);
             if(e.getFrom()->getId() == from.getId() && e.getTo()->getId()==to.getId()) {
+
                 e.setColor(GraphViewer::GREEN);
                 //from.setColor(GraphViewer::GREEN);
                 //to.setColor(GraphViewer::GREEN);
-            }else if(e.getFrom()->getId() == to.getId() && e.getTo()->getId()==from.getId()){
+            }/*else if(e.getFrom()->getId() == to.getId() && e.getTo()->getId()==from.getId()){
                 e.setColor(GraphViewer::GREEN);
-            }
+            }*/
         }
 
     /*  for(auto e : gv->getEdges())

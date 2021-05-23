@@ -56,15 +56,11 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     destinyID = getInt(0, graph->getVertexSet().size() -1);
 
     //Coloring origin and destiny points
-    GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
-    start.setColor(GraphViewer::GREEN);
-    destiny.setColor(GraphViewer::RED);
+
 
 
     cout << "Are you doing tasks? (Y/N) \n";
     bool doTasks = getYesNo();
-
-
 
     //chooseTasks(graph);
     Point origin(startID, 0, 0);
@@ -72,16 +68,32 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     int parkID = chooseOptimization(graph, &destinyPoint, &origin);
     Point parkPoint(parkID, 0, 0);
 
+    GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
+    start.setColor(GraphViewer::BLUE);
+    destiny.setColor(GraphViewer::BLUE);
+
     GraphViewer::Node &park = gv.getNode(parkID);
     park.setColor(GraphViewer::RED);
 
     if(!doTasks){
-
-        graph->dijkstraShortestPath(origin);
-        if(!graph->getPath(origin, parkPoint).empty())
-            gvl.colorPath(*graph, origin, destinyPoint);
+        vector<Point> route;
+        vector<int> ids = {startID, parkID, destinyID};
+        graph->Christofides(ids, route);
+        for(int i = 0; i < route.size()-1; i++){
+            Point from = route.at(i), to = route.at(i+1);
+            graph->dijkstraShortestPath(from);
+            if(!graph->getPath(from, to).empty())
+                gvl.colorPath(*graph, from, to);
+        }
+        Point from = route.back(), to = Point(startID,0, 0);
+        graph->dijkstraShortestPath(from);
+        gvl.colorPath(*graph, from, to);
         //graph->getPath(origin, destinyPoint);
     }
+
+
+
+
 
     gv.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
