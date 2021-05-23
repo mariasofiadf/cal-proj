@@ -247,6 +247,7 @@ std::vector<Point> Graph::getPath(const Point &origin, const Point &dest) const{
 void Graph::markPossibleParks(Point  *source) {
 
     double maxDist = 1000;
+    int c = 0;
     typename std::vector<Vertex *>::iterator it;
 
     for(it = vertexSet.begin(); it != vertexSet.end(); it++)
@@ -258,9 +259,13 @@ void Graph::markPossibleParks(Point  *source) {
         auto point = (*it)->getPoint();
         //enum pointType pointType = (*it)->getPoint().getPointType();
         bool isPark = (*it)->getPoint().getPointType() == PARK;
-        if(validDist && isPark)
+        if(validDist && isPark){
             (*it)->marked = true;
+            c++;
+        }
+
     }
+
 }
 
 /**************** Euler Circuit  ***************/
@@ -525,7 +530,7 @@ void Graph::addPark(PointPark * park) {
 }
 
 Point *Graph::getParkByPrice(Point *dest, Point *orig, int timeParked) {
-    markPossibleParks( orig);
+    markPossibleParks( dest);
     Point * parkToReturn = nullptr;
     int minPrice = INF;
     bool foundPark = false;
@@ -605,5 +610,19 @@ void Graph::Christofides(vector<int > ids, vector<Point> &route) {
         route.push_back(p);
 
     return;
+}
+
+/*
+ * @return price paid, while parked for 'time' minutes
+ * */
+int Graph::getPrice(int time, int parkID) {
+
+    for(auto park: parkSet){
+        Vertex * v = findVertex( *park);
+        if( park->getId() == parkID) {
+            return park->getPricePaid(time);
+        }
+    }
+    return 0;
 }
 

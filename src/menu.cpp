@@ -7,7 +7,7 @@
 
 using namespace std;
 
-
+int timeParked;
 
 void initialMenu(){
     string text = "     À procura de estacionamento";
@@ -26,13 +26,30 @@ void initialMenu(){
     }
 }
 
-void chooseTasks(Graph * graph){
+vector<int> chooseTasks(Graph * graph){
+    int task;
+    bool cont;
+    vector<int> tasks;
+    do{
+        cout << "Insira o número da task\n";
+        task = getInt(0, graph->getVertexSet().size() -1);
+        pointType type = graph->findVertex(Point(task, 0, 0))->getPoint().getPointType();
+        while( type == POINT || type == PARK){
+            cout << "O ponto escolhido não é uma task... tente outra vez\n";
+            task = getInt(0, graph->getVertexSet().size() -1);
+            type = graph->findVertex(Point(task, 0, 0))->getPoint().getPointType();
+        }
+        tasks.push_back(task);
+        cout << "Pretende fazer mais tasks? (Y/N)\n";
+        cont = getYesNo();
 
+    }while(cont);
+
+    return tasks;
 }
 
 int chooseOptimization(Graph * graph, Point * destiny, Point * orig){
     int option;
-    int timeParked = 0;
     cout << "Pretende otimizar:\n";
     cout << "[1] Distância percorrida até ao parque de estacionamento\n"
             "[2] Preço a pagar pelo estacionamento\n"
@@ -43,69 +60,75 @@ int chooseOptimization(Graph * graph, Point * destiny, Point * orig){
     timeParked = getInt(0, 500000);
 
 
-    Point destPark = graph->getPark(option, destiny, orig, 15);
+    Point destPark = graph->getPark(option, destiny, orig, timeParked);
     return  destPark.getId();
 }
 
 void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     int startID, destinyID;
-    cout << "Enter your starting point:\n";
+    cout << "Insira o ponto inicial:\n";
     startID = getInt(0, graph->getVertexSet().size() -1);
 
-    cout << "Enter your destiny:\n";
+    cout << "Insira o destino:\n";
     destinyID = getInt(0, graph->getVertexSet().size() -1);
 
     //Coloring origin and destiny points
-
-
-    cout << "Are you doing tasks? (Y/N) \n";
-    bool doTasks = getYesNo();
-
-    //chooseTasks(graph);
     Point origin(startID, 0, 0);
     Point destinyPoint(destinyID, 0, 0);
     int parkID = chooseOptimization(graph, &destinyPoint, &origin);
+
+    cout << "Vai realizar tarefas? (Y/N) \n";
+    bool doTasks = getYesNo();
+
     Point parkPoint(parkID, 0, 0);
 
     GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
-    start.setOutlineColor(GraphViewer::RED);
-    start.setOutlineThickness(4);
-    destiny.setOutlineColor(GraphViewer::RED);
-    destiny.setOutlineThickness(4);
+    start.setColor(GraphViewer::CYAN);
+    //start.setOutlineThickness(4);
+    destiny.setColor(GraphViewer::CYAN);
+    //destiny.setOutlineThickness(4);
 
     GraphViewer::Node &park = gv.getNode(parkID);
     park.setColor(GraphViewer::RED);
+    vector<Point> route;
+    vector<int> ids = {startID ,parkID};
 
-    if(!doTasks){
-        vector<Point> route;
-        vector<int> ids = {startID, parkID, destinyID};
-        graph->Christofides(ids, route);
-        for(int i = 0; i < route.size()-1; i++){
-            Point from = route.at(i), to = route.at(i+1);
-            graph->dijkstraShortestPath(from);
-            if(!graph->getPath(from, to).empty())
-                gvl.colorPath(*graph, from, to);
-        }
-        Point from = route.back(), to = Point(startID,0, 0);
-        graph->dijkstraShortestPath(from);
-        gvl.colorPath(*graph, from, to);
-        //graph->getPath(origin, destinyPoint);
+    if(doTasks){
+        ids = {startID ,parkID};
+        vector<int> tasks = chooseTasks(graph);//Getting tasks
+        ids.insert(ids.end(), tasks.begin(), tasks.end());
     }
 
-
-
+    graph->Christofides(ids, route);
+    for(int i = 0; i < route.size()-1; i++){
+        Point from = route.at(i), to = route.at(i+1);
+        graph->dijkstraShortestPath(from);
+        vector<Point> path = graph->getPath(from ,to);
+        if(!path.empty()){
+            gvl.colorPath(*graph, from, to);
+            for(vector<Point>::iterator it = path.begin(); it != path.end(); it++)
+                cout << it->getId() << " -> ";
+            cout <<endl;
+        }
+    }
+    //Unites the last two points
+    Point from = route.back(), to = Point(startID,0, 0);
+    vector<Point> path = graph->getPath(from ,to);
+    graph->dijkstraShortestPath(from);
+    gvl.colorPath(*graph, from, to);
+    for(vector<Point>::iterator it = path.begin(); it != path.end(); it++)
+        cout << it->getId() << " -> ";
+    cout <<endl;
 
 
     gv.createWindow(WIDTH, HEIGHT);
     // Join viewer thread (blocks till window closed)
     gv.join();
 
-
-
+    float price = (float) graph->getPrice(timeParked, parkID) / 100.0;
+    cout << "[Price Paid] = " << price << " euros\n";
 
 }
-
-
 
 void displayMap(int map){
     int scale = 1, nodeSize = 10, thickness = 5;
@@ -147,7 +170,6 @@ void displayMap(int map){
     gv.join();
     gv.closeWindow();
     choosePoints(&g, gv, gvl);
-
 
 }
 

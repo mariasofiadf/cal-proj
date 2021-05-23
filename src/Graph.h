@@ -135,6 +135,8 @@ public:
 
     Point getClosestMarkedPark(Point *orig);
 
+    int getPrice(int time, int parkID);
+
     void Christofides(vector<int > ids, vector<Point> &route);
 };
 
