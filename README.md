@@ -23,9 +23,9 @@ Nota: O projeto foi feito para funcionar em Linux. Em windows dará um erro rela
 
 Em linux, basta instalar a biblioteca SFML com o seguinte comando: sudo apt-get install libsfml-dev
 
-Para compilar o projeto basta abri-lo no Clion enquanto projeto e correr por lá.
+Para compilar basta abrir o projeto no Clion e correr lá o target main (ou test para Unit Tests).
 
-Para compilar pela linha de commandos, basta fazer o seguinte (dentro da pasta cal-proj):
+Para compilar pela linha de commandos, seguir as seguintes instruções (dentro da pasta cal-proj):
 
 mkdir build
 
@@ -35,6 +35,6 @@ cmake --build build/
 
 Tanto o executável principal (main) como o executável para os unit tests (test) estarão na pasta "build"
 
-Basta chamar os exucutáveis sem qualquer argumento
+Chamar os exucutáveis sem qualquer argumento
 
 ex: ./main (or ./test for unit tests and timed tests)
