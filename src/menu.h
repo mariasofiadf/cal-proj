@@ -10,6 +10,7 @@
 #include "GraphViewerLoader.h"
 #include <graphviewer.h>
 #include "GraphLoader.h"
+#include <unistd.h>
 #include "utils.h"
 
 #define WIDTH 1920

@@ -3,6 +3,7 @@
 //
 
 #include <iostream>
+
 #include "menu.h"
 
 using namespace std;
@@ -10,9 +11,15 @@ using namespace std;
 int timeParked;
 
 void initialMenu1(){
+
     int option, map;
     string text;
+
     do{
+        clear();
+        text = "             Menu Inicial";
+        clear();
+        printText(text);
         cout << "Escolha uma opção: \n" << "[1] Utilização normal\n[2] Testar conectividade\n[3] Sair\n";
         option = getInt(1, 3);
 
@@ -85,7 +92,7 @@ void connectAnalysis(int map){
     }
 
     vector<vector<Vertex *>> scc = myGraph.getSCC();
-
+    clear();
     cout << "[Strongly connected components]\n";
     for(auto component : scc){
         for(auto vertex : component){
@@ -95,10 +102,12 @@ void connectAnalysis(int map){
     }
 
     if(scc.size() == 1 && scc.at(0).size() == myGraph.getVertexSet().size())
-        cout << "Strongly connected!!\n";
+        cout << "[Strongly connected]\n";
     else{
-        cout << "Not strongly connected\n";
+        cout << "[Not strongly connected]\n";
     }
+
+    sleep(3);
 }
 
 int chooseMap(){
@@ -176,7 +185,7 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     //destiny.setOutlineThickness(4);
 
     GraphViewer::Node &park = gv.getNode(graph->findVertex(parkPoint)->getViewerIndex());
-    park.setOutlineColor(GraphViewer::RED);
+    park.setColor(GraphViewer::RED);
     park.setOutlineThickness(20);
 
     vector<Point> route;

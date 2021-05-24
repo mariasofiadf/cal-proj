@@ -9,10 +9,6 @@
 
 #include "Graph.h"
 
-//To get sqlite3.h:
-//      ~$ sudo apt-get install sqlite3
-//      ~$ sudo apt-get install libsqlite3-dev
-#include <sqlite3.h>
 
 class GraphLoader {
     Graph * graph;
