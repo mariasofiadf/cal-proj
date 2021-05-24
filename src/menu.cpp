@@ -104,20 +104,20 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
         graph->dijkstraShortestPath(from);
         vector<Point> path = graph->getPath(from ,to);
         if(!path.empty()){
-            //gvl.colorPath(*graph, from, to);
+            gvl.colorPath(*graph, from, to);
             for(vector<Point>::iterator it = path.begin(); it != path.end(); it++)
                 cout << it->getId() << " -> ";
             cout <<endl;
         }
     }
     //Unites the last two points
-    Point from = route.back(), to = Point(startID,0, 0);
+/*    Point from = route.back(), to = Point(startID,0, 0);
     vector<Point> path = graph->getPath(from ,to);
     graph->dijkstraShortestPath(from);
     //gvl.colorPath(*graph, from, to);
     for(vector<Point>::iterator it = path.begin(); it != path.end(); it++)
         cout << it->getId() << " -> ";
-    cout <<endl;
+    cout <<endl;*/
 
 
     gv.createWindow(WIDTH, HEIGHT);

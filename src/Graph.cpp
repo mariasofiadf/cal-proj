@@ -499,14 +499,17 @@ float Graph::cutShort(vector<Point>* path) {
 Graph Graph::extractMSTfromPath() {
     for(auto v: vertexSet){
         v->visited = false;
+        v->adj = vector<Edge*>{};
     }
 
     for(auto v: vertexSet){
-        v->adj = vector<Edge*>{};
+
         if(v->path == NULL)
             continue;
         if(!v->visited || !v->path->visited){
-            addBidirectionalEdge(v->getPoint(), v->path->getPoint(),v->getPoint().getPosition().distance(v->path->getPoint().getPosition()));
+            addEdge(v->getPoint(), v->path->getPoint(),v->getPoint().getPosition().distance(v->path->getPoint().getPosition()));
+            addEdge(v->path->getPoint(),v->getPoint(), v->getPoint().getPosition().distance(v->path->getPoint().getPosition()));
+            //addBidirectionalEdge(v->getPoint(), v->path->getPoint(),v->getPoint().getPosition().distance(v->path->getPoint().getPosition()));
             v->visited=true;
             v->path->visited = true;
         }
@@ -677,6 +680,8 @@ void Graph::Christofides(vector<int > ids, vector<Point> &route) {
     cutShort(&temp);
     for(auto p : temp)
         route.push_back(p);
+
+    route.push_back(route.front());
 
     return;
 }

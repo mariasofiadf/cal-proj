@@ -12,13 +12,12 @@
 #include "../test/GraphGenerator.h"
 
 TEST(GlobalTest, _4x4){
-/*
 
     Graph graph;
 
     GraphLoader graphLoader(&graph);
 
-    graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt", 1);
+    graphLoader.loadMap("../data/GridGraphs/32x32/nodes.txt", "../data/GridGraphs/32x32/edges.txt", 1);
 
     GraphViewer graphViewer;
 
@@ -26,7 +25,7 @@ TEST(GlobalTest, _4x4){
 
     graphViewerLoader.loadGraph(graph);
 
-    int ids[] = {0, 4, 16, 22};
+    int ids[] = {100, 1010, 962, 195};
 
     Graph abstractGraph;
     for(auto i: ids)
@@ -74,7 +73,7 @@ TEST(GlobalTest, _4x4){
     for(auto p : route){
         cout << p << " ; ";
     }
-*/
+
 
 
 }
