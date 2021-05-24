@@ -70,9 +70,8 @@ void GraphViewerLoader::colorPath(Graph graph, Point start, Point end) {
             }
         }
         for(auto edge : Vto->getAdj()){
-            if(edge->getDest()->getPoint().getId() == Vfrom->getPoint().getId()){
+            if(edge->getDest()->getPoint().getId() == Vfrom->getPoint().getId()) {
                 GraphViewer::Edge &e = gv->getEdge(edge->getViewerIndex());
-                e.setColor(GraphViewer::GREEN);
             }
         }
 
@@ -80,6 +79,4 @@ void GraphViewerLoader::colorPath(Graph graph, Point start, Point end) {
         Vfrom = Vfrom->getPath();
     } while(Vfrom != NULL);
 
-    free(Vfrom);
-    free(Vto);
 }

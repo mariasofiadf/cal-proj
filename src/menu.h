@@ -14,21 +14,18 @@
 
 #define WIDTH 1920
 #define HEIGHT 1080
-/*enum Map{
-    quatro,
-    oito,
-    Maia,
-    Porto
-};*/
+
+
+
 void initialMenu();
 
 void displayMap(int map);
 
 void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl);
 
-int chooseOptimization(Graph * graph, Point * destiny);
+int chooseOptimization(Graph * graph, Point * destiny, Point * orig);
 
-void chooseTasks(Graph * graph);
+vector<int> chooseTasks(Graph * graph);
 
 
 #endif //UNTITLED_MENU_H

@@ -57,8 +57,8 @@ PointPark::PointPark( const int id, double x, double y) : Point(id, x, y){
     gettimeofday(&time, NULL);
     srand(hash3(time.tv_sec, time.tv_usec, getpid()));
 
-    this->priceRate =  rand() % 15 + 50; //entre 50 e 65 centimos
-    this->fixPrice = rand() % 100 + 50; // entre 50 e 150 centimos
+    this->priceRate =  rand() % 5 + 1; //entre 1 e 5 centimos
+    this->fixPrice = rand() % 50 + 50; // entre 50 e 100 centimos
 }
 
 double PointPark::getPricePaid(int time) {

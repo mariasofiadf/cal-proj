@@ -137,12 +137,19 @@ public:
     void DFSUtil(Vertex * v, vector<Vertex*> &vector);
     Graph getTranspose();
 
-    Point * getPark(int optimization, Point * dest ,Point * origin, int timeParked);
     void addPark(PointPark * park);
 
-    Point * getParkByPrice(Point *dest, Point *orig, int timeParked);
-    Point * getParkByDistance(Point * dest);
+    Point getPark(int optimization, Point * dest ,Point * origin, int timeParked);
 
+    Point * getParkByPrice(Point *dest, Point *orig, int timeParked);
+    Point getParkByDistance(Point * dest, Point * orig);
+    Point getParkByWalkingDist(Point *dest);
+
+    Point getClosestMarkedPark(Point *orig);
+
+    int getPrice(int time, int parkID);
+
+    void Christofides(vector<int > ids, vector<Point> &route);
 };
 
 
