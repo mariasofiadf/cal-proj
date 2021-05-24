@@ -16,12 +16,23 @@ int getInt(int lower, int upper) // Inclusive
 {
     int choice;
     while (!(cin >> choice) || choice < lower || choice > upper) {
-        cout << "Invalid Input: ";
+        cout << "Input inválido!\n";
         cin.clear();
         cin.ignore(1000000, '\n');
     }
     cin.ignore(1000000, '\n');
     return choice;
+}
+
+int getID(Graph * g){
+    int id;
+    while (!(cin >> id) || g->findVertex(Point(id,0,0)) == nullptr) {
+        cout << "Não existe nenhum ponto com esse ID\n";
+        cin.clear();
+        cin.ignore(1000000, '\n');
+    }
+    cin.ignore(1000000, '\n');
+    return id;
 }
 
 void clear()

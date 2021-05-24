@@ -8,6 +8,7 @@
 #include <iostream>
 #include <iomanip>
 #include <string>
+#include "Graph.h"
 
 using namespace std;
 
@@ -29,12 +30,15 @@ bool getYesNo();
 
 /**
  * @brief Clears the console
- *
- *
  */
 void clear();
 
 void printText( string text );
+
+/**
+ * @brief Gets point id, if it exists
+ */
+int getID(Graph * g);
 
 
 
