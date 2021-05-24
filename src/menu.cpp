@@ -18,10 +18,10 @@ void initialMenu(){
     while(option != 6){
         clear();
         printText(text);
-        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n[4] 32x32\n[5] Porto\n[6] Leave\n";
-        option = getInt(1, 6);
+        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n[4] 32x32\n[5] Porto\n[6] Penafiel\n[7] Leave\n";
+        option = getInt(1, 7);
 
-        if(option != 6 && option != 0)
+        if(option != 7 && option != 0)
             displayMap(option);
     }
 }
@@ -163,6 +163,12 @@ void displayMap(int map){
             scale = 30;
             nodeSize = 100;
             thickness = 40;
+            break;
+        case 6: //Penafiel
+            graphLoader.loadMap("../data/penafiel/penafiel_strong_nodes_xy.txt", "../data/penafiel/penafiel_strong_edges.txt");
+            scale = 20;
+            nodeSize = 100;
+            thickness = 50;
             break;
     }
 
