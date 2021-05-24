@@ -18,7 +18,9 @@
 
 void initialMenu1();
 
-void initialMenu();
+int chooseMap();
+
+void connectAnalysis(int map);
 
 void displayMap(int map);
 

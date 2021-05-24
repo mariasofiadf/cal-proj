@@ -10,16 +10,17 @@ using namespace std;
 int timeParked;
 
 void initialMenu1(){
-    int option;
+    int option, map;
     do{
         cout << "Escolha uma opção: \n" << "[1] Utilização normal\n[2] Testar conectividade\n[3] Sair\n";
         option = getInt(1, 3);
+        map = chooseMap();
         switch (option) {
             case 1:
-                initialMenu();
+                displayMap(map);
                 break;
             case 2:
-                //connectAnalysis();
+                connectAnalysis(map);
                 break;
             case 3:
                 break;
@@ -29,7 +30,43 @@ void initialMenu1(){
 
 }
 
-void initialMenu(){
+void connectAnalysis(int map){
+    Graph myGraph;
+    GraphLoader graphLoader(&myGraph);
+    switch (map) {
+        case 1: //4x4
+            graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt", 1);
+            break;
+        case 2: //8x8
+            graphLoader.loadMap("../data/GridGraphs/8x8/nodes.txt", "../data/GridGraphs/8x8/edges.txt", 1);
+            break;
+        case 3: //16x16
+            graphLoader.loadMap("../data/GridGraphs/16x16/nodes.txt", "../data/GridGraphs/16x16/edges.txt", 1);
+            break;
+        case 4: //32x32
+            graphLoader.loadMap("../data/GridGraphs/32x32/nodes.txt", "../data/GridGraphs/32x32/edges.txt", 1);
+            break;
+        case 5: //Porto
+            graphLoader.loadMap("../data/porto/porto_strong_nodes_xy.txt", "../data/porto/porto_strong_edges.txt");
+
+            break;
+        case 6: //Penafiel
+            graphLoader.loadMap("../data/penafiel/penafiel_strong_nodes_xy.txt", "../data/penafiel/penafiel_strong_edges.txt");
+            break;
+    }
+
+    vector<vector<Vertex *>> scc = myGraph.getSCC();
+    if(scc.size() == 1 && scc.at(0).size() == myGraph.getVertexSet().size())
+        cout << "Strongly connected!!\n";
+    for(auto component : scc){
+        for(auto vertex : component){
+            cout << vertex->getPoint().getId() << " ";
+        }
+        cout << endl;
+    }
+}
+
+int chooseMap(){
     string text = "     À procura de estacionamento";
 
     int option = 0;
@@ -38,11 +75,11 @@ void initialMenu(){
     clear();
     printText(text);
     cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n"
-                                      "[4] 32x32\n[5] Porto\n[6] Penafiel\n[7] Leave\n";
-        option = getInt(1, 7);
-        if(option != 7 && option != 0)
-            displayMap(option);
+                                  "[4] 32x32\n[5] Porto\n[6] Penafiel\n[7] Leave\n";
+    option = getInt(1, 7);
+    return option;
 }
+
 
 vector<int> chooseTasks(Graph * graph){
     int task;
