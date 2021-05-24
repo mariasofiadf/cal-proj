@@ -506,13 +506,12 @@ Graph Graph::extractMSTfromPath() {
 
         if(v->path == NULL)
             continue;
-        if(!v->visited || !v->path->visited){
             addEdge(v->getPoint(), v->path->getPoint(),v->getPoint().getPosition().distance(v->path->getPoint().getPosition()));
             addEdge(v->path->getPoint(),v->getPoint(), v->getPoint().getPosition().distance(v->path->getPoint().getPosition()));
             //addBidirectionalEdge(v->getPoint(), v->path->getPoint(),v->getPoint().getPosition().distance(v->path->getPoint().getPosition()));
             v->visited=true;
             v->path->visited = true;
-        }
+
     }
     return Graph();
 }

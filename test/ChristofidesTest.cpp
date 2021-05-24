@@ -25,7 +25,7 @@ TEST(GlobalTest, _4x4){
 
     graphViewerLoader.loadGraph(graph);
 
-    int ids[] = {100, 1010, 962, 195};
+    int ids[] = {100, 1010, 962, 561,768, 195};
 
     Graph abstractGraph;
     for(auto i: ids)
