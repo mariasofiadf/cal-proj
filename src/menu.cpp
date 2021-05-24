@@ -15,10 +15,11 @@ void initialMenu(){
     int option = 0;
     Graph * graph;
 
-    while(option != 6){
+    while(option != 7){
         clear();
         printText(text);
-        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n[4] 32x32\n[5] Porto\n[6] Penafiel\n[7] Leave\n";
+        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n"
+                                      "[4] 32x32\n[5] Porto\n[6] Penafiel\n[7] Leave\n";
         option = getInt(1, 7);
 
         if(option != 7 && option != 0)
@@ -89,14 +90,23 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     //destiny.setOutlineThickness(4);
 
     GraphViewer::Node &park = gv.getNode(parkID);
-    park.setColor(GraphViewer::RED);
+    park.setOutlineColor(GraphViewer::RED);
+    park.setOutlineThickness(20);
+
     vector<Point> route;
     vector<int> ids = {startID ,parkID};
 
     if(doTasks){
         vector<int> tasks = chooseTasks(graph);//Getting tasks
         ids.insert(ids.end(), tasks.begin(), tasks.end());
+
+        for(auto task: tasks ){
+            GraphViewer::Node &node = gv.getNode(task);
+            node.setColor(GraphViewer::RED);
+        }
     }
+
+
 
     graph->Christofides(ids, route);
     for(int i = 0; i < route.size()-1; i++){
