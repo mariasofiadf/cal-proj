@@ -153,10 +153,11 @@ void displayMap(int map){
             nodeSize = 50;
             //thickness = 20;
             break;
-        case 4: //100x100
+        case 4: //32x32
             graphLoader.loadMap("../data/GridGraphs/32x32/nodes.txt", "../data/GridGraphs/32x32/edges.txt", 1);
-            scale = 3;
-            nodeSize = 50;
+            scale = 10;
+            nodeSize = 70;
+            thickness = 8;
             break;
         case 5: //Porto
             graphLoader.loadMap("../data/porto/porto_strong_nodes_xy.txt", "../data/porto/porto_strong_edges.txt");

@@ -255,7 +255,6 @@ std::vector<Point> Graph::getPath(const Point &origin, const Point &dest) const{
 void Graph::markPossibleParks(Point  *source) {
 
     double maxDist = 1000;
-    int c = 0;
     typename std::vector<Vertex *>::iterator it;
 
     for(it = vertexSet.begin(); it != vertexSet.end(); it++)
@@ -269,9 +268,7 @@ void Graph::markPossibleParks(Point  *source) {
         bool isPark = (*it)->getPoint().getPointType() == PARK;
         if(validDist && isPark){
             (*it)->marked = true;
-            c++;
         }
-
     }
 
 }
