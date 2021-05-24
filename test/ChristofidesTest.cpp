@@ -17,15 +17,15 @@ TEST(GlobalTest, _4x4){
 
     GraphLoader graphLoader(&graph);
 
-    graphLoader.loadMap("../data/GridGraphs/32x32/nodes.txt", "../data/GridGraphs/32x32/edges.txt", 1);
+    graphLoader.loadMap("../data/GridGraphs/16x16/nodes.txt", "../data/GridGraphs/16x16/edges.txt", 1);
 
     GraphViewer graphViewer;
 
     GraphViewerLoader graphViewerLoader(&graphViewer);
 
-    graphViewerLoader.loadGraph(graph);
+    graphViewerLoader.loadGraph(graph, 2, 2.5,25);
 
-    int ids[] = {100, 1010, 962, 561,768, 195};
+    int ids[] = {19, 175, 143, 235, 79, 59, 104};
 
     Graph abstractGraph;
     for(auto i: ids)
@@ -48,12 +48,13 @@ TEST(GlobalTest, _4x4){
 
     GraphViewer graphViewerAbs;
     GraphViewerLoader graphViewerLoaderAbs(&graphViewerAbs);
-    graphViewerLoaderAbs.loadGraph(abstractGraph);
+    graphViewerLoaderAbs.loadGraph(abstractGraph, 2, 2.5,25);
 
     graphViewer.setCenter(sf::Vector2f(WIDTH/2, HEIGHT/2));
     graphViewer.createWindow(WIDTH, HEIGHT);
 
     graphViewer.join();
+    graphViewer.closeWindow();
 
     graphViewerAbs.setCenter(sf::Vector2f(WIDTH/2, HEIGHT/2));
     graphViewerAbs.createWindow(WIDTH, HEIGHT);
@@ -64,16 +65,33 @@ TEST(GlobalTest, _4x4){
 
     GraphViewer graphViewerMatchingOdd;
     GraphViewerLoader graphViewerLoaderMatchingOdd(&graphViewerMatchingOdd);
-    graphViewerLoaderMatchingOdd.loadGraph(abstractGraph);
+    graphViewerLoaderMatchingOdd.loadGraph(abstractGraph,2, 2.5,25);
     graphViewerMatchingOdd.createWindow(WIDTH, HEIGHT);
     graphViewerMatchingOdd.join();
 
     vector<Point> route = abstractGraph.getEuler(abstractGraph.getVertexSet().at(0)->getPoint());
+    abstractGraph.cutShort(&route);
+    route.push_back(route.front());
 
     for(auto p : route){
         cout << p << " ; ";
     }
+    cout <<endl;
 
+    for(int i = 0; i < route.size()-1; i++){
+        Point from = route.at(i), to = route.at(i+1);
+        graph.dijkstraShortestPath(from);
+        vector<Point> path = graph.getPath(from ,to);
+        if(!path.empty()){
+            for(vector<Point>::iterator it = path.begin(); it != path.end(); it++)
+                cout << it->getId() << " -> ";
+            cout <<endl;
+        }
+    }
+
+    graphViewer.createWindow(WIDTH, HEIGHT);
+
+    graphViewer.join();
 
 
 }
