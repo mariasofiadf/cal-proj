@@ -309,13 +309,16 @@ TEST(Graph, DFSUtil) {
 
 
 TEST(Graph, getSCC) {
-    Graph myGraph = getTestGraph5();
+    Graph myGraph;
+    GraphLoader graphLoader(&myGraph);
+    graphLoader.loadMap("../data/GridGraphs/4x4/nodes.txt", "../data/GridGraphs/4x4/edges.txt",1);
 
     vector<vector<Vertex *>> scc = myGraph.getSCC();
-
+    if(scc.size() == 1 && scc.at(0).size() == myGraph.getVertexSet().size())
+        cout << "Strongly connected!!\n";
     for(auto component : scc){
         for(auto vertex : component){
-            cout << vertex->getPoint().getId();
+            cout << vertex->getPoint().getId() << " ";
         }
         cout << endl;
     }

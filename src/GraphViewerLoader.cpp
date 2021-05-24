@@ -63,6 +63,11 @@ void GraphViewerLoader::colorPath(Graph graph, Point start, Point end) {
         GraphViewer::Node from = gv->getNode(Vfrom->getViewerIndex());
         if(from.getColor() == GraphViewer::WHITE)
             from.setColor(GraphViewer::GREEN);
+        else{
+            from.setOutlineColor(GraphViewer::GREEN);
+            from.setOutlineThickness(10);
+        }
+
         //to.setColor(GraphViewer::GREEN);
         for(auto edge : Vfrom->getAdj()){
             if(edge->getDest()->getPoint().getId() == Vto->getPoint().getId()){

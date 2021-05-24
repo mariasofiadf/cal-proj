@@ -9,22 +9,39 @@ using namespace std;
 
 int timeParked;
 
+void initialMenu1(){
+    int option;
+    do{
+        cout << "Escolha uma opção: \n" << "[1] Utilização normal\n[2] Testar conectividade\n[3] Sair\n";
+        option = getInt(1, 3);
+        switch (option) {
+            case 1:
+                initialMenu();
+                break;
+            case 2:
+                //connectAnalysis();
+                break;
+            case 3:
+                break;
+        }
+    }while(option != 3);
+
+
+}
+
 void initialMenu(){
     string text = "     À procura de estacionamento";
 
     int option = 0;
     Graph * graph;
 
-    while(option != 7){
-        clear();
-        printText(text);
-        cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n"
+    clear();
+    printText(text);
+    cout << "Choose a map: \n" << "[1] 4x4\n[2] 8x8\n[3] 16x16\n"
                                       "[4] 32x32\n[5] Porto\n[6] Penafiel\n[7] Leave\n";
         option = getInt(1, 7);
-
         if(option != 7 && option != 0)
             displayMap(option);
-    }
 }
 
 vector<int> chooseTasks(Graph * graph){
@@ -77,19 +94,21 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     Point origin(startID, 0, 0);
     Point destinyPoint(destinyID, 0, 0);
     int parkID = chooseOptimization(graph, &destinyPoint, &origin);
+    if(parkID == -1) cout <<"Invalid Park\n";
 
     cout << "Vai realizar tarefas? (Y/N) \n";
     bool doTasks = getYesNo();
 
     Point parkPoint(parkID, 0, 0);
 
-    GraphViewer::Node &start = gv.getNode(startID), &destiny = gv.getNode(destinyID);
+
+    GraphViewer::Node &start = gv.getNode(graph->findVertex(origin)->getViewerIndex()), &destiny = gv.getNode(graph->findVertex(destinyPoint)->getViewerIndex());
     start.setColor(GraphViewer::CYAN);
     //start.setOutlineThickness(4);
     destiny.setColor(GraphViewer::CYAN);
     //destiny.setOutlineThickness(4);
 
-    GraphViewer::Node &park = gv.getNode(parkID);
+    GraphViewer::Node &park = gv.getNode(graph->findVertex(parkPoint)->getViewerIndex());
     park.setOutlineColor(GraphViewer::RED);
     park.setOutlineThickness(20);
 
@@ -101,7 +120,7 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
         ids.insert(ids.end(), tasks.begin(), tasks.end());
 
         for(auto task: tasks ){
-            GraphViewer::Node &node = gv.getNode(task);
+            GraphViewer::Node &node = gv.getNode(graph->findVertex(Point(task,0, 0))->getViewerIndex());
             node.setColor(GraphViewer::RED);
         }
     }
@@ -112,7 +131,8 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     for(int i = 0; i < route.size()-1; i++){
         Point from = route.at(i), to = route.at(i+1);
         graph->dijkstraShortestPath(from);
-        vector<Point> path = graph->getPath(from ,to);
+        vector<Point> path = {};
+        path =graph->getPath(from ,to);
         if(!path.empty()){
             gvl.colorPath(*graph, from, to);
             for(vector<Point>::iterator it = path.begin(); it != path.end(); it++)

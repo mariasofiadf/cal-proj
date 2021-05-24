@@ -4,6 +4,6 @@
 using namespace std;
 
 int main(int argc, char **argv) {
-    initialMenu();
+    initialMenu1();
     return 0;
 }

@@ -16,6 +16,7 @@
 #define HEIGHT 1080
 
 
+void initialMenu1();
 
 void initialMenu();
 

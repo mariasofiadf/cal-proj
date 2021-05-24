@@ -137,7 +137,7 @@ void Edge::setViewerIndex(int viewerIndex) {
  */
 Vertex * Graph::findVertex(const Point &in) const {
     for (auto v : vertexSet)
-        if (v->info == in)
+        if (v->info.getId() == in.getId())
             return v;
     return nullptr;
 }
