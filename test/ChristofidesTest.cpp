@@ -181,12 +181,12 @@ void plot(vector<double>size, vector<double> time, string fileName){
 }
 
 TEST(Christofides, test_performance_christofides_increasing_node_number){
-    //TODO: Change these const parameters as needed
     int tries = 10; int intPoints = 5;
     vector<double> size={};
     vector<double> time={};
     for(int x = 10; x <= 100; x += 10) {
-        size.push_back((x + 1) * (x + 1));
+        int nNodes = (x + 1) * (x + 1);
+        size.push_back(nNodes);
         DIST = 600 / x;
         Graph g = generateGridGraph(x, x);
         vector<int> ids = getRandomNodes(x, x, intPoints);
@@ -209,7 +209,7 @@ TEST(Christofides, test_performance_christofides_increasing_node_number){
         auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count();
         auto average = (elapsed) / tries;
         time.push_back((double) average / 1000000);
-        std::cout << "Christofides processing grid " << x << " x " << x << " with " <<  intPoints<< " interest points "<<  "average time (micro-seconds)="
+        std::cout << "Christofides processing grid " << x << " x " << x << "("<< nNodes<< " nodes)"<< " with " <<  intPoints << " interest points "<<  "average time (micro-seconds)="
         << average << std::endl;
 
     }
@@ -219,13 +219,13 @@ TEST(Christofides, test_performance_christofides_increasing_node_number){
 }
 
 TEST(Christofides, test_performance_christofides_increasing_number_of_interest_points){
-    //TODO: Change these const parameters as needed
     int tries = 10; ;
     vector<double> size={};
     vector<double> time={};
     int x = 30;
     for(int intPoints = 2; intPoints < 15; intPoints++) {
         size.push_back(intPoints);
+        int nNodes = (x + 1) * (x + 1);
         DIST = 600 / x;
         Graph g = generateGridGraph(x, x);
         vector<int> ids = getRandomNodes(x, x, intPoints);
@@ -243,11 +243,52 @@ TEST(Christofides, test_performance_christofides_increasing_number_of_interest_p
         auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count();
         auto average = (elapsed) / tries;
         time.push_back((double) average / 1000000);
-        std::cout << "Christofides processing grid " << x << " x " << x << " with " <<  intPoints<< " interest points "<<  "average time (micro-seconds)="
+        std::cout << "Christofides processing grid " << x << " x " << x << "("<< nNodes<< " nodes)"<<  " with " <<  intPoints<< " interest points "<<  "average time (micro-seconds)="
                   << average << std::endl;
 
     }
 
     plot(size, time, "plot_increasing_number_interest_points.png");
+
+}
+
+
+
+TEST(Christofides, test_performance_christofides_increasing_both){
+    int tries = 10;
+    vector<double> size={};
+    vector<double> time={};
+    int intPoints = 2;
+    for(int x = 10; x <= 100; x += 10, intPoints++) {
+        int nNodes= (x + 1) * (x + 1);
+        size.push_back(nNodes);
+        DIST = 600 / x;
+        Graph g = generateGridGraph(x, x);
+        vector<int> ids = getRandomNodes(x, x, intPoints);
+        vector<Point> route = {};
+        auto start = std::chrono::high_resolution_clock::now();
+        for (int i = 0; i < tries; i++) {
+            g.Christofides(ids, route);
+            for (int i = 0; i < route.size() - 1; i++) {
+                Point from = route.at(i), to = route.at(i + 1);
+                g.dijkstraShortestPath(from);
+                vector<Point> path = g.getPath(from, to);
+/*                if(!path.empty()){
+                    for(vector<Point>::iterator it = path.begin(); it != path.end(); it++)
+                        cout << it->getId() << " -> ";
+                    cout <<endl;
+                }*/
+            }
+        }
+        auto finish = std::chrono::high_resolution_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count();
+        auto average = (elapsed) / tries;
+        time.push_back((double) average / 1000000);
+        std::cout << "Christofides processing grid " << x << " x " << x << "("<< nNodes<< " nodes)"<< " with " <<  intPoints << " interest points "<<  "average time (micro-seconds)="
+                  << average << std::endl;
+
+    }
+
+    plot(size, time, "plot_increasing_both.png");
 
 }
