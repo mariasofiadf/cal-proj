@@ -12,6 +12,7 @@
 #include "../test/GraphGenerator.h"
 
 TEST(GlobalTest, _4x4){
+/*
 
     Graph graph;
 
@@ -75,6 +76,7 @@ TEST(GlobalTest, _4x4){
     }
 
 
+*/
 
 }
 
@@ -142,12 +144,14 @@ Graph generateGridGraph(int x, int y){
 vector<int> getRandomNodes(int x, int y, int n) {
     srand(time(NULL));
     int totalNodes = (x+1)*(y+1);
-    vector<int> res; int id;
+    int increment = (totalNodes-1)/n;
+    vector<int> res; int id = 0;
     for(int i = 0; i < n; i++){
-        do{
+/*        do{
             id = rand()%totalNodes;
-        }while(find(res.begin(), res.end(), id) != res.end());
+        }while(find(res.begin(), res.end(), id) != res.end());*/
         res.push_back(id);
+        id += increment;
     }
 
     return res;
@@ -209,7 +213,7 @@ TEST(Christofides, test_performance_christofides_increasing_node_number){
         auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count();
         auto average = (elapsed) / tries;
         time.push_back((double) average / 1000000);
-        std::cout << "Christofides processing grid " << x << " x " << x << "("<< nNodes<< " nodes)"<< " with " <<  intPoints << " interest points "<<  "average time (micro-seconds)="
+        std::cout << "Christofides processing grid " << x << " x " << x << " ("<< nNodes<< " nodes)"<< " with " <<  intPoints << " interest points "<<  "average time (micro-seconds)="
         << average << std::endl;
 
     }
@@ -223,7 +227,7 @@ TEST(Christofides, test_performance_christofides_increasing_number_of_interest_p
     vector<double> size={};
     vector<double> time={};
     int x = 30;
-    for(int intPoints = 2; intPoints < 15; intPoints++) {
+    for(int intPoints = 2; intPoints < 12; intPoints++) {
         size.push_back(intPoints);
         int nNodes = (x + 1) * (x + 1);
         DIST = 600 / x;
@@ -243,7 +247,7 @@ TEST(Christofides, test_performance_christofides_increasing_number_of_interest_p
         auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count();
         auto average = (elapsed) / tries;
         time.push_back((double) average / 1000000);
-        std::cout << "Christofides processing grid " << x << " x " << x << "("<< nNodes<< " nodes)"<<  " with " <<  intPoints<< " interest points "<<  "average time (micro-seconds)="
+        std::cout << "Christofides processing grid " << x << " x " << x << " ("<< nNodes<< " nodes)"<<  " with " <<  intPoints<< " interest points "<<  "average time (micro-seconds)="
                   << average << std::endl;
 
     }
@@ -259,7 +263,7 @@ TEST(Christofides, test_performance_christofides_increasing_both){
     vector<double> size={};
     vector<double> time={};
     int intPoints = 2;
-    for(int x = 10; x <= 100; x += 10, intPoints++) {
+    for(int x = 10; x < 100; x += 10, intPoints++) {
         int nNodes= (x + 1) * (x + 1);
         size.push_back(nNodes);
         DIST = 600 / x;
@@ -284,7 +288,7 @@ TEST(Christofides, test_performance_christofides_increasing_both){
         auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count();
         auto average = (elapsed) / tries;
         time.push_back((double) average / 1000000);
-        std::cout << "Christofides processing grid " << x << " x " << x << "("<< nNodes<< " nodes)"<< " with " <<  intPoints << " interest points "<<  "average time (micro-seconds)="
+        std::cout << "Christofides processing grid " << x << " x " << x << " ("<< nNodes<< " nodes)"<< " with " <<  intPoints << " interest points "<<  "average time (micro-seconds)="
                   << average << std::endl;
 
     }
