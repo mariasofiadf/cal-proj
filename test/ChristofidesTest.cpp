@@ -11,7 +11,7 @@
 #include "../src/GraphViewerLoader.h"
 #include "../test/GraphGenerator.h"
 
-TEST(GlobalTest, _4x4){
+TEST(GlobalVisualTest, _4x4){
 /*
 
     Graph graph;
@@ -75,6 +75,28 @@ TEST(GlobalTest, _4x4){
         cout << p << " ; ";
     }
 */
+}
 
 
+Graph getGridGraph(int x,int y){
+    stringstream nodes;
+    nodes << "../data/GridGraphs/"<<x<<"x"<<y<<"/nodes.txt";
+    string nodeFile; nodes >> nodeFile;
+    stringstream edges;
+    edges << "../data/GridGraphs/"<<x<<"x"<<y<<"/nodes.txt";
+    string edgesFile; edges >> edgesFile;
+
+    Graph g; GraphLoader graphLoader(&g); graphLoader.loadMap(nodeFile, "../data/GridGraphs/4x4/edges.txt",1);
+    return g;
+}
+
+TEST(Christofides, test_performance_christofides) {
+    //TODO: Change these const parameters as needed
+    Graph g = getGridGraph(4,4);
+    vector<int>ids = {1, 10, 20}; vector<Point> route;
+    auto start = std::chrono::high_resolution_clock::now();
+    g.Christofides(ids,route);
+    auto finish = std::chrono::high_resolution_clock::now();
+    auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(finish - start).count();
+    std::cout << "Christofides processing grid " << 8 << " x " << 8 << " average time (micro-seconds)=" << (elapsed) << std::endl;
 }
