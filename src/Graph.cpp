@@ -674,7 +674,7 @@ void Graph::Christofides(vector<int > ids, vector<Point> &route) {
     abstractGraph.matchingOdd();
 
     vector<Point> temp = abstractGraph.getEuler(abstractGraph.getVertexSet().at(0)->getPoint());
-
+    cutShort(&temp);
     for(auto p : temp)
         route.push_back(p);
 

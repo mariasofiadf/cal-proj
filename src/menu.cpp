@@ -94,7 +94,6 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     vector<int> ids = {startID ,parkID};
 
     if(doTasks){
-        ids = {startID ,parkID};
         vector<int> tasks = chooseTasks(graph);//Getting tasks
         ids.insert(ids.end(), tasks.begin(), tasks.end());
     }
@@ -105,7 +104,7 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
         graph->dijkstraShortestPath(from);
         vector<Point> path = graph->getPath(from ,to);
         if(!path.empty()){
-            gvl.colorPath(*graph, from, to);
+            //gvl.colorPath(*graph, from, to);
             for(vector<Point>::iterator it = path.begin(); it != path.end(); it++)
                 cout << it->getId() << " -> ";
             cout <<endl;
@@ -115,7 +114,7 @@ void choosePoints(Graph  * graph, GraphViewer &gv, GraphViewerLoader &gvl){
     Point from = route.back(), to = Point(startID,0, 0);
     vector<Point> path = graph->getPath(from ,to);
     graph->dijkstraShortestPath(from);
-    gvl.colorPath(*graph, from, to);
+    //gvl.colorPath(*graph, from, to);
     for(vector<Point>::iterator it = path.begin(); it != path.end(); it++)
         cout << it->getId() << " -> ";
     cout <<endl;
